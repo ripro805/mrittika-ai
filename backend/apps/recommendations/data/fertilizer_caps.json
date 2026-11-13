@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "source": "bangladesh_fertilizer_recommendation.csv",
+    "buffer_multiplier": 1.05,
+    "dose_columns": [
+      "urea_kg_ha",
+      "tsp_kg_ha",
+      "mop_kg_ha",
+      "gypsum_kg_ha",
+      "zinc_sulphate_kg_ha",
+      "lime_kg_ha",
+      "compost_kg_ha"
+    ]
+  },
+  "per_crop": {
+    "Brinjal": {
+      "urea_kg_ha": 314.58,
+      "tsp_kg_ha": 168.63,
+      "mop_kg_ha": 163.17,
+      "gypsum_kg_ha": 115.92,
+      "zinc_sulphate_kg_ha": 21.95,
+      "lime_kg_ha": 2184.74,
+      "compost_kg_ha": 5415.06
+    },
+    "Chilli": {
+      "urea_kg_ha": 237.3,
+      "tsp_kg_ha": 151.83,
+      "mop_kg_ha": 133.35,
+      "gypsum_kg_ha": 121.7,
+      "zinc_sulphate_kg_ha": 21.73,
+      "lime_kg_ha": 2313.99,
+      "compost_kg_ha": 5464.52
+    },
+    "Jute": {
+      "urea_kg_ha": 211.68,
+      "tsp_kg_ha": 65.84,
+      "mop_kg_ha": 80.75,
+      "gypsum_kg_ha": 125.27,
+      "zinc_sulphate_kg_ha": 22.89,
+      "lime_kg_ha": 2215.82,
+      "compost_kg_ha": 5210.31
+    },
+    "Lentil": {
+      "urea_kg_ha": 33.49,
+      "tsp_kg_ha": 90.09,
+      "mop_kg_ha": 33.6,
+      "gypsum_kg_ha": 120.75,
+      "zinc_sulphate_kg_ha": 21.0,
+      "lime_kg_ha": 2355.88,
+      "compost_kg_ha": 5538.02
+    },
+    "Maize": {
+      "urea_kg_ha": 686.07,
+      "tsp_kg_ha": 276.15,
+      "mop_kg_ha": 224.7,
+      "gypsum_kg_ha": 121.49,
+      "zinc_sulphate_kg_ha": 21.95,
+      "lime_kg_ha": 2339.72,
+      "compost_kg_ha": 5425.98
+    },
+    "Mustard": {
+      "urea_kg_ha": 231.84,
+      "tsp_kg_ha": 120.02,
+      "mop_kg_ha": 77.7,
+      "gypsum_kg_ha": 117.92,
+      "zinc_sulphate_kg_ha": 21.11,
+      "lime_kg_ha": 2276.51,
+      "compost_kg_ha": 5281.19
+    },
+    "Onion": {
+      "urea_kg_ha": 238.03,
+      "tsp_kg_ha": 151.94,
+      "mop_kg_ha": 125.58,
+      "gypsum_kg_ha": 118.02,
+      "zinc_sulphate_kg_ha": 21.73,
+      "lime_kg_ha": 2235.03,
+      "compost_kg_ha": 5399.62
+    },
+    "Potato": {
+      "urea_kg_ha": 351.86,
+      "tsp_kg_ha": 161.18,
+      "mop_kg_ha": 226.7,
+      "gypsum_kg_ha": 121.49,
+      "zinc_sulphate_kg_ha": 22.79,
+      "lime_kg_ha": 2139.48,
+      "compost_kg_ha": 5283.81
+    },
+    "Rice_Aman": {
+      "urea_kg_ha": 238.14,
+      "tsp_kg_ha": 90.3,
+      "mop_kg_ha": 81.17,
+      "gypsum_kg_ha": 124.53,
+      "zinc_sulphate_kg_ha": 21.53,
+      "lime_kg_ha": 2285.33,
+      "compost_kg_ha": 5412.44
+    },
+    "Rice_Aus": {
+      "urea_kg_ha": 196.98,
+      "tsp_kg_ha": 73.61,
+      "mop_kg_ha": 63.84,
+      "gypsum_kg_ha": 118.23,
+      "zinc_sulphate_kg_ha": 21.63,
+      "lime_kg_ha": 2226.84,
+      "compost_kg_ha": 5229.0
+    },
+    "Rice_Boro": {
+      "urea_kg_ha": 371.91,
+      "tsp_kg_ha": 131.15,
+      "mop_kg_ha": 112.77,
+      "gypsum_kg_ha": 123.9,
+      "zinc_sulphate_kg_ha": 22.57,
+      "lime_kg_ha": 2203.95,
+      "compost_kg_ha": 5526.05
+    },
+    "Tomato": {
+      "urea_kg_ha": 409.08,
+      "tsp_kg_ha": 203.18,
+      "mop_kg_ha": 234.99,
+      "gypsum_kg_ha": 116.34,
+      "zinc_sulphate_kg_ha": 23.1,
+      "lime_kg_ha": 2176.86,
+      "compost_kg_ha": 5353.95
+    },
+    "Wheat": {
+      "urea_kg_ha": 281.51,
+      "tsp_kg_ha": 113.72,
+      "mop_kg_ha": 76.86,
+      "gypsum_kg_ha": 122.85,
+      "zinc_sulphate_kg_ha": 22.37,
+      "lime_kg_ha": 2354.94,
+      "compost_kg_ha": 5632.52
+    }
+  },
+  "global_fallback": {
+    "urea_kg_ha": 686.07,
+    "tsp_kg_ha": 276.15,
+    "mop_kg_ha": 234.99,
+    "gypsum_kg_ha": 125.27,
+    "zinc_sulphate_kg_ha": 23.1,
+    "lime_kg_ha": 2355.88,
+    "compost_kg_ha": 5632.52
+  }
+}
