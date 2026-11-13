@@ -1,0 +1,36 @@
+{
+  "app_name": "Mrittika AI",
+  "app_tagline": "Right Crop, Right Fertilizer, Right Guidance - Smarter Farming with AI",
+  "nav": {
+    "home": "Home",
+    "crop": "Crop Advisory",
+    "fertilizer": "Fertilizer Plan",
+    "assistant": "AI Assistant",
+    "history": "History",
+    "officer_dash": "Officer Portal",
+    "about": "Model & Info",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile"
+  },
+  "roles": {
+    "farmer": "Farmer",
+    "officer": "Extension Officer",
+    "admin": "Admin",
+    "guest": "Guest"
+  },
+  "buttons": {
+    "recommend_crop": "Recommend Crops",
+    "get_fertilizer": "Calculate Fertilizer",
+    "view_fertilizer_for_crop": "View Fertilizer Plan (Next Step)",
+    "ask_assistant_about_crop": "Ask Assistant About This Crop",
+    "ask_assistant": "Ask Assistant",
+    "download_pdf": "Download PDF Report",
+    "autofill_weather": "Auto-Fill Weather",
+    "submit": "Submit",
+    "delete": "Delete",
+    "save": "Save"
+  },
+  "disclaimer": "Notice: Recommendations are decision-support outputs based on AI and research data. Always consult your local Upazila Agriculture Officer before field application."
+}
