@@ -104,11 +104,25 @@ export const Navbar: React.FC = () => {
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <Link
-                  to="/profile"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-100 text-gray-800 text-xs font-semibold hover:bg-gray-200 transition-colors"
+                  to={
+                    role === "ADMIN"
+                      ? "/admin-portal/overview"
+                      : role === "OFFICER"
+                      ? "/officer/overview"
+                      : "/farmer/overview"
+                  }
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs ${
+                    role === "ADMIN"
+                      ? "bg-purple-100 text-purple-900 border border-purple-200 hover:bg-purple-200"
+                      : role === "OFFICER"
+                      ? "bg-teal-100 text-teal-900 border border-teal-200 hover:bg-teal-200"
+                      : "bg-emerald-100 text-emerald-900 border border-emerald-200 hover:bg-emerald-200"
+                  }`}
                 >
-                  <User className="w-3.5 h-3.5 text-mrittika-800" />
-                  <span className="max-w-[100px] truncate">{user?.name}</span>
+                  <User className="w-3.5 h-3.5" />
+                  <span className="max-w-[120px] truncate">
+                    {role === "ADMIN" ? "👑 অ্যাডমিন পোর্টাল" : role === "OFFICER" ? "🛡️ কর্মকর্তা পোর্টাল" : "🌾 কৃষক পোর্টাল"}
+                  </span>
                 </Link>
                 <button
                   onClick={handleLogout}

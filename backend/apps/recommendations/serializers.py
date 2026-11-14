@@ -79,9 +79,9 @@ class FertilizerRecommendInputSerializer(serializers.Serializer):
     P = serializers.FloatField(min_value=0.0, max_value=200.0)
     K = serializers.FloatField(min_value=0.0, max_value=300.0)
     pH = serializers.FloatField(min_value=3.5, max_value=9.5)
-    temperature = serializers.FloatField(min_value=5.0, max_value=50.0)
-    humidity = serializers.FloatField(min_value=10.0, max_value=100.0)
-    rainfall = serializers.FloatField(min_value=0.0, max_value=1200.0)
+    temperature = serializers.FloatField(min_value=5.0, max_value=50.0, required=False, default=25.0)
+    humidity = serializers.FloatField(min_value=10.0, max_value=100.0, required=False, default=75.0)
+    rainfall = serializers.FloatField(min_value=0.0, max_value=1200.0, required=False, default=150.0)
     season = serializers.CharField(max_length=50, default="Rabi")
     soil_type = serializers.CharField(max_length=50, default="Loam")
 
@@ -92,11 +92,20 @@ class FertilizerRecommendInputSerializer(serializers.Serializer):
 
     # Optional land area & unit
     land_area = serializers.FloatField(min_value=0.01, required=False, default=1.0)
-    land_unit = serializers.ChoiceField(
-        choices=["bigha", "decimal", "hectare"],
+    land_unit = serializers.CharField(
         required=False,
         default="bigha",
     )
+
+    def validate_land_unit(self, value):
+        val = (value or "bigha").strip().lower()
+        if val in ("bigha_33", "bigha"):
+            return "bigha"
+        if val in ("decimal", "shotok", "shatak"):
+            return "decimal"
+        if val in ("hectare", "ha"):
+            return "hectare"
+        return "bigha"
 
 
 class RecommendationHistorySerializer(serializers.ModelSerializer):

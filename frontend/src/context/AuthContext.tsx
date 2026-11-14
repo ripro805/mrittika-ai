@@ -17,8 +17,8 @@ interface AuthContextType {
   role: "GUEST" | "FARMER" | "OFFICER" | "ADMIN";
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (phone: string, password: string) => Promise<void>;
-  register: (data: any) => Promise<void>;
+  login: (phone: string, password: string) => Promise<User>;
+  register: (data: any) => Promise<User>;
   logout: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -50,20 +50,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     fetchCurrentUser();
   }, []);
 
-  const login = async (phone: string, password: string) => {
+  const login = async (phone: string, password: string): Promise<User> => {
     const res = await apiClient.post("/auth/login", { phone, password });
     if (res.data?.access) {
       setAccessToken(res.data.access);
       setUser(res.data.user);
+      return res.data.user;
     }
+    throw new Error("Login failed");
   };
 
-  const register = async (data: any) => {
+  const register = async (data: any): Promise<User> => {
     const res = await apiClient.post("/auth/register", data);
     if (res.data?.access) {
       setAccessToken(res.data.access);
       setUser(res.data.user);
+      return res.data.user;
     }
+    throw new Error("Registration failed");
   };
 
   const logout = async () => {

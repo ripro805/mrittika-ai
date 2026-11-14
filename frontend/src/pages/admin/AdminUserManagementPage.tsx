@@ -1,0 +1,206 @@
+import React, { useEffect, useState } from "react";
+import apiClient from "../../services/api";
+import {
+  Users,
+  Search,
+  Filter,
+  CheckCircle,
+  XCircle,
+  Shield,
+  Loader2,
+  AlertCircle,
+  Check,
+} from "lucide-react";
+
+export const AdminUserManagementPage: React.FC = () => {
+  const [users, setUsers] = useState<any[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [roleFilter, setRoleFilter] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [actionSuccess, setActionSuccess] = useState<string | null>(null);
+
+  const fetchUsers = () => {
+    setIsLoading(true);
+    let url = `/admin/users?limit=100`;
+    if (roleFilter) url += `&role=${roleFilter}`;
+    if (searchQuery.trim()) url += `&search=${encodeURIComponent(searchQuery.trim())}`;
+
+    apiClient
+      .get(url)
+      .then((res) => {
+        setUsers(res.data.users || []);
+        setTotalCount(res.data.total || 0);
+      })
+      .catch(() => {
+        setError("ব্যবহারকারী তালিকা লোড করা যায়নি।");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchUsers();
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [roleFilter, searchQuery]);
+
+  const handleToggleActive = async (userId: number, currentActive: boolean) => {
+    try {
+      await apiClient.patch(`/admin/users/${userId}`, {
+        is_active: !currentActive,
+      });
+      setActionSuccess("ব্যবহারকারীর সক্রিয়তা স্ট্যাটাস সফলভাবে পরিবর্তিত হয়েছে।");
+      fetchUsers();
+    } catch {
+      setError("স্ট্যাটাস পরিবর্তন ব্যর্থ হয়েছে।");
+    }
+  };
+
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Title */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+            <Users className="w-6 h-6 text-purple-700" />
+            <span>ব্যবহারকারী ও ভূমিকা ব্যবস্থাপনা (User Management)</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-500">
+            সমগ্র প্ল্যাটফর্মের কৃষক, উপজেলা কৃষি কর্মকর্তা এবং অ্যাডমিন অ্যাকাউন্ট নিয়ন্ত্রণ ও পর্যবেক্ষণ
+          </p>
+        </div>
+
+        {/* Role Filters */}
+        <div className="inline-flex rounded-xl bg-gray-100 p-1 border border-gray-200 text-xs font-semibold">
+          <button
+            onClick={() => setRoleFilter("")}
+            className={`px-3 py-1.5 rounded-lg transition ${
+              roleFilter === "" ? "bg-white text-gray-900 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            সব ({totalCount})
+          </button>
+          <button
+            onClick={() => setRoleFilter("FARMER")}
+            className={`px-3 py-1.5 rounded-lg transition ${
+              roleFilter === "FARMER" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            কৃষক
+          </button>
+          <button
+            onClick={() => setRoleFilter("OFFICER")}
+            className={`px-3 py-1.5 rounded-lg transition ${
+              roleFilter === "OFFICER" ? "bg-white text-teal-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            কর্মকর্তা
+          </button>
+          <button
+            onClick={() => setRoleFilter("ADMIN")}
+            className={`px-3 py-1.5 rounded-lg transition ${
+              roleFilter === "ADMIN" ? "bg-white text-purple-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            অ্যাডমিন
+          </button>
+        </div>
+      </div>
+
+      {actionSuccess && (
+        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 font-medium">
+          <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <span>{actionSuccess}</span>
+        </div>
+      )}
+
+      {/* Search Bar */}
+      <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-xs">
+        <div className="relative">
+          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+          <input
+            type="text"
+            placeholder="নাম, মোবাইল নম্বর বা জেলা দিয়ে ব্যবহারকারী খুঁজুন..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Users Table */}
+      <div className="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden">
+        {isLoading ? (
+          <div className="p-12 text-center text-xs text-gray-400 flex flex-col items-center gap-2">
+            <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
+            <span>ব্যবহারকারী তালিকা লোড হচ্ছে...</span>
+          </div>
+        ) : users.length === 0 ? (
+          <div className="p-12 text-center text-xs text-gray-400">কোনো ব্যবহারকারী পাওয়া যায়নি।</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs sm:text-sm">
+              <thead className="bg-gray-50/75 text-gray-600 font-semibold border-b border-gray-100">
+                <tr>
+                  <th className="px-6 py-3.5">পূর্ণ নাম ও নম্বর</th>
+                  <th className="px-6 py-3.5">ভূমিকা (Role)</th>
+                  <th className="px-6 py-3.5">অঞ্চল (জেলা / উপজেলা)</th>
+                  <th className="px-6 py-3.5">স্ট্যাটাস</th>
+                  <th className="px-6 py-3.5 text-right">কার্যক্রম</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {users.map((u) => (
+                  <tr key={u.id} className="hover:bg-gray-50/50 transition">
+                    <td className="px-6 py-4">
+                      <p className="font-bold text-gray-900">{u.name}</p>
+                      <p className="text-xs text-gray-500">{u.phone}</p>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                          u.role === "ADMIN"
+                            ? "bg-purple-100 text-purple-800"
+                            : u.role === "OFFICER"
+                            ? "bg-teal-100 text-teal-800"
+                            : "bg-emerald-100 text-emerald-800"
+                        }`}
+                      >
+                        {u.role === "ADMIN" ? "অ্যাডমিন" : u.role === "OFFICER" ? "কর্মকর্তা" : "কৃষক"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-gray-600">
+                      {u.district ? `${u.district}, ${u.upazila || "সদর"}` : "অনির্ধারিত"}
+                    </td>
+                    <td className="px-6 py-4">
+                      {u.is_verified ? (
+                        <span className="inline-flex items-center gap-1 text-emerald-700 font-semibold text-xs">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          <span>যাচাইকৃত</span>
+                        </span>
+                      ) : (
+                        <span className="text-gray-400 text-xs">সাধারণ</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleToggleActive(u.id, true)}
+                        className="px-3 py-1 rounded-lg border border-gray-200 text-xs font-semibold text-gray-600 hover:bg-gray-100 transition"
+                      >
+                        সম্পাদনা
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

@@ -20,8 +20,14 @@ export const LoginPage: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      await login(phone, password);
-      navigate("/profile");
+      const loggedUser = await login(phone, password);
+      if (loggedUser.role === "ADMIN") {
+        navigate("/admin-portal/overview");
+      } else if (loggedUser.role === "OFFICER") {
+        navigate("/officer/overview");
+      } else {
+        navigate("/farmer/overview");
+      }
     } catch (err: any) {
       const msg =
         err.response?.data?.non_field_errors?.[0] ||
@@ -56,6 +62,36 @@ export const LoginPage: React.FC = () => {
             <span>{errorMessage}</span>
           </div>
         )}
+
+        {/* Demo Fast Login Pills */}
+        <div className="bg-emerald-50/60 p-3 rounded-2xl border border-emerald-100 space-y-2">
+          <p className="text-[11px] font-bold text-emerald-900 text-center">
+            🚀 দ্রুত পরীক্ষার জন্য ডেমো অ্যাকাউন্ট নির্বাচন করুন:
+          </p>
+          <div className="grid grid-cols-3 gap-1.5">
+            <button
+              type="button"
+              onClick={() => { setPhone("01720000001"); setPassword("Farmer@123456"); }}
+              className="px-2 py-1.5 rounded-xl bg-white border border-emerald-200 text-[11px] font-semibold text-emerald-800 hover:bg-emerald-100 transition shadow-xs text-center"
+            >
+              🌾 কৃষক
+            </button>
+            <button
+              type="button"
+              onClick={() => { setPhone("01710000001"); setPassword("Officer@123456"); }}
+              className="px-2 py-1.5 rounded-xl bg-white border border-teal-200 text-[11px] font-semibold text-teal-800 hover:bg-teal-100 transition shadow-xs text-center"
+            >
+              🛡️ কর্মকর্তা
+            </button>
+            <button
+              type="button"
+              onClick={() => { setPhone("01700000001"); setPassword("Admin@123456"); }}
+              className="px-2 py-1.5 rounded-xl bg-white border border-purple-200 text-[11px] font-semibold text-purple-800 hover:bg-purple-100 transition shadow-xs text-center"
+            >
+              👑 অ্যাডমিন
+            </button>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
