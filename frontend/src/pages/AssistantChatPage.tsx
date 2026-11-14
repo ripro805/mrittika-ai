@@ -4,6 +4,7 @@ import { useUnifiedFlow } from "../context/UnifiedFlowContext";
 import { useAuth } from "../context/AuthContext";
 import apiClient, { getAccessToken } from "../services/api";
 import { VoiceInputButton } from "../components/VoiceInputButton";
+import { MarkdownRenderer } from "../components/MarkdownRenderer";
 import {
   MessageSquare,
   Send,
@@ -44,6 +45,7 @@ interface ChatMessage {
   sources?: SourceItem[];
   fallback?: boolean;
   provider_used?: string;
+  timestamp?: string;
 }
 
 interface ChatSessionItem {
@@ -149,10 +151,13 @@ export const AssistantChatPage: React.FC = () => {
       setCurrentSessionId(res.data.id);
       const history: ChatMessage[] = (res.data.messages || []).map((m: any) => ({
         id: `msg_${m.id}`,
-        sender: m.role === "user" ? "user" : "bot",
-        text: m.content,
+        sender: (m.role || "").toLowerCase() === "user" ? "user" : "bot",
+        text: m.content || m.text || "",
         sources: m.sources || [],
         fallback: m.fallback || false,
+        timestamp: m.created_at
+          ? new Date(m.created_at).toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" })
+          : undefined,
       }));
       setMessages(
         history.length > 0
@@ -205,11 +210,14 @@ export const AssistantChatPage: React.FC = () => {
     setLastUserMessage(textToSend);
     setInputMessage("");
 
+    const timeNow = new Date().toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" });
+
     const userMsgId = `user_${Date.now()}`;
     const userMsg: ChatMessage = {
       id: userMsgId,
       sender: "user",
       text: textToSend,
+      timestamp: timeNow,
     };
 
     const botMsgId = `bot_${Date.now()}`;
@@ -219,6 +227,7 @@ export const AssistantChatPage: React.FC = () => {
       text: "",
       sources: [],
       fallback: false,
+      timestamp: timeNow,
     };
 
     setMessages((prev) => [...prev, userMsg, initialBotMsg]);
@@ -628,43 +637,73 @@ export const AssistantChatPage: React.FC = () => {
             return (
               <div
                 key={msg.id}
-                className={`w-full flex flex-col ${isUser ? "items-end" : "items-start"}`}
+                className={`w-full flex ${isUser ? "justify-end" : "justify-start"} my-2`}
               >
                 <div
-                  className={`max-w-[88%] sm:max-w-[78%] rounded-2xl p-4 text-sm leading-relaxed shadow-sm transition-all ${
+                  className={`rounded-2xl p-4 sm:p-5 text-sm leading-relaxed shadow-xs transition-all ${
                     isUser
-                      ? "bg-mrittika-800 text-white rounded-tr-none"
+                      ? "max-w-[85%] sm:max-w-[75%] bg-emerald-800 text-white rounded-tr-xs shadow-md border border-emerald-900/30"
                       : msg.fallback
-                      ? "bg-amber-50 text-amber-950 border border-amber-200 rounded-tl-none"
-                      : "bg-white text-gray-900 border border-gray-200 rounded-tl-none"
+                      ? "w-full max-w-[92%] sm:max-w-[85%] bg-amber-50/50 text-gray-900 border border-amber-300/80 rounded-tl-xs"
+                      : "w-full max-w-[92%] sm:max-w-[85%] bg-white text-gray-900 border border-gray-200/90 rounded-tl-xs"
                   }`}
                 >
                   {/* Sender Header */}
-                  <div className="flex items-center gap-1.5 mb-1.5 text-[11px] font-semibold">
+                  <div className="flex items-center justify-between gap-3 mb-2.5 text-[11px] font-semibold border-b border-black/5 pb-2">
                     {isUser ? (
-                      <span className="text-emerald-200 ml-auto flex items-center gap-1 font-bold">
-                        👤 আপনি
-                      </span>
+                      <div className="flex items-center justify-between w-full text-emerald-100">
+                        <span className="flex items-center gap-1.5 font-bold">
+                          <span>👤 আপনি</span>
+                        </span>
+                        {msg.timestamp && (
+                          <span className="text-[10px] text-emerald-200/80 font-normal ml-2">
+                            {msg.timestamp}
+                          </span>
+                        )}
+                      </div>
                     ) : (
-                      <span className="text-mrittika-800 flex items-center gap-1 font-bold">
-                        <Sparkles className="w-3.5 h-3.5 text-mrittika-600" />
-                        মৃত্তিকা এআই
-                      </span>
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-emerald-800 flex items-center gap-1.5 font-bold">
+                          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>মৃত্তিকা এআই</span>
+                        </span>
+                        {msg.timestamp && (
+                          <span className="text-[10px] text-gray-400 font-normal">
+                            {msg.timestamp}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
 
-                  <p className="whitespace-pre-line leading-relaxed font-bangla">
-                    {msg.text || (isLoading && !isUser ? "..." : "")}
-                  </p>
+                  {/* Message Content */}
+                  {isUser ? (
+                    <p className="whitespace-pre-wrap leading-relaxed font-bangla text-white text-[13px] sm:text-sm">
+                      {msg.text}
+                    </p>
+                  ) : (
+                    <div>
+                      {!msg.text && isLoading ? (
+                        <div className="flex items-center gap-2 py-3">
+                          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.3s]" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.15s]" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce" />
+                          <span className="text-xs text-gray-500 font-medium ml-1 font-bangla">মৃত্তিকা এআই উত্তর তৈরি করছে...</span>
+                        </div>
+                      ) : (
+                        <MarkdownRenderer content={msg.text} />
+                      )}
+                    </div>
+                  )}
 
                   {/* Fallback Special Card */}
                   {!isUser && msg.fallback && (
-                    <div className="mt-3 p-3 bg-white/80 rounded-xl border border-amber-300 text-xs text-amber-900 space-y-1.5 shadow-xs">
-                      <div className="flex items-center gap-1.5 font-bold text-amber-900">
-                        <AlertTriangle className="w-4 h-4 text-amber-600" />
+                    <div className="mt-4 p-3.5 bg-amber-100/70 rounded-xl border border-amber-300 text-xs text-amber-950 space-y-1.5 shadow-2xs">
+                      <div className="flex items-center gap-2 font-bold text-amber-900">
+                        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
                         <span>উপজেলা কৃষি কর্মকর্তার সাথে যোগাযোগ করুন</span>
                       </div>
-                      <p className="text-[11px] text-amber-800 leading-normal">
+                      <p className="text-[11px] text-amber-900/90 leading-relaxed font-bangla">
                         উচ্চ-ঝুঁকি বা বিষাক্ত রাসায়নিক প্রয়োগের ক্ষেত্রে শুধুমাত্র সরকারি লাইসেন্সধারী কর্মকর্তা বা আপনার নিকটস্থ উপজেলা কৃষি অফিসে গিয়ে সরাসরি পরামর্শ নিন।
                       </p>
                     </div>
@@ -672,9 +711,9 @@ export const AssistantChatPage: React.FC = () => {
 
                   {/* Expandable Sources Chips */}
                   {!isUser && msg.sources && msg.sources.length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-gray-100">
-                      <div className="text-[11px] font-bold text-gray-500 mb-1 flex items-center gap-1">
-                        <BookOpen className="w-3.5 h-3.5 text-mrittika-700" />
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <div className="text-[11px] font-bold text-gray-500 mb-1.5 flex items-center gap-1.5">
+                        <BookOpen className="w-3.5 h-3.5 text-emerald-700" />
                         <span>তথ্যসূত্র ও নির্দেশিকা ({msg.sources.length}):</span>
                       </div>
                       <div className="space-y-1.5">
@@ -684,7 +723,7 @@ export const AssistantChatPage: React.FC = () => {
                           return (
                             <div
                               key={idx}
-                              className="bg-gray-50 border border-gray-200 rounded-lg p-2 text-[11px] text-gray-700"
+                              className="bg-gray-50/90 border border-gray-200 rounded-lg p-2.5 text-[11px] text-gray-700 hover:border-gray-300 transition-colors"
                             >
                               <div
                                 onClick={() =>
@@ -692,24 +731,24 @@ export const AssistantChatPage: React.FC = () => {
                                 }
                                 className="flex items-center justify-between cursor-pointer font-medium"
                               >
-                                <span className="truncate flex-1">
+                                <span className="truncate flex-1 font-bangla">
                                   📄 {s.source} {s.page ? `(পৃ. ${s.page})` : ""}
                                 </span>
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1.5 ml-2">
                                   {s.is_sample && (
                                     <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
                                       নমুনা নথি
                                     </span>
                                   )}
                                   {isExpanded ? (
-                                    <ChevronUp className="w-3 h-3 text-gray-500" />
+                                    <ChevronUp className="w-3.5 h-3.5 text-gray-500" />
                                   ) : (
-                                    <ChevronDown className="w-3 h-3 text-gray-500" />
+                                    <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
                                   )}
                                 </div>
                               </div>
                               {isExpanded && s.snippet && (
-                                <p className="mt-1.5 pt-1.5 border-t border-gray-200 text-gray-600 italic bg-white p-1.5 rounded text-[10px] leading-relaxed">
+                                <p className="mt-2 pt-2 border-t border-gray-200 text-gray-600 italic bg-white p-2 rounded text-[11px] leading-relaxed font-bangla">
                                   "{s.snippet}"
                                 </p>
                               )}
@@ -719,42 +758,49 @@ export const AssistantChatPage: React.FC = () => {
                       </div>
                     </div>
                   )}
-                </div>
 
-                {/* Assistant Message Actions */}
-                {!isUser && msg.id !== "welcome" && (
-                  <div className="flex items-center gap-2 mt-1 px-1 text-gray-400 text-xs">
-                    <button
-                      onClick={() => handleCopyText(msg.id, msg.text)}
-                      className="hover:text-gray-700 p-1 flex items-center gap-1"
-                      title="অনুলিপি (Copy)"
-                    >
-                      {copiedId === msg.id ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setFeedbackTargetMessage(msg);
-                        submitFeedback(true);
-                      }}
-                      className="hover:text-emerald-700 p-1"
-                      title="সহায়ক উত্তর (Helpful)"
-                    >
-                      <ThumbsUp className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => openFeedbackModal(msg)}
-                      className="hover:text-red-600 p-1 flex items-center gap-1"
-                      title="ভুল উত্তর রিপোর্ট করুন"
-                    >
-                      <Flag className="w-3.5 h-3.5" />
-                      <span className="text-[10px]">রিপোর্ট</span>
-                    </button>
-                  </div>
-                )}
+                  {/* Assistant Message Actions */}
+                  {!isUser && msg.id !== "welcome" && msg.text && (
+                    <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-gray-100 text-gray-400 text-xs">
+                      <button
+                        onClick={() => handleCopyText(msg.id, msg.text)}
+                        className="hover:text-emerald-700 p-1 flex items-center gap-1 rounded hover:bg-gray-100 transition-colors"
+                        title="অনুলিপি (Copy)"
+                      >
+                        {copiedId === msg.id ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-[11px] text-emerald-600 font-medium">কপি হয়েছে</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span className="text-[11px]">কপি</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setFeedbackTargetMessage(msg);
+                          submitFeedback(true);
+                        }}
+                        className="hover:text-emerald-700 p-1 flex items-center gap-1 rounded hover:bg-gray-100 transition-colors"
+                        title="সহায়ক উত্তর (Helpful)"
+                      >
+                        <ThumbsUp className="w-3.5 h-3.5" />
+                        <span className="text-[11px]">পছন্দ</span>
+                      </button>
+                      <button
+                        onClick={() => openFeedbackModal(msg)}
+                        className="hover:text-red-600 p-1 flex items-center gap-1 rounded hover:bg-gray-100 transition-colors ml-auto"
+                        title="রিপোর্ট করুন"
+                      >
+                        <Flag className="w-3.5 h-3.5" />
+                        <span className="text-[11px]">রিপোর্ট</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -808,6 +854,7 @@ export const AssistantChatPage: React.FC = () => {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
+                  if (e.nativeEvent.isComposing) return;
                   e.preventDefault();
                   handleSend();
                 }

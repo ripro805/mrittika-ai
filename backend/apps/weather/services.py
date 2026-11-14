@@ -6,7 +6,9 @@ and district-specific climatological baselines based on BMD / BARC agro-ecologic
 import datetime
 import logging
 import os
+import re
 from typing import Any, Dict
+import unicodedata
 
 import requests
 from django.core.cache import cache
@@ -76,16 +78,28 @@ def get_district_seasonal_baseline(district_en: str) -> Dict[str, Any]:
 
 
 def fetch_weather_for_district(district_name: str) -> Dict[str, Any]:
-    cleaned = district_name.strip() if district_name else "Dhaka"
+    raw = district_name or "Dhaka"
+    cleaned = unicodedata.normalize("NFC", raw.strip())
+    cleaned_lower = cleaned.lower()
+
+    # Extract English name if provided like "বগুড়া (Bogra)"
+    paren_match = re.search(r"\(([a-zA-Z\s]+)\)", cleaned)
+    extracted_en = paren_match.group(1).strip().lower() if paren_match else ""
 
     # Match district metadata
     dist_meta = None
     for d in BANGLADESH_DISTRICTS:
+        d_en_norm = d["name_en"].lower()
+        d_bn_norm = unicodedata.normalize("NFC", d["name_bn"]).lower()
+
         if (
-            d["name_en"].lower() == cleaned.lower()
-            or d["name_bn"] == cleaned
-            or cleaned.lower() in d["name_en"].lower()
-            or cleaned in d["name_bn"]
+            d_en_norm == cleaned_lower
+            or d_bn_norm == cleaned_lower
+            or (extracted_en and d_en_norm == extracted_en)
+            or d_en_norm in cleaned_lower
+            or d_bn_norm in cleaned_lower
+            or cleaned_lower in d_en_norm
+            or cleaned_lower in d_bn_norm
         ):
             dist_meta = d
             break
