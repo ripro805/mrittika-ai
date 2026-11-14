@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mrittika_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mrittika_db
+      POSTGRES_USER: mrittika_user
+      POSTGRES_PASSWORD: mrittika_secure_password_replace_in_prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mrittika_user -d mrittika_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mrittika_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-prod-placeholder-replace-with-openssl-rand-hex-32}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,backend}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost,http://localhost:80,http://localhost:3000,http://localhost:5173}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS:-http://localhost,http://localhost:80,http://localhost:3000,http://localhost:5173}
+      - DATABASE_URL=postgres://${POSTGRES_USER:-mrittika_user}:${POSTGRES_PASSWORD:-mrittika_secure_password_replace_in_prod}@postgres:5432/${POSTGRES_DB:-mrittika_db}
+      - POSTGRES_DB=${POSTGRES_DB:-mrittika_db}
+      - POSTGRES_USER=${POSTGRES_USER:-mrittika_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-mrittika_secure_password_replace_in_prod}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - HF_TOKEN=${HF_TOKEN:-}
+      - HF_REPO_ID=${HF_REPO_ID:-ripro805/mrittika-ai}
+      - HF_REVISION=${HF_REVISION:-main}
+      - LLM_PROVIDER_ORDER=${LLM_PROVIDER_ORDER:-groq,gemini}
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+      - GROQ_MODEL=${GROQ_MODEL:-openai/gpt-oss-120b}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash-lite}
+      - CHAT_GLOBAL_RPD=${CHAT_GLOBAL_RPD:-5000}
+      - RAG_MIN_SCORE=${RAG_MIN_SCORE:-0.85}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-intfloat/multilingual-e5-large}
+    volumes:
+      - ml_model_cache:/app/ml_models
+      - chroma_cache:/app/chroma_db
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mrittika_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "5173:80"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  postgres_data:
+  ml_model_cache:
+  chroma_cache:
