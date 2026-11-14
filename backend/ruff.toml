@@ -1,0 +1,17 @@
+line-length = 120
+target-version = "py311"
+
+exclude = [
+    "*/migrations/*",
+    "ml_models",
+    "staticfiles",
+    "chroma_db",
+    "htmlcov",
+]
+
+[lint]
+select = ["E", "F", "W", "I"]
+ignore = [
+    "E501",  # Line too long
+    "E402",  # Module level import not at top of file (for django.setup())
+]

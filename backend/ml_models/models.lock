@@ -1,0 +1,26 @@
+{
+  "mrittika_crop_model.pkl": {
+    "sha256": "860256b36d332aac1d13e33c6f5a8b7f47834938c580e7f2abe589581f51794f",
+    "size_bytes": 11418090
+  },
+  "mrittika_fertilizer_model.pkl": {
+    "sha256": "6db7628bcd35e13d41c6283c541770ae64f60cab42f7455622fde5f223be22af",
+    "size_bytes": 2934500
+  },
+  "metrics.json": {
+    "sha256": "c0bfd963f225acfb87f3966f57a0087b4e3871fb0f9b1836bc51f03c0fd640e2",
+    "size_bytes": 625
+  },
+  "fertilizer_metrics.json": {
+    "sha256": "9fc09edec11daf48294435a6c6bc7cdb3f6319d25b842ea4a320794137ea8835",
+    "size_bytes": 1069
+  },
+  "bangladesh_crop_recommendation.csv": {
+    "sha256": "34f08736a33bd5249356a31ded1d876bb9279626cf2b46bfeccd89e50f53d19a",
+    "size_bytes": 480351
+  },
+  "bangladesh_fertilizer_recommendation.csv": {
+    "sha256": "425ec5ff2d04a5e3b6f15396e1faedb67a829ba0d48ac4d46dc23e349539b0cb",
+    "size_bytes": 739705
+  }
+}

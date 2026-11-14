@@ -1,0 +1,32 @@
+{
+  "best_model": "ExtraTrees",
+  "test_accuracy": 0.8613,
+  "test_macro_f1": 0.8599,
+  "test_top3_accuracy": 0.9759,
+  "cv_results": [
+    {
+      "Model": "ExtraTrees",
+      "CV Accuracy": 0.8592,
+      "CV Macro-F1": 0.8588,
+      "F1 Std": 0.0059
+    },
+    {
+      "Model": "RandomForest",
+      "CV Accuracy": 0.8525,
+      "CV Macro-F1": 0.8528,
+      "F1 Std": 0.0109
+    },
+    {
+      "Model": "XGBoost",
+      "CV Accuracy": 0.8434,
+      "CV Macro-F1": 0.8435,
+      "F1 Std": 0.0089
+    },
+    {
+      "Model": "LightGBM",
+      "CV Accuracy": 0.84,
+      "CV Macro-F1": 0.84,
+      "F1 Std": 0.0069
+    }
+  ]
+}

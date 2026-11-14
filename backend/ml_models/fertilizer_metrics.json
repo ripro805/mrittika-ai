@@ -1,0 +1,56 @@
+{
+  "classifier": "XGBoost",
+  "cls_test_accuracy": 0.9617,
+  "cls_test_macro_f1": 0.9394,
+  "regressor": "LightGBM",
+  "reg_test_r2": 0.974,
+  "reg_test_mae_kg_ha": 29.221,
+  "cls_cv_results": [
+    {
+      "Model": "XGBoost",
+      "CV Accuracy": 0.9402,
+      "CV Macro-F1": 0.8911,
+      "F1 Std": 0.0205
+    },
+    {
+      "Model": "RandomForest",
+      "CV Accuracy": 0.9342,
+      "CV Macro-F1": 0.8908,
+      "F1 Std": 0.0142
+    },
+    {
+      "Model": "ExtraTrees",
+      "CV Accuracy": 0.9088,
+      "CV Macro-F1": 0.7603,
+      "F1 Std": 0.0636
+    },
+    {
+      "Model": "LightGBM",
+      "CV Accuracy": 0.7242,
+      "CV Macro-F1": 0.4609,
+      "F1 Std": 0.3579
+    }
+  ],
+  "reg_results": [
+    {
+      "Model": "LightGBM",
+      "R2": 0.974,
+      "MAE (kg/ha)": 29.2212
+    },
+    {
+      "Model": "XGBoost",
+      "R2": 0.9738,
+      "MAE (kg/ha)": 28.948
+    },
+    {
+      "Model": "RandomForest",
+      "R2": 0.6786,
+      "MAE (kg/ha)": 38.871
+    },
+    {
+      "Model": "ExtraTrees",
+      "R2": 0.6472,
+      "MAE (kg/ha)": 41.998
+    }
+  ]
+}
