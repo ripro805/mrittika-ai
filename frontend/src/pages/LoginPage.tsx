@@ -25,8 +25,12 @@ export const LoginPage: React.FC = () => {
     } catch (err: any) {
       const msg =
         err.response?.data?.non_field_errors?.[0] ||
+        err.response?.data?.detail ||
         err.response?.data?.error ||
-        "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।";
+        err.response?.data?.message ||
+        (err.response
+          ? "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।"
+          : "সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (Network Error)। ব্যাকএন্ড চালু আছে কি না পরীক্ষা করুন।");
       setErrorMessage(msg);
     } finally {
       setIsLoading(false);

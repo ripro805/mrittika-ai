@@ -4,10 +4,21 @@ All API endpoints are versioned under /api/v1/
 """
 
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+def root_view(request):
+    return JsonResponse({
+        "status": "online",
+        "service": "Mrittika AI (মৃত্তিকা এআই) Backend API",
+        "version": "1.0.0",
+        "documentation": "/api/docs/",
+        "health": "/api/v1/health/",
+    })
+
 urlpatterns = [
+    path("", root_view, name="root"),
     path("admin/", admin.site.urls),
 
     # OpenAPI Schema & Swagger UI

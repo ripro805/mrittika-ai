@@ -202,8 +202,8 @@ SIMPLE_JWT = {
 # Cookie security for refresh token
 AUTH_COOKIE_NAME = os.getenv("AUTH_COOKIE_NAME", "mrittika_refresh_token")
 AUTH_COOKIE_HTTPONLY = True
-AUTH_COOKIE_SAMESITE = os.getenv("AUTH_COOKIE_SAMESITE", "Lax")
-AUTH_COOKIE_SECURE = not DEBUG
+AUTH_COOKIE_SECURE = False if DEBUG else (os.getenv("AUTH_COOKIE_SECURE", "True").lower() in ("true", "1", "yes"))
+AUTH_COOKIE_SAMESITE = "Lax" if DEBUG else os.getenv("AUTH_COOKIE_SAMESITE", "Lax")
 AUTH_COOKIE_PATH = "/api/v1/auth/"
 
 # CORS & CSRF Headers
@@ -248,7 +248,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "True").lower() in ("true", "1", "yes")
+    SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "False").lower() in ("true", "1", "yes")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", "31536000"))
