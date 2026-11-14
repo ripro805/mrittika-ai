@@ -36,6 +36,7 @@ export const CropRecommendPage: React.FC = () => {
   const [seasons, setSeasons] = useState<any[]>([]);
   const [soilTypes, setSoilTypes] = useState<any[]>([]);
   const [isLoadingWeather, setIsLoadingWeather] = useState(false);
+  const [weatherMeta, setWeatherMeta] = useState<{ source?: string; district_bn?: string; fallback?: boolean } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<any | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -57,23 +58,40 @@ export const CropRecommendPage: React.FC = () => {
     }));
   };
 
-  const handleAutofillWeather = async () => {
+  const fetchWeatherForDistrict = async (districtName: string) => {
+    if (!districtName) return;
     setIsLoadingWeather(true);
     setErrorMessage(null);
     try {
-      const res = await apiClient.get(`/weather?district=${formData.district}`);
+      const res = await apiClient.get(`/weather?district=${encodeURIComponent(districtName)}`);
       setFormData((prev) => ({
         ...prev,
+        district: districtName,
         temperature: res.data.temperature,
         humidity: res.data.humidity,
         rainfall: res.data.rainfall,
         season: res.data.season || prev.season,
       }));
+      setWeatherMeta({
+        source: res.data.source,
+        district_bn: res.data.district_bn,
+        fallback: res.data.fallback,
+      });
     } catch {
       setErrorMessage("আবহাওয়া তথ্য লোড করা যায়নি। দয়া করে ম্যানুয়ালি ইনপুট দিন।");
     } finally {
       setIsLoadingWeather(false);
     }
+  };
+
+  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newDistrict = e.target.value;
+    handleInputChange(e);
+    fetchWeatherForDistrict(newDistrict);
+  };
+
+  const handleAutofillWeather = () => {
+    fetchWeatherForDistrict(formData.district);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -131,7 +149,7 @@ export const CropRecommendPage: React.FC = () => {
             <select
               name="district"
               value={formData.district}
-              onChange={handleInputChange}
+              onChange={handleDistrictChange}
               className="w-full px-3 py-2 bg-white border border-gray-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
             >
               {districts.map((d) => (
@@ -140,6 +158,14 @@ export const CropRecommendPage: React.FC = () => {
                 </option>
               ))}
             </select>
+            {weatherMeta && (
+              <p className="mt-1.5 text-[11px] text-gray-600 flex items-center gap-1 font-medium">
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                <span>
+                  {weatherMeta.district_bn || formData.district}: {weatherMeta.fallback ? "আঞ্চলিক জলবায়ু উপাত্ত" : "Open-Meteo লাইভ আবহাওয়া"}
+                </span>
+              </p>
+            )}
           </div>
 
           <button
@@ -235,9 +261,17 @@ export const CropRecommendPage: React.FC = () => {
 
         {/* Environmental Factors Grid */}
         <div>
-          <h3 className="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2 mb-4">
-            ২. পরিবেশ ও আবহাওয়া (Climate & Environment)
-          </h3>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-2 mb-4 gap-2">
+            <h3 className="text-sm font-bold text-gray-900">
+              ২. পরিবেশ ও আবহাওয়া (Climate & Environment)
+            </h3>
+            {weatherMeta && (
+              <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200 font-medium w-fit">
+                <CloudSun className="w-3.5 h-3.5 text-blue-600" />
+                <span>{weatherMeta.district_bn || formData.district} ({weatherMeta.fallback ? "আঞ্চলিক গড়" : "লাইভ"})</span>
+              </span>
+            )}
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
