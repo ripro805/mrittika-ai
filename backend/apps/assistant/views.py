@@ -8,6 +8,7 @@ import datetime
 import json
 import logging
 import os
+import time
 import uuid
 from pathlib import Path
 from typing import Any, Dict, List
@@ -26,6 +27,14 @@ from rest_framework.views import APIView
 from apps.accounts.permissions import IsAdminRole, IsVerifiedOfficer
 from apps.feedback.models import Feedback
 
+from .cache_service import (
+    acquire_single_flight,
+    canonicalize_context,
+    generate_cache_fingerprint,
+    lookup_cache,
+    normalize_text_for_caching,
+    save_response_to_cache,
+)
 from .llm.base import redact_secrets
 from .llm.router import OFFICER_FALLBACK_BN, get_llm_router
 from .models import AssistantMessage, AssistantSession
@@ -142,64 +151,170 @@ class ChatView(APIView):
             for m in reversed(list(past_msgs)):
                 conversation_history.append({"role": m.role, "content": m.content})
 
-        # 2. Enrich query for retrieval if crop context is active
-        query_enrichment = message
-        if client_context.get("crop"):
-            query_enrichment = f"{client_context['crop']} - {message}"
+        # --- SHARED AI RESPONSE CACHE LOOKUP (Level 1 & 2) ---
+        cached_hit = lookup_cache(question=message, context=client_context)
+        if cached_hit:
+            answer = cached_hit["answer"]
+            clean_sources = cached_hit.get("sources", [])
+            cache_id = cached_hit.get("cache_id")
+            match_type = cached_hit.get("match_type", "EXACT")
+            is_verified = cached_hit.get("is_verified", False)
 
-        # 3. Retrieve chunks with relevance threshold check
-        chunks, is_low_confidence = query_knowledge_base(query_enrichment, top_k=4)
-        clean_sources = format_sources_for_client(chunks)
+            if session:
+                try:
+                    AssistantMessage.objects.create(session=session, role="user", content=message)
+                    AssistantMessage.objects.create(
+                        session=session,
+                        role="assistant",
+                        content=answer,
+                        sources=clean_sources,
+                        fallback=False,
+                        provider_used="cache",
+                        is_cached=True,
+                        cache_entry_id=cache_id,
+                        cache_match_type=match_type,
+                    )
+                    session.save(update_fields=["updated_at"])
+                except Exception as e:
+                    logger.warning("Failed to persist cached assistant message: %s", e)
 
-        # 4. Generate answer using LLM Router (Grounded in RAG context or general agronomy)
-        messages = build_assistant_messages(
-            user_message=message,
-            context_chunks=chunks,
-            client_context=client_context,
-            conversation_history=conversation_history,
-            max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
-            is_low_confidence=is_low_confidence,
-        )
-        router = get_llm_router()
-        result = router.generate(messages, stream=False, context_chunks=chunks)
-        answer = result["answer"]
-        provider_used = result.get("provider_used", "unknown")
-        fallback = result.get("fallback", False) or is_low_confidence
+            resp_data = {
+                "answer": answer,
+                "sources": clean_sources,
+                "fallback": False,
+                "session_id": session_id,
+                "client_context": client_context,
+                "is_cached": True,
+                "cache_id": cache_id,
+                "match_type": match_type,
+                "is_verified": is_verified,
+            }
+            if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
+                resp_data["provider_used"] = "cache"
+            return Response(resp_data, status=status.HTTP_200_OK)
 
-        # 5. Persist messages for authenticated users
-        if session:
-            try:
-                AssistantMessage.objects.create(session=session, role="user", content=message)
-                AssistantMessage.objects.create(
-                    session=session,
-                    role="assistant",
-                    content=answer,
+        # Cache Miss: compute fingerprint and acquire single-flight deduplication lock
+        normalized_q = normalize_text_for_caching(message)
+        _, ctx_hash, _ = canonicalize_context(client_context)
+        _, fingerprint = generate_cache_fingerprint(normalized_q, ctx_hash)
+
+        with acquire_single_flight(fingerprint):
+            # Double check if concurrent request populated the cache while waiting
+            double_check = lookup_cache(question=message, context=client_context)
+            if double_check:
+                answer = double_check["answer"]
+                clean_sources = double_check.get("sources", [])
+                cache_id = double_check.get("cache_id")
+                match_type = double_check.get("match_type", "EXACT")
+                if session:
+                    try:
+                        AssistantMessage.objects.create(session=session, role="user", content=message)
+                        AssistantMessage.objects.create(
+                            session=session,
+                            role="assistant",
+                            content=answer,
+                            sources=clean_sources,
+                            fallback=False,
+                            provider_used="cache",
+                            is_cached=True,
+                            cache_entry_id=cache_id,
+                            cache_match_type=match_type,
+                        )
+                        session.save(update_fields=["updated_at"])
+                    except Exception as e:
+                        logger.warning("Failed to persist cached assistant message: %s", e)
+                resp_data = {
+                    "answer": answer,
+                    "sources": clean_sources,
+                    "fallback": False,
+                    "session_id": session_id,
+                    "client_context": client_context,
+                    "is_cached": True,
+                    "cache_id": cache_id,
+                    "match_type": match_type,
+                    "is_verified": double_check.get("is_verified", False),
+                }
+                if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
+                    resp_data["provider_used"] = "cache"
+                return Response(resp_data, status=status.HTTP_200_OK)
+
+            # 2. Enrich query for retrieval if crop context is active
+            query_enrichment = message
+            if client_context.get("crop"):
+                query_enrichment = f"{client_context['crop']} - {message}"
+
+            # 3. Retrieve chunks with relevance threshold check
+            chunks, is_low_confidence = query_knowledge_base(query_enrichment, top_k=4)
+            clean_sources = format_sources_for_client(chunks)
+
+            # 4. Generate answer using LLM Router (Grounded in RAG context or general agronomy)
+            messages = build_assistant_messages(
+                user_message=message,
+                context_chunks=chunks,
+                client_context=client_context,
+                conversation_history=conversation_history,
+                max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
+                is_low_confidence=is_low_confidence,
+            )
+            router = get_llm_router()
+            result = router.generate(messages, stream=False, context_chunks=chunks)
+            answer = result["answer"]
+            provider_used = result.get("provider_used", "unknown")
+            fallback = result.get("fallback", False) or is_low_confidence
+
+            # Save to shared AI cache if eligible
+            new_cache_entry = None
+            if not fallback:
+                new_cache_entry = save_response_to_cache(
+                    original_question=message,
+                    response_text=answer,
+                    context=client_context,
                     sources=clean_sources,
+                    metadata={"provider_used": provider_used},
                     fallback=fallback,
-                    provider_used=provider_used,
+                    model_name=provider_used,
                 )
-                session.save(update_fields=["updated_at"])
-            except Exception as e:
-                logger.warning("Failed to persist assistant messages: %s", e)
 
-        resp_data = {
-            "answer": answer,
-            "sources": clean_sources,
-            "fallback": fallback,
-            "session_id": session_id,
-            "client_context": client_context,
-        }
-        # Only expose provider_used to admins or in DEBUG mode
-        if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
-            resp_data["provider_used"] = provider_used
+            # 5. Persist messages for authenticated users
+            if session:
+                try:
+                    AssistantMessage.objects.create(session=session, role="user", content=message)
+                    AssistantMessage.objects.create(
+                        session=session,
+                        role="assistant",
+                        content=answer,
+                        sources=clean_sources,
+                        fallback=fallback,
+                        provider_used=provider_used,
+                        is_cached=False,
+                        cache_entry=new_cache_entry,
+                        cache_match_type="",
+                    )
+                    session.save(update_fields=["updated_at"])
+                except Exception as e:
+                    logger.warning("Failed to persist assistant messages: %s", e)
 
-        return Response(resp_data, status=status.HTTP_200_OK)
+            resp_data = {
+                "answer": answer,
+                "sources": clean_sources,
+                "fallback": fallback,
+                "session_id": session_id,
+                "client_context": client_context,
+                "is_cached": False,
+                "cache_id": str(new_cache_entry.id) if new_cache_entry else None,
+            }
+            # Only expose provider_used to admins or in DEBUG mode
+            if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
+                resp_data["provider_used"] = provider_used
+
+            return Response(resp_data, status=status.HTTP_200_OK)
 
 
 class ChatStreamView(APIView):
     """
     Server-Sent Events (SSE) streaming chat endpoint.
     Emits events: sources, token, done, error.
+    Fully integrated with Shared AI Response Cache for sub-50ms instant streaming.
     """
     permission_classes = [AllowAny]
     throttle_classes = [AnonChatThrottle, UserChatThrottle]
@@ -235,6 +350,71 @@ class ChatStreamView(APIView):
             for m in reversed(list(past_msgs)):
                 conversation_history.append({"role": m.role, "content": m.content})
 
+        # --- Check Cache First ---
+        cached_hit = lookup_cache(question=message, context=client_context)
+        if cached_hit:
+            answer = cached_hit["answer"]
+            clean_sources = cached_hit.get("sources", [])
+            cache_id = cached_hit.get("cache_id")
+            match_type = cached_hit.get("match_type", "EXACT")
+
+            def cached_event_stream():
+                try:
+                    # 1. Send sources event
+                    yield f"event: sources\ndata: {json.dumps(clean_sources)}\n\n"
+
+                    # 2. Smooth token delivery from cache
+                    words = answer.split(" ")
+                    for i, word in enumerate(words):
+                        chunk = word + (" " if i < len(words) - 1 else "")
+                        yield f"event: token\ndata: {json.dumps({'token': chunk})}\n\n"
+                        time.sleep(0.012)
+
+                    # 3. Persist to user session
+                    if session:
+                        try:
+                            AssistantMessage.objects.create(session=session, role="user", content=message)
+                            AssistantMessage.objects.create(
+                                session=session,
+                                role="assistant",
+                                content=answer,
+                                sources=clean_sources,
+                                fallback=False,
+                                provider_used="cache",
+                                is_cached=True,
+                                cache_entry_id=cache_id,
+                                cache_match_type=match_type,
+                            )
+                            session.save(update_fields=["updated_at"])
+                        except Exception as pe:
+                            logger.warning("Could not persist streamed cached message: %s", pe)
+
+                    done_payload = {
+                        "session_id": session_id,
+                        "fallback": False,
+                        "is_cached": True,
+                        "cache_id": cache_id,
+                        "match_type": match_type,
+                    }
+                    if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
+                        done_payload["provider_used"] = "cache"
+
+                    yield f"event: done\ndata: {json.dumps(done_payload)}\n\n"
+
+                except Exception as stream_err:
+                    logger.error("SSE cached stream error: %s", redact_secrets(str(stream_err)))
+                    yield f"event: error\ndata: {json.dumps({'error': 'সার্ভারে সাময়িক সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।'})}\n\n"
+
+            response = StreamingHttpResponse(cached_event_stream(), content_type="text/event-stream")
+            response["Cache-Control"] = "no-cache"
+            response["X-Accel-Buffering"] = "no"
+            return response
+
+        # Cache Miss: Proceed to RAG & Single-flight LLM Router
+        normalized_q = normalize_text_for_caching(message)
+        _, ctx_hash, _ = canonicalize_context(client_context)
+        _, fingerprint = generate_cache_fingerprint(normalized_q, ctx_hash)
+
         query_enrichment = message
         if client_context.get("crop"):
             query_enrichment = f"{client_context['crop']} - {message}"
@@ -251,26 +431,81 @@ class ChatStreamView(APIView):
                 provider_used = "mock"
                 fallback = False
 
-                messages = build_assistant_messages(
-                    user_message=message,
-                    context_chunks=chunks,
-                    client_context=client_context,
-                    conversation_history=conversation_history,
-                    max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
-                    is_low_confidence=is_low_confidence,
-                )
-                router = get_llm_router()
-                gen_result = router.generate(messages, stream=True, context_chunks=chunks)
-                provider_used = gen_result.get("provider_used", "unknown")
-                fallback = gen_result.get("fallback", False) or is_low_confidence
-                generator = gen_result.get("stream_generator")
+                with acquire_single_flight(fingerprint):
+                    # Check if concurrent thread populated the cache while waiting on lock
+                    double_check = lookup_cache(question=message, context=client_context)
+                    if double_check:
+                        cached_ans = double_check["answer"]
+                        words = cached_ans.split(" ")
+                        for i, word in enumerate(words):
+                            chunk = word + (" " if i < len(words) - 1 else "")
+                            yield f"event: token\ndata: {json.dumps({'token': chunk})}\n\n"
+                            time.sleep(0.012)
 
-                if generator:
-                    for token in generator:
-                        accumulated_tokens.append(token)
-                        yield f"event: token\ndata: {json.dumps({'token': token})}\n\n"
+                        if session:
+                            try:
+                                AssistantMessage.objects.create(session=session, role="user", content=message)
+                                AssistantMessage.objects.create(
+                                    session=session,
+                                    role="assistant",
+                                    content=cached_ans,
+                                    sources=clean_sources,
+                                    fallback=False,
+                                    provider_used="cache",
+                                    is_cached=True,
+                                    cache_entry_id=double_check.get("cache_id"),
+                                    cache_match_type=double_check.get("match_type", "EXACT"),
+                                )
+                                session.save(update_fields=["updated_at"])
+                            except Exception as pe:
+                                logger.warning("Could not persist streamed assistant message: %s", pe)
+
+                        done_payload = {
+                            "session_id": session_id,
+                            "fallback": False,
+                            "is_cached": True,
+                            "cache_id": double_check.get("cache_id"),
+                            "match_type": double_check.get("match_type"),
+                        }
+                        if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
+                            done_payload["provider_used"] = "cache"
+
+                        yield f"event: done\ndata: {json.dumps(done_payload)}\n\n"
+                        return
+
+                    messages = build_assistant_messages(
+                        user_message=message,
+                        context_chunks=chunks,
+                        client_context=client_context,
+                        conversation_history=conversation_history,
+                        max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
+                        is_low_confidence=is_low_confidence,
+                    )
+                    router = get_llm_router()
+                    gen_result = router.generate(messages, stream=True, context_chunks=chunks)
+                    provider_used = gen_result.get("provider_used", "unknown")
+                    fallback = gen_result.get("fallback", False) or is_low_confidence
+                    generator = gen_result.get("stream_generator")
+
+                    if generator:
+                        for token in generator:
+                            accumulated_tokens.append(token)
+                            yield f"event: token\ndata: {json.dumps({'token': token})}\n\n"
 
                 final_answer = "".join(accumulated_tokens).strip()
+
+                # Save to shared AI response cache if eligible
+                new_cache_entry = None
+                if not fallback and final_answer:
+                    new_cache_entry = save_response_to_cache(
+                        original_question=message,
+                        response_text=final_answer,
+                        context=client_context,
+                        sources=clean_sources,
+                        metadata={"provider_used": provider_used},
+                        fallback=fallback,
+                        model_name=provider_used,
+                    )
 
                 # Persist message turn if session exists
                 if session and final_answer:
@@ -283,6 +518,9 @@ class ChatStreamView(APIView):
                             sources=clean_sources,
                             fallback=fallback,
                             provider_used=provider_used,
+                            is_cached=False,
+                            cache_entry=new_cache_entry,
+                            cache_match_type="",
                         )
                         session.save(update_fields=["updated_at"])
                     except Exception as pe:
@@ -291,6 +529,8 @@ class ChatStreamView(APIView):
                 done_payload = {
                     "session_id": session_id,
                     "fallback": fallback,
+                    "is_cached": False,
+                    "cache_id": str(new_cache_entry.id) if new_cache_entry else None,
                 }
                 if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
                     done_payload["provider_used"] = provider_used

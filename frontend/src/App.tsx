@@ -32,6 +32,7 @@ import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
 import { AdminUserManagementPage } from "./pages/admin/AdminUserManagementPage";
 import { AdminOfficerVerificationPage } from "./pages/admin/AdminOfficerVerificationPage";
 import { AdminKnowledgeBasePage } from "./pages/admin/AdminKnowledgeBasePage";
+import { AdminCacheManagementPage } from "./pages/admin/AdminCacheManagementPage";
 import { AdminModelRegistryPage } from "./pages/admin/AdminModelRegistryPage";
 import { AdminActivityLogsPage } from "./pages/admin/AdminActivityLogsPage";
 
@@ -200,6 +201,16 @@ export const App: React.FC = () => {
                   <ProtectedRoute allowedRoles={["ADMIN"]}>
                     <PortalLayout portalRole="ADMIN">
                       <AdminKnowledgeBasePage />
+                    </PortalLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin-portal/cache"
+                element={
+                  <ProtectedRoute allowedRoles={["ADMIN"]}>
+                    <PortalLayout portalRole="ADMIN">
+                      <AdminCacheManagementPage />
                     </PortalLayout>
                   </ProtectedRoute>
                 }

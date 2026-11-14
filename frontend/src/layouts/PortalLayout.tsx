@@ -21,6 +21,7 @@ import {
   BookOpenCheck,
   Cpu,
   ScrollText,
+  Database,
   ExternalLink,
 } from "lucide-react";
 
@@ -90,6 +91,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
         { path: "/admin-portal/users", labelBn: "ব্যবহারকারী ব্যবস্থাপনা", labelEn: "User Management", icon: Users },
         { path: "/admin-portal/officers", labelBn: "কর্মকর্তা যাচাই ও অনুমোদন", labelEn: "Officer Verifications", icon: ShieldCheck },
         { path: "/admin-portal/knowledge", labelBn: "কৃষি গবেষণা নথিপত্র (RAG)", labelEn: "Knowledge Base", icon: BookOpenCheck },
+        { path: "/admin-portal/cache", labelBn: "এআই ক্যাশ ও অপ্টিমাইজেশন", labelEn: "AI Response Cache", icon: Database },
         { path: "/admin-portal/models", labelBn: "এআই মডেল আর্কিটেকচার", labelEn: "Model Registry", icon: Cpu },
         { path: "/admin-portal/activity-logs", labelBn: "সিস্টেম অডিট ও লগ", labelEn: "System Activity Logs", icon: ScrollText },
       ],
