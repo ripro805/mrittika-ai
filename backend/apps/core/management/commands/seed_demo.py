@@ -27,6 +27,7 @@ class Command(BaseCommand):
                 "is_verified": True,
                 "is_staff": True,
                 "is_superuser": True,
+                "password": "Admin@123456",
             },
             {
                 "phone": "01700000002",
@@ -37,6 +38,7 @@ class Command(BaseCommand):
                 "is_verified": True,
                 "is_staff": False,
                 "is_superuser": False,
+                "password": "Officer@123456",
             },
             {
                 "phone": "01700000003",
@@ -47,6 +49,7 @@ class Command(BaseCommand):
                 "is_verified": False,
                 "is_staff": False,
                 "is_superuser": False,
+                "password": "Farmer@123456",
             },
         ]
 
@@ -54,7 +57,7 @@ class Command(BaseCommand):
 
         for udata in users_to_create:
             phone = udata["phone"]
-            password = secrets.token_urlsafe(10)
+            password = udata.get("password") or secrets.token_urlsafe(10)
             user, created = User.objects.get_or_create(
                 phone=phone,
                 defaults={

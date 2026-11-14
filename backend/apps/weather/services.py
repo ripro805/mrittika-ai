@@ -3,6 +3,7 @@ Weather service integrating Open-Meteo API with 30-min cache, 5s timeout, and gr
 """
 
 import datetime
+import os
 from typing import Any, Dict
 
 import requests
@@ -44,8 +45,9 @@ def fetch_weather_for_district(district_name: str) -> Dict[str, Any]:
 
     lat = dist_meta["lat"]
     lon = dist_meta["lon"]
+    base_url = os.getenv("OPEN_METEO_API_URL", "https://api.open-meteo.com/v1/forecast").rstrip("/")
     url = (
-        f"https://api.open-meteo.com/v1/forecast"
+        f"{base_url}"
         f"?latitude={lat}&longitude={lon}"
         f"&current=temperature_2m,relative_humidity_2m,precipitation"
         f"&daily=precipitation_sum"

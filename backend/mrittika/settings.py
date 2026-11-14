@@ -8,6 +8,14 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env if python-dotenv is installed
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / ".env")
+    load_dotenv(BASE_DIR.parent / ".env")
+except ImportError:
+    pass
+
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
     "django-insecure-mrittika-ai-super-secret-key-change-in-production-2026",
@@ -15,10 +23,17 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1,0.0.0.0,[::1]",
-).split(",")
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv(
+        "ALLOWED_HOSTS",
+        "localhost,127.0.0.1,0.0.0.0,[::1]",
+    ).split(",")
+    if host.strip()
+]
+RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 INSTALLED_APPS = [
@@ -82,13 +97,42 @@ TEMPLATES = [
 WSGI_APPLICATION = "mrittika.wsgi.application"
 
 # Database
-# Use SQLite by default, PostgreSQL if DB env vars present
-POSTGRES_DB = os.getenv("POSTGRES_DB")
-if POSTGRES_DB:
+# Supports DATABASE_URL (Neon, Supabase, RDS, etc.), POSTGRES_* variables, or SQLite default
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL:
+    try:
+        import dj_database_url
+        DATABASES = {
+            "default": dj_database_url.parse(
+                DATABASE_URL,
+                conn_max_age=600,
+                conn_health_checks=True,
+            )
+        }
+    except ImportError:
+        from urllib.parse import urlparse, parse_qs
+        parsed = urlparse(DATABASE_URL)
+        options = {}
+        if parsed.query:
+            qs = parse_qs(parsed.query)
+            for k, v in qs.items():
+                options[k] = v[0]
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": parsed.path.lstrip("/"),
+                "USER": parsed.username or "",
+                "PASSWORD": parsed.password or "",
+                "HOST": parsed.hostname or "",
+                "PORT": str(parsed.port) if parsed.port else "5432",
+                "OPTIONS": options,
+            }
+        }
+elif os.getenv("POSTGRES_DB"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": POSTGRES_DB,
+            "NAME": os.getenv("POSTGRES_DB"),
             "USER": os.getenv("POSTGRES_USER", "mrittika"),
             "PASSWORD": os.getenv("POSTGRES_PASSWORD", "mrittika_secret"),
             "HOST": os.getenv("POSTGRES_HOST", "localhost"),
@@ -156,9 +200,9 @@ SIMPLE_JWT = {
 }
 
 # Cookie security for refresh token
-AUTH_COOKIE_NAME = "mrittika_refresh_token"
+AUTH_COOKIE_NAME = os.getenv("AUTH_COOKIE_NAME", "mrittika_refresh_token")
 AUTH_COOKIE_HTTPONLY = True
-AUTH_COOKIE_SAMESITE = "Lax"
+AUTH_COOKIE_SAMESITE = os.getenv("AUTH_COOKIE_SAMESITE", "Lax")
 AUTH_COOKIE_SECURE = not DEBUG
 AUTH_COOKIE_PATH = "/api/v1/auth/"
 
@@ -182,6 +226,10 @@ CSRF_TRUSTED_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
+if RENDER_EXTERNAL_HOSTNAME:
+    render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
 
 # Content Security Policy (django-csp 4.0+)
 CONTENT_SECURITY_POLICY = {
@@ -199,10 +247,11 @@ CONTENT_SECURITY_POLICY = {
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "True").lower() in ("true", "1", "yes")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", "31536000"))
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
