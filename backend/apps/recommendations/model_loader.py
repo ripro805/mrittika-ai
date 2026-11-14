@@ -11,6 +11,27 @@ from typing import Any, Dict
 import joblib
 from django.conf import settings
 
+# Cross-version compatibility shims for scikit-learn models
+try:
+    import sklearn.compose._column_transformer
+    if not hasattr(sklearn.compose._column_transformer, "_RemainderColsList"):
+        class _RemainderColsList(list):
+            pass
+        sklearn.compose._column_transformer._RemainderColsList = _RemainderColsList
+except Exception:
+    pass
+
+try:
+    import sklearn.impute
+    orig_imputer_transform = sklearn.impute.SimpleImputer.transform
+    def _compat_imputer_transform(self, *args, **kwargs):
+        if hasattr(self, "_fit_dtype") and not hasattr(self, "_fill_dtype"):
+            self._fill_dtype = self._fit_dtype
+        return orig_imputer_transform(self, *args, **kwargs)
+    sklearn.impute.SimpleImputer.transform = _compat_imputer_transform
+except Exception:
+    pass
+
 _CROP_BUNDLE: Dict[str, Any] = None
 _FERT_BUNDLE: Dict[str, Any] = None
 

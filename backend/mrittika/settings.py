@@ -284,7 +284,12 @@ SPECTACULAR_SETTINGS = {
 HF_REPO_ID = os.getenv("HF_REPO_ID", "ripro805/mrittika-ai")
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 HF_REVISION = os.getenv("HF_REVISION", "main")
-ML_MODELS_DIR = Path(os.getenv("MODEL_DIR", str(BASE_DIR / "ml_models")))
+_model_dir = os.getenv("MODEL_DIR")
+if _model_dir:
+    _p = Path(_model_dir)
+    ML_MODELS_DIR = _p if _p.is_absolute() else (BASE_DIR / _p)
+else:
+    ML_MODELS_DIR = BASE_DIR / "ml_models"
 
 # LLM & RAG Configuration
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "mock")
@@ -300,4 +305,9 @@ RAG_MIN_SCORE = float(os.getenv("RAG_MIN_SCORE", "0.85"))
 
 EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "local")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
-CHROMA_PERSIST_DIR = Path(os.getenv("CHROMA_DIR", str(BASE_DIR / "chroma_db")))
+_chroma_dir = os.getenv("CHROMA_DIR")
+if _chroma_dir:
+    _cp = Path(_chroma_dir)
+    CHROMA_PERSIST_DIR = _cp if _cp.is_absolute() else (BASE_DIR / _cp)
+else:
+    CHROMA_PERSIST_DIR = BASE_DIR / "chroma_db"

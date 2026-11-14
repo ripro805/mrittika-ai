@@ -235,25 +235,29 @@ def query_knowledge_base(query_text: str, top_k: int = 4) -> Tuple[List[Dict[str
     Enforces RAG_MIN_SCORE relevance threshold.
     Returns: (list_of_chunks, is_low_confidence_boolean)
     """
-    collection = get_collection()
-    count = collection.count()
-    if count == 0:
+    try:
+        collection = get_collection()
+        count = collection.count()
+        if count == 0:
+            return [], True
+
+        embedder = get_embed_model()
+        model_name = getattr(settings, "EMBEDDING_MODEL", "")
+
+        # Clean query and strip PII
+        cleaned_query = redact_pii(query_text.strip())
+        q_prefixed = f"query: {cleaned_query}" if "e5" in model_name.lower() else cleaned_query
+
+        q_emb = embedder.encode([q_prefixed], normalize_embeddings=True).tolist()
+
+        results = collection.query(
+            query_embeddings=q_emb,
+            n_results=min(top_k, count),
+            include=["documents", "metadatas", "distances"],
+        )
+    except Exception as err:
+        logger.warning("Knowledge base retrieval failed or unavailable (%s). Falling back gracefully.", err)
         return [], True
-
-    embedder = get_embed_model()
-    model_name = getattr(settings, "EMBEDDING_MODEL", "")
-
-    # Clean query and strip PII
-    cleaned_query = redact_pii(query_text.strip())
-    q_prefixed = f"query: {cleaned_query}" if "e5" in model_name.lower() else cleaned_query
-
-    q_emb = embedder.encode([q_prefixed], normalize_embeddings=True).tolist()
-
-    results = collection.query(
-        query_embeddings=q_emb,
-        n_results=min(top_k, count),
-        include=["documents", "metadatas", "distances"],
-    )
 
     docs = results.get("documents", [[]])[0]
     metas = results.get("metadatas", [[]])[0]
