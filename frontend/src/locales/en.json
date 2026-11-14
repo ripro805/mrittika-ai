@@ -8,6 +8,8 @@
     "assistant": "AI Assistant",
     "history": "History",
     "officer_dash": "Officer Portal",
+    "admin_dash": "Admin Portal",
+    "farmer_dash": "Farmer Portal",
     "about": "Model & Info",
     "login": "Login",
     "register": "Register",
@@ -20,6 +22,14 @@
     "admin": "Admin",
     "guest": "Guest"
   },
+  "portals": {
+    "farmer_title": "Farmer Digital Portal",
+    "farmer_subtitle": "Comprehensive digital records for your land, crops, and fertilizer plans",
+    "officer_title": "Extension Officer Portal",
+    "officer_subtitle": "Field-level agronomic audit & AI advisory review center",
+    "admin_title": "Admin Executive Command Center",
+    "admin_subtitle": "National agricultural AI infrastructure & user telemetry"
+  },
   "buttons": {
     "recommend_crop": "Recommend Crops",
     "get_fertilizer": "Calculate Fertilizer",
@@ -30,7 +40,22 @@
     "autofill_weather": "Auto-Fill Weather",
     "submit": "Submit",
     "delete": "Delete",
-    "save": "Save"
+    "save": "Save",
+    "view_all": "View All",
+    "review_now": "Review Now",
+    "reindex": "Re-index Knowledge",
+    "copy": "Copy"
+  },
+  "metrics": {
+    "total_recommendations": "Total Recommendations",
+    "crop_recommendations": "Crop Advisories",
+    "fertilizer_plans": "Fertilizer Plans",
+    "chat_sessions": "AI Chat Sessions",
+    "total_users": "Registered Users",
+    "pending_reviews": "Pending Reviews",
+    "resolved_reviews": "Resolved Reviews",
+    "resolution_rate": "Resolution Rate",
+    "active_models": "Active AI Models"
   },
   "disclaimer": "Notice: Recommendations are decision-support outputs based on AI and research data. Always consult your local Upazila Agriculture Officer before field application."
 }
