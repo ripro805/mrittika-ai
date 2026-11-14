@@ -1,0 +1,37 @@
+# Core Framework & API
+django>=5.0,<5.2
+djangorestframework>=3.14.0,<3.16.0
+djangorestframework-simplejwt[token-blacklist]>=5.3.1
+django-cors-headers>=4.3.0
+django-csp>=3.8
+drf-spectacular>=0.27.0
+whitenoise>=6.6.0
+gunicorn>=21.2.0; sys_platform != "win32"
+argon2-cffi>=23.1.0
+psycopg2-binary>=2.9.9
+
+# Machine Learning & Scientific Stack (Pinned to Model Contract)
+scikit-learn==1.6.1
+xgboost>=2.0.0,<3.0.0
+lightgbm>=4.3.0
+joblib==1.4.2
+pandas>=2.2.0,<3.0.0
+numpy>=1.26.0,<3.0.0
+huggingface_hub>=0.20.0
+requests>=2.31.0
+
+# Document & PDF Generation
+reportlab>=4.1.0
+
+# Assistant & RAG
+chromadb>=0.4.22
+sentence-transformers>=2.2.2
+pypdf>=4.0.0
+
+# Testing, Quality & Security Audit
+pytest>=8.0.0
+pytest-django>=4.8.0
+pytest-cov>=4.1.0
+ruff>=0.3.0
+bandit>=1.7.7
+pip-audit>=2.7.0
