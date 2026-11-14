@@ -487,8 +487,8 @@ export const AssistantChatPage: React.FC = () => {
       {/* Sessions Sidebar (Drawer on mobile) */}
       <div
         className={`${
-          isSidebarOpen ? "block" : "hidden"
-        } md:block w-64 bg-gray-50 border-r border-gray-200 flex flex-col flex-shrink-0 z-20`}
+          isSidebarOpen ? "flex" : "hidden"
+        } md:flex w-64 bg-gray-50 border-r border-gray-200 flex-col flex-shrink-0 z-20`}
       >
         <div className="p-3 border-b border-gray-200 flex items-center justify-between">
           <button
@@ -562,7 +562,8 @@ export const AssistantChatPage: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="md:hidden p-1.5 rounded-lg text-gray-600 hover:bg-gray-100"
+              className="p-1.5 rounded-lg text-gray-600 hover:bg-gray-100"
+              title="আলোচনার ইতিহাস (Toggle Sidebar)"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -627,7 +628,7 @@ export const AssistantChatPage: React.FC = () => {
             return (
               <div
                 key={msg.id}
-                className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}
+                className={`w-full flex flex-col ${isUser ? "items-end" : "items-start"}`}
               >
                 <div
                   className={`max-w-[88%] sm:max-w-[78%] rounded-2xl p-4 text-sm leading-relaxed shadow-sm transition-all ${
@@ -638,6 +639,20 @@ export const AssistantChatPage: React.FC = () => {
                       : "bg-white text-gray-900 border border-gray-200 rounded-tl-none"
                   }`}
                 >
+                  {/* Sender Header */}
+                  <div className="flex items-center gap-1.5 mb-1.5 text-[11px] font-semibold">
+                    {isUser ? (
+                      <span className="text-emerald-200 ml-auto flex items-center gap-1 font-bold">
+                        👤 আপনি
+                      </span>
+                    ) : (
+                      <span className="text-mrittika-800 flex items-center gap-1 font-bold">
+                        <Sparkles className="w-3.5 h-3.5 text-mrittika-600" />
+                        মৃত্তিকা এআই
+                      </span>
+                    )}
+                  </div>
+
                   <p className="whitespace-pre-line leading-relaxed font-bangla">
                     {msg.text || (isLoading && !isUser ? "..." : "")}
                   </p>

@@ -151,24 +151,20 @@ class ChatView(APIView):
         chunks, is_low_confidence = query_knowledge_base(query_enrichment, top_k=4)
         clean_sources = format_sources_for_client(chunks)
 
-        # 4. If low confidence: immediate fallback without calling LLM
-        if is_low_confidence:
-            answer = OFFICER_FALLBACK_BN
-            provider_used = "retrieval_threshold"
-            fallback = True
-        else:
-            messages = build_assistant_messages(
-                user_message=message,
-                context_chunks=chunks,
-                client_context=client_context,
-                conversation_history=conversation_history,
-                max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
-            )
-            router = get_llm_router()
-            result = router.generate(messages, stream=False, context_chunks=chunks)
-            answer = result["answer"]
-            provider_used = result.get("provider_used", "unknown")
-            fallback = result.get("fallback", False)
+        # 4. Generate answer using LLM Router (Grounded in RAG context or general agronomy)
+        messages = build_assistant_messages(
+            user_message=message,
+            context_chunks=chunks,
+            client_context=client_context,
+            conversation_history=conversation_history,
+            max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
+            is_low_confidence=is_low_confidence,
+        )
+        router = get_llm_router()
+        result = router.generate(messages, stream=False, context_chunks=chunks)
+        answer = result["answer"]
+        provider_used = result.get("provider_used", "unknown")
+        fallback = result.get("fallback", False) or is_low_confidence
 
         # 5. Persist messages for authenticated users
         if session:
@@ -255,31 +251,24 @@ class ChatStreamView(APIView):
                 provider_used = "mock"
                 fallback = False
 
-                if is_low_confidence:
-                    fallback = True
-                    provider_used = "retrieval_threshold"
-                    for word in OFFICER_FALLBACK_BN.split():
-                        tok = word + " "
-                        accumulated_tokens.append(tok)
-                        yield f"event: token\ndata: {json.dumps({'token': tok})}\n\n"
-                else:
-                    messages = build_assistant_messages(
-                        user_message=message,
-                        context_chunks=chunks,
-                        client_context=client_context,
-                        conversation_history=conversation_history,
-                        max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
-                    )
-                    router = get_llm_router()
-                    gen_result = router.generate(messages, stream=True, context_chunks=chunks)
-                    provider_used = gen_result.get("provider_used", "unknown")
-                    fallback = gen_result.get("fallback", False)
-                    generator = gen_result.get("stream_generator")
+                messages = build_assistant_messages(
+                    user_message=message,
+                    context_chunks=chunks,
+                    client_context=client_context,
+                    conversation_history=conversation_history,
+                    max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
+                    is_low_confidence=is_low_confidence,
+                )
+                router = get_llm_router()
+                gen_result = router.generate(messages, stream=True, context_chunks=chunks)
+                provider_used = gen_result.get("provider_used", "unknown")
+                fallback = gen_result.get("fallback", False) or is_low_confidence
+                generator = gen_result.get("stream_generator")
 
-                    if generator:
-                        for token in generator:
-                            accumulated_tokens.append(token)
-                            yield f"event: token\ndata: {json.dumps({'token': token})}\n\n"
+                if generator:
+                    for token in generator:
+                        accumulated_tokens.append(token)
+                        yield f"event: token\ndata: {json.dumps({'token': token})}\n\n"
 
                 final_answer = "".join(accumulated_tokens).strip()
 

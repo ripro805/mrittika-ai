@@ -120,4 +120,34 @@ describe("AssistantChatPage Unit & Streaming Tests", () => {
       expect(screen.getByText(/উপজেলা কৃষি কর্মকর্তার সাথে যোগাযোগ করুন/i)).toBeInTheDocument();
     });
   });
+
+  it("renders user message bubble and bot response when prompt chip is clicked", async () => {
+    const ssePayload = [
+      'event: token\ndata: {"token":"আলু চাষের পরামর্শ"}\n\n',
+      'event: done\ndata: {"session_id":"chip-123","fallback":false}\n\n',
+    ].join("");
+
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      body: new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(ssePayload));
+          controller.close();
+        },
+      }),
+    });
+
+    renderWithProviders(<AssistantChatPage />);
+
+    const chip = screen.getByText("আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার");
+    fireEvent.click(chip);
+
+    // Verify user message appears in DOM (both chip and chat bubble)
+    expect(screen.getAllByText("আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার").length).toBeGreaterThanOrEqual(2);
+
+    await waitFor(() => {
+      expect(screen.getByText(/আলু চাষের পরামর্শ/i)).toBeInTheDocument();
+    });
+  });
 });
