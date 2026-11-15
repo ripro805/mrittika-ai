@@ -12,6 +12,8 @@ class RecommendationHistory(models.Model):
         FERTILIZER = "FERTILIZER", "সারের সুপারিশ (Fertilizer)"
         COMBINED = "COMBINED", "সমন্বিত পরামর্শ (Combined)"
 
+    objects = models.Manager()
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

@@ -12,6 +12,8 @@ class Feedback(models.Model):
         FERTILIZER = "FERTILIZER", "সারের সুপারিশ (Fertilizer)"
         CHAT = "CHAT", "কৃষি সহকারী (Assistant)"
 
+    objects = models.Manager()
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

@@ -16,6 +16,8 @@ class AIResponseCache(models.Model):
     while isolating individual user conversation histories.
     """
 
+    objects = models.Manager()
+
     class Category(models.TextChoices):
         GENERAL_FAQ = "GENERAL_FAQ", "সাধারণ কৃষি জিজ্ঞাসা (General FAQ)"
         CROP_CULTIVATION = "CROP_CULTIVATION", "ফসল চাষাবাদ পদ্ধতি (Crop Cultivation)"
@@ -111,6 +113,7 @@ class AssistantSession(models.Model):
     """
     Persistent conversational session for authenticated users.
     """
+    objects = models.Manager()
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -139,6 +142,7 @@ class AssistantMessage(models.Model):
         USER = "user", "User"
         ASSISTANT = "assistant", "Assistant"
 
+    objects = models.Manager()
     session = models.ForeignKey(
         AssistantSession,
         on_delete=models.CASCADE,

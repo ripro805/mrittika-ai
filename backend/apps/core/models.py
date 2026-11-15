@@ -17,6 +17,8 @@ class ActivityLog(models.Model):
         DOC_INGEST = "DOC_INGEST", "নথি সংযোজন (Document Ingest)"
         MODEL_SWITCH = "MODEL_SWITCH", "মডেল পরিবর্তন (Model Switch)"
 
+    objects = models.Manager()
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
