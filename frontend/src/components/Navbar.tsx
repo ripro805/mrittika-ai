@@ -29,6 +29,7 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [quickOpen, setQuickOpen] = useState(false);
   const [navLoggingRole, setNavLoggingRole] = useState<string | null>(null);
 
   const toggleLanguage = () => {
@@ -127,7 +128,9 @@ export const Navbar: React.FC = () => {
             {/* Quick 1-Click Role Login Dropdown */}
             <div className="relative group">
               <button
+                id="quick-login-toggle"
                 type="button"
+                onClick={() => setQuickOpen((prev) => !prev)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white hover:bg-[#f5f5f7] text-xs font-semibold text-[#1d1d1f] transition-all shadow-2xs cursor-pointer active:scale-98"
                 title={i18n.language === "en" ? "1-Click Role Switch" : "১-ক্লিকে ভূমিকা পরীক্ষা করুন"}
               >
@@ -137,11 +140,16 @@ export const Navbar: React.FC = () => {
                     ? (i18n.language === "en" ? "Entering..." : "প্রবেশ হচ্ছে...")
                     : (i18n.language === "en" ? "Quick Login" : "কুইক লগইন")}
                 </span>
-                <ChevronDown className="w-3 h-3 text-[#86868b] group-hover:rotate-180 transition-transform" />
+                <ChevronDown className={`w-3 h-3 text-[#86868b] transition-transform ${quickOpen ? "rotate-180" : "group-hover:rotate-180"}`} />
               </button>
 
-              {/* Hover Dropdown */}
-              <div className="absolute right-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-2 hidden group-hover:block hover:block z-50">
+              {/* Hover & Click Dropdown */}
+              <div
+                id="quick-login-menu"
+                className={`absolute right-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-2xl rounded-2xl border border-black/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-2 z-50 ${
+                  quickOpen ? "block" : "hidden group-hover:block hover:block"
+                }`}
+              >
                 <div className="px-2.5 py-1.5 border-b border-black/[0.05] mb-1">
                   <p className="text-[10px] font-bold text-[#1d1d1f] uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-amber-500" />
@@ -153,9 +161,13 @@ export const Navbar: React.FC = () => {
                 </div>
 
                 <button
+                  id="quick-role-farmer"
                   type="button"
                   disabled={!!navLoggingRole}
-                  onClick={() => handleNavQuickLogin("01720000001", "Farmer@123456", "/farmer/overview", "farmer")}
+                  onClick={() => {
+                    setQuickOpen(false);
+                    handleNavQuickLogin("01720000001", "Farmer@123456", "/farmer/overview", "farmer");
+                  }}
                   className="w-full flex items-center justify-between p-2 rounded-xl text-left hover:bg-emerald-50 text-[#1d1d1f] transition-colors group/item cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
@@ -177,9 +189,13 @@ export const Navbar: React.FC = () => {
                 </button>
 
                 <button
+                  id="quick-role-officer"
                   type="button"
                   disabled={!!navLoggingRole}
-                  onClick={() => handleNavQuickLogin("01710000001", "Officer@123456", "/officer/overview", "officer")}
+                  onClick={() => {
+                    setQuickOpen(false);
+                    handleNavQuickLogin("01710000001", "Officer@123456", "/officer/overview", "officer");
+                  }}
                   className="w-full flex items-center justify-between p-2 rounded-xl text-left hover:bg-teal-50 text-[#1d1d1f] transition-colors group/item cursor-pointer mt-1"
                 >
                   <div className="flex items-center gap-2">
@@ -201,9 +217,13 @@ export const Navbar: React.FC = () => {
                 </button>
 
                 <button
+                  id="quick-role-admin"
                   type="button"
                   disabled={!!navLoggingRole}
-                  onClick={() => handleNavQuickLogin("01700000001", "Admin@123456", "/admin-portal/overview", "admin")}
+                  onClick={() => {
+                    setQuickOpen(false);
+                    handleNavQuickLogin("01700000001", "Admin@123456", "/admin-portal/overview", "admin");
+                  }}
                   className="w-full flex items-center justify-between p-2 rounded-xl text-left hover:bg-purple-50 text-[#1d1d1f] transition-colors group/item cursor-pointer mt-1"
                 >
                   <div className="flex items-center gap-2">
