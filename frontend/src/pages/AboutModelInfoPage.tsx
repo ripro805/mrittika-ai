@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import apiClient from "../services/api";
+import { SCENIC_IMAGES } from "../utils/agroImages";
 import { Info, AlertTriangle, ShieldCheck, Database, Cpu, Award } from "lucide-react";
 
 export const AboutModelInfoPage: React.FC = () => {
@@ -77,94 +78,125 @@ export const AboutModelInfoPage: React.FC = () => {
       {/* Model Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Crop Recommendation Model */}
-        <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center border border-emerald-200">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-slate-900 text-base">
-                {i18n.language === "en" ? "1. Crop Selection Model" : "১. ফসল নির্বাচন মডেল"}
-              </h3>
-              <span className="text-xs text-slate-500 font-mono">ExtraTrees Classifier Bundle</span>
+        <div className="app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden space-y-4">
+          <div className="relative h-32 w-full overflow-hidden">
+            <img
+              src={SCENIC_IMAGES.precisionFarming.url}
+              alt="Crop Selection Model"
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent flex items-end p-4">
+              <span className="text-white text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-600/90 border border-emerald-400/40">
+                {i18n.language === "en" ? "24 Regional Crops Multi-Class" : "২৪টি আঞ্চলিক ফসল ক্লাসিফায়ার"}
+              </span>
             </div>
           </div>
 
-          <div className="space-y-2 text-xs text-slate-700 font-bangla">
-            <p>
-              <strong>{i18n.language === "en" ? "Input Variables: " : "ইনপুট ভ্যারিয়েবল: "}</strong>
-              {i18n.language === "en"
-                ? "N, P, K, pH, Temperature, Humidity, Rainfall, Season, Soil Type"
-                : "N, P, K, pH, তাপমাত্রা, আর্দ্রতা, বৃষ্টিপাত, মৌসুম, মাটির ধরন"}
-            </p>
-            <p>
-              <strong>{i18n.language === "en" ? "Target Classes: " : "আউটপুট ক্লাস: "}</strong>
-              {i18n.language === "en" ? "24 Bangladeshi Agricultural Crops" : "২৪টি বাংলাদেশি ফসল"}
-            </p>
-            <p>
-              <strong>{i18n.language === "en" ? "Pipeline: " : "পাইপলাইন: "}</strong>
-              ColumnTransformer (SimpleImputer median + OHE) + ExtraTreesClassifier
-            </p>
-          </div>
+          <div className="p-6 pt-0 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center border border-emerald-200 shrink-0">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-slate-900 text-base">
+                  {i18n.language === "en" ? "1. Crop Selection Model" : "১. ফসল নির্বাচন মডেল"}
+                </h3>
+                <span className="text-xs text-slate-500 font-mono">ExtraTrees Classifier Bundle</span>
+              </div>
+            </div>
 
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1.5 font-medium">
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-600">
-                {i18n.language === "en" ? "Test Accuracy:" : "পরীক্ষণ নির্ভুলতা (Test Accuracy):"}
-              </span>
-              <span className="font-extrabold text-emerald-800 font-mono">86.13%</span>
+            <div className="space-y-2 text-xs text-slate-700 font-bangla">
+              <p>
+                <strong>{i18n.language === "en" ? "Input Variables: " : "ইনপুট ভ্যারিয়েবল: "}</strong>
+                {i18n.language === "en"
+                  ? "N, P, K, pH, Temperature, Humidity, Rainfall, Season, Soil Type"
+                  : "N, P, K, pH, তাপমাত্রা, আর্দ্রতা, বৃষ্টিপাত, মৌসুম, মাটির ধরন"}
+              </p>
+              <p>
+                <strong>{i18n.language === "en" ? "Target Classes: " : "আউটপুট ক্লাস: "}</strong>
+                {i18n.language === "en" ? "24 Bangladeshi Agricultural Crops" : "২৪টি বাংলাদেশি ফসল"}
+              </p>
+              <p>
+                <strong>{i18n.language === "en" ? "Pipeline: " : "পাইপলাইন: "}</strong>
+                ColumnTransformer (SimpleImputer median + OHE) + ExtraTreesClassifier
+              </p>
             </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-600">
-                {i18n.language === "en" ? "Top-3 Accuracy:" : "শীর্ষ-৩ নির্ভুলতা (Top-3 Accuracy):"}
-              </span>
-              <span className="font-extrabold text-emerald-800 font-mono">97.59%</span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-slate-600">
-                {i18n.language === "en" ? "Macro F1 Score:" : "ম্যাক্রো F1 স্কোর:"}
-              </span>
-              <span className="font-extrabold text-emerald-800 font-mono">0.8599</span>
+
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1.5 font-medium">
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-600">
+                  {i18n.language === "en" ? "Test Accuracy:" : "পরীক্ষণ নির্ভুলতা (Test Accuracy):"}
+                </span>
+                <span className="font-extrabold text-emerald-800 font-mono">86.13%</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-600">
+                  {i18n.language === "en" ? "Top-3 Accuracy:" : "শীর্ষ-৩ নির্ভুলতা (Top-3 Accuracy):"}
+                </span>
+                <span className="font-extrabold text-emerald-800 font-mono">97.59%</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-600">
+                  {i18n.language === "en" ? "Macro F1 Score:" : "ম্যাক্রো F1 স্কোর:"}
+                </span>
+                <span className="font-extrabold text-emerald-800 font-mono">0.8599</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Fertilizer Recommendation Model */}
-        <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center border border-amber-200">
-              <Database className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-extrabold text-slate-900 text-base">
-                {i18n.language === "en" ? "2. Balanced Fertilizer Prediction Model" : "২. সারের সুপারিশ মডেল"}
-              </h3>
-              <span className="text-xs text-slate-500 font-mono">XGBoost Clf + LightGBM Reg</span>
+        <div className="app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden space-y-4">
+          <div className="relative h-32 w-full overflow-hidden">
+            <img
+              src={SCENIC_IMAGES.soilTesting.url}
+              alt="Fertilizer Recommendation Model"
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent flex items-end p-4">
+              <span className="text-white text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-600/90 border border-amber-400/40">
+                {i18n.language === "en" ? "Balanced Nutrient Dosage Regressor" : "সুষম সার মাত্রা রিগ্রেসর"}
+              </span>
             </div>
           </div>
 
-          <div className="space-y-2 text-xs text-slate-700 font-bangla">
-            <p>
-              <strong>{i18n.language === "en" ? "Input Variables: " : "ইনপুট ভ্যারিয়েবল: "}</strong>
-              {i18n.language === "en"
-                ? "N, P, K, S, Zn, pH, Organic Carbon, Weather, Crop, Season, Soil Type"
-                : "N, P, K, S, Zn, pH, জৈব পদার্থ, আবহাওয়া, ফসল, মৌসুম, মাটি"}
-            </p>
-            <p>
-              <strong>{i18n.language === "en" ? "Output: " : "আউটপুট: "}</strong>
-              {i18n.language === "en"
-                ? "8 Fertilizer Packages and 7 Nutrient Doses (kg/ha)"
-                : "৮টি সার পরিকল্পনা এবং ৭টি সারের মাত্রা (কেজি/হেক্টর)"}
-            </p>
-            <p>
-              <strong>{i18n.language === "en" ? "Safety Guardrails: " : "সুরক্ষা স্তর: "}</strong>
-              {i18n.language === "en"
-                ? "Negative dosage clipping (≥0) & 105% cap of training maximums"
-                : "নেগেটিভ ক্লিপিং (≥0) ও প্রশিক্ষণ উপাত্তের সর্বোচ্চ মাত্রার ১০৫% ক্যাপ"}
-            </p>
-          </div>
+          <div className="p-6 pt-0 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center border border-amber-200 shrink-0">
+                <Database className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-slate-900 text-base">
+                  {i18n.language === "en" ? "2. Balanced Fertilizer Prediction Model" : "২. সারের সুপারিশ মডেল"}
+                </h3>
+                <span className="text-xs text-slate-500 font-mono">XGBoost Clf + LightGBM Reg</span>
+              </div>
+            </div>
 
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1.5 font-medium">
+            <div className="space-y-2 text-xs text-slate-700 font-bangla">
+              <p>
+                <strong>{i18n.language === "en" ? "Input Variables: " : "ইনপুট ভ্যারিয়েবল: "}</strong>
+                {i18n.language === "en"
+                  ? "N, P, K, S, Zn, pH, Organic Carbon, Weather, Crop, Season, Soil Type"
+                  : "N, P, K, S, Zn, pH, জৈব পদার্থ, আবহাওয়া, ফসল, মৌসুম, মাটি"}
+              </p>
+              <p>
+                <strong>{i18n.language === "en" ? "Output: " : "আউটপুট: "}</strong>
+                {i18n.language === "en"
+                  ? "8 Fertilizer Packages and 7 Nutrient Doses (kg/ha)"
+                  : "৮টি সার পরিকল্পনা এবং ৭টি সারের মাত্রা (কেজি/হেক্টর)"}
+              </p>
+              <p>
+                <strong>{i18n.language === "en" ? "Safety Guardrails: " : "সুরক্ষা স্তর: "}</strong>
+                {i18n.language === "en"
+                  ? "Negative dosage clipping (≥0) & 105% cap of training maximums"
+                  : "নেগেটিভ ক্লিপিং (≥0) ও প্রশিক্ষণ উপাত্তের সর্বোচ্চ মাত্রার ১০৫% ক্যাপ"}
+              </p>
+            </div>
+
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1.5 font-medium">
             <div className="flex justify-between text-xs">
               <span className="text-slate-600">
                 {i18n.language === "en" ? "Classifier Accuracy:" : "শ্রেণিকরণ নির্ভুলতা (Classifier Acc):"}
@@ -186,6 +218,7 @@ export const AboutModelInfoPage: React.FC = () => {
           </div>
         </div>
       </div>
+    </div>
 
       {/* RAG & Embeddings */}
       <div className="app-card bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-card space-y-4">

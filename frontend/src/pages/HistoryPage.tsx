@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import apiClient from "../services/api";
+import { AgroImage } from "../components/AgroImage";
+import { getCropImage, getFertilizerImage } from "../utils/agroImages";
 import {
   History as HistoryIcon,
   Download,
@@ -133,62 +135,75 @@ export const HistoryPage: React.FC = () => {
               ? (item.crop_name_en || item.crop_slug || "Agricultural Advisory")
               : (item.crop_name_bn || item.crop_slug || "সার্বিক পরামর্শ");
 
+            const cropData = getCropImage(item.crop_slug || item.crop_name_en);
+
             return (
               <div
                 key={item.id}
-                className="app-card bg-white p-6 rounded-2xl border border-slate-200 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition"
+                className="app-card bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 transition"
               >
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border ${
-                        isCrop
-                          ? "bg-emerald-50 text-emerald-900 border-emerald-200"
-                          : "bg-amber-50 text-amber-900 border-amber-200"
-                      }`}
-                    >
-                      {isCrop ? <Sprout className="w-3.5 h-3.5 text-emerald-700" /> : <FlaskConical className="w-3.5 h-3.5 text-amber-700" />}
-                      {isCrop
-                        ? (i18n.language === "en" ? "Crop Recommendation" : "ফসলের সুপারিশ")
-                        : (i18n.language === "en" ? "Fertilizer Plan" : "সারের সুপারিশ")}
-                    </span>
-                    <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {dateStr}
-                    </span>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden flex-shrink-0 shadow-2xs border border-slate-200">
+                    <AgroImage
+                      crop={cropData}
+                      lang={i18n.language === "en" ? "en" : "bn"}
+                      aspect="square"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
-                  <h3 className="text-lg font-bold text-slate-900">
-                    {cropName}
-                    {item.fertilizer_plan && (
-                      <span className="text-sm font-normal text-slate-500 ml-2">
-                        ({item.fertilizer_plan})
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                          isCrop
+                            ? "bg-emerald-50 text-emerald-900 border-emerald-200"
+                            : "bg-amber-50 text-amber-900 border-amber-200"
+                        }`}
+                      >
+                        {isCrop ? <Sprout className="w-3.5 h-3.5 text-emerald-700" /> : <FlaskConical className="w-3.5 h-3.5 text-amber-700" />}
+                        {isCrop
+                          ? (i18n.language === "en" ? "Crop Recommendation" : "ফসলের সুপারিশ")
+                          : (i18n.language === "en" ? "Fertilizer Plan" : "সারের সুপারিশ")}
                       </span>
-                    )}
-                  </h3>
+                      <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
+                        <Calendar className="w-3.5 h-3.5" />
+                        {dateStr}
+                      </span>
+                    </div>
 
-                  <div className="text-xs text-slate-600 space-x-3 font-medium">
-                    <span>
-                      {i18n.language === "en" ? "Season: " : "মৌসুম: "}
-                      {item.inputs?.season || (i18n.language === "en" ? "Rabi" : "রবি")}
-                    </span>
-                    <span>•</span>
-                    <span>
-                      {i18n.language === "en" ? "Soil: " : "মাটি: "}
-                      {item.inputs?.soil_type || (i18n.language === "en" ? "Loam" : "দোআঁশ")}
-                    </span>
-                    {item.inputs?.land_area && (
-                      <>
-                        <span>•</span>
-                        <span>
-                          {i18n.language === "en" ? "Area: " : "জমি: "}
-                          {item.inputs.land_area}{" "}
-                          {item.inputs.land_unit === "bigha"
-                            ? (i18n.language === "en" ? "Bigha" : "বিঘা")
-                            : (i18n.language === "en" ? "Decimal" : "শতক")}
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                      {cropName}
+                      {item.fertilizer_plan && (
+                        <span className="text-sm font-normal text-slate-500 ml-2">
+                          ({item.fertilizer_plan})
                         </span>
-                      </>
-                    )}
+                      )}
+                    </h3>
+
+                    <div className="text-xs text-slate-600 space-x-3 font-medium">
+                      <span>
+                        {i18n.language === "en" ? "Season: " : "মৌসুম: "}
+                        {item.inputs?.season || (i18n.language === "en" ? "Rabi" : "রবি")}
+                      </span>
+                      <span>•</span>
+                      <span>
+                        {i18n.language === "en" ? "Soil: " : "মাটি: "}
+                        {item.inputs?.soil_type || (i18n.language === "en" ? "Loam" : "দোআঁশ")}
+                      </span>
+                      {item.inputs?.land_area && (
+                        <>
+                          <span>•</span>
+                          <span>
+                            {i18n.language === "en" ? "Area: " : "জমি: "}
+                            {item.inputs.land_area}{" "}
+                            {item.inputs.land_unit === "bigha"
+                              ? (i18n.language === "en" ? "Bigha" : "বিঘা")
+                              : (i18n.language === "en" ? "Decimal" : "শতক")}
+                          </span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
 

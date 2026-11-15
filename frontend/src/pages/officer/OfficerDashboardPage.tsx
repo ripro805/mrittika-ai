@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import apiClient from "../../services/api";
+import { SCENIC_IMAGES } from "../../utils/agroImages";
 import {
   ShieldAlert,
   CheckCircle2,
@@ -64,10 +65,18 @@ export const OfficerDashboardPage: React.FC = () => {
       <div
         className="banner-officer-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-teal-800"
         style={{
-          background: "linear-gradient(135deg, #042f2e 0%, #134e4a 50%, #022c22 100%)",
           backgroundColor: "#042f2e",
+          backgroundImage: "linear-gradient(135deg, rgba(4, 47, 46, 0.94) 0%, rgba(19, 78, 74, 0.90) 50%, rgba(2, 44, 34, 0.96) 100%)",
         }}
       >
+        {/* Authentic Agricultural Field Inspection Photographic Backdrop */}
+        <img
+          src={SCENIC_IMAGES.pestInspection.url}
+          alt={i18n.language === "en" ? SCENIC_IMAGES.pestInspection.altEn : SCENIC_IMAGES.pestInspection.altBn}
+          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-20 pointer-events-none"
+          loading="lazy"
+        />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-teal-200 border border-white/10">

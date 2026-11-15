@@ -11,7 +11,9 @@ import {
   CheckCircle,
   AlertCircle,
   Sparkles,
+  Wheat,
 } from "lucide-react";
+import { getCropImage } from "../utils/agroImages";
 
 export const CropRecommendPage: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -134,6 +136,29 @@ export const CropRecommendPage: React.FC = () => {
             ? "Enter your soil test nutrients and local climate; AI will analyze and recommend the top 3 highest-yielding crops."
             : "আপনার জমির পুষ্টির মাত্রা এবং স্থানীয় আবহাওয়া প্রদান করুন; এআই মডেল বিশ্লেষণ করে সেরা ৩টি ফসল সুপারিশ করবে।"}
         </p>
+
+        {/* Quick Visual Badges of Popular Supported Crops */}
+        <div className="flex items-center justify-center gap-2.5 overflow-x-auto no-scrollbar pt-2">
+          {[
+            { slug: "rice_boro", nameBn: "বোরো ধান", nameEn: "Boro Rice" },
+            { slug: "wheat", nameBn: "গম", nameEn: "Wheat" },
+            { slug: "potato", nameBn: "আলু", nameEn: "Potato" },
+            { slug: "maize", nameBn: "ভুট্টা", nameEn: "Maize" },
+            { slug: "mustard", nameBn: "সরিষা", nameEn: "Mustard" },
+            { slug: "jute", nameBn: "পাট", nameEn: "Jute" },
+          ].map((c) => {
+            const img = getCropImage(c.slug);
+            return (
+              <div
+                key={c.slug}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-2xs shrink-0"
+              >
+                <img src={img.url} alt={c.nameEn} className="w-5 h-5 rounded-full object-cover border border-emerald-500/40" loading="lazy" />
+                <span className="text-xs font-bold text-slate-800">{i18n.language === "en" ? c.nameEn : c.nameBn}</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {errorMessage && (
@@ -408,65 +433,94 @@ export const CropRecommendPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {result.recommendations.map((item: any) => (
-              <div
-                key={item.crop_slug}
-                className={`app-card rounded-3xl p-6 flex flex-col justify-between transition-all bg-white ${
-                  item.rank === 1
-                    ? "border-2 border-emerald-600 ring-2 ring-emerald-600/20 shadow-elevated"
-                    : "border border-slate-200 shadow-card"
-                }`}
-              >
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
-                      {i18n.language === "en" ? `Rank #${item.rank}` : `অগ্রাধিকার #${item.rank}`}
-                    </span>
-                    <span className="text-sm font-extrabold text-emerald-800 font-mono">
-                      {item.confidence_percentage}% {i18n.language === "en" ? "Match" : "সামঞ্জস্য"}
-                    </span>
-                  </div>
+            {result.recommendations.map((item: any) => {
+              const cropImg = getCropImage(item.crop_slug || item.crop_name_en || item.crop_name_bn);
 
+              return (
+                <div
+                  key={item.crop_slug}
+                  className={`app-card overflow-hidden rounded-3xl flex flex-col justify-between transition-all bg-white group ${
+                    item.rank === 1
+                      ? "border-2 border-emerald-600 ring-2 ring-emerald-600/20 shadow-elevated"
+                      : "border border-slate-200 shadow-card"
+                  }`}
+                >
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900">
-                      {i18n.language === "en" ? (item.crop_name_en || item.crop_name_bn) : item.crop_name_bn}
-                    </h3>
-                    <p className="text-xs text-slate-500 font-medium font-mono">
-                      {i18n.language === "en" ? item.crop_name_bn : item.crop_name_en}
-                    </p>
-                  </div>
+                    {/* Real Agricultural Crop Photograph */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+                      <img
+                        src={cropImg.url}
+                        alt={i18n.language === "en" ? cropImg.altEn : cropImg.altBn}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+                      
+                      {/* Priority Rank Badge */}
+                      <span className="absolute top-3 left-3 text-xs font-extrabold px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-xs text-white border border-white/20 shadow-sm">
+                        {i18n.language === "en" ? `Rank #${item.rank}` : `অগ্রাধিকার #${item.rank}`}
+                      </span>
 
-                  {/* Confidence Bar */}
-                  <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                    <div
-                      className="bg-emerald-600 h-full rounded-full transition-all duration-700"
-                      style={{ width: `${item.confidence_percentage}%` }}
-                    />
-                  </div>
+                      {/* Match Percentage Pill */}
+                      <span className="absolute top-3 right-3 text-xs font-mono font-extrabold px-3 py-1 rounded-full bg-emerald-600/90 backdrop-blur-xs text-white border border-emerald-400/40 shadow-sm">
+                        {item.confidence_percentage}% {i18n.language === "en" ? "Match" : "সামঞ্জস্য"}
+                      </span>
 
-                  <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200 font-bangla">
-                    {i18n.language === "en" ? (item.reason_en || item.reason_bn) : item.reason_bn}
-                  </p>
-                </div>
-
-                <div className="pt-6">
-                  {item.fertilizer_supported ? (
-                    <button
-                      type="button"
-                      onClick={() => handleSelectCropForFertilizer(item)}
-                      className="w-full py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
-                    >
-                      <span>{i18n.language === "en" ? "Calculate Fertilizer" : "সারের হিসাব দেখুন"}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  ) : (
-                    <div className="text-center py-2.5 px-3 rounded-xl bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200">
-                      {i18n.language === "en" ? "Fertilizer model not available for this crop" : "এই ফসলের সারের মডেল যুক্ত হয়নি"}
+                      {/* Crop Botanical Category */}
+                      <span className="absolute bottom-2.5 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-xs text-emerald-300 border border-white/10">
+                        {i18n.language === "en" ? cropImg.categoryEn : cropImg.categoryBn}
+                      </span>
                     </div>
-                  )}
+
+                    <div className="p-6 space-y-4">
+                      <div>
+                        <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                          {i18n.language === "en" ? (item.crop_name_en || item.crop_name_bn) : item.crop_name_bn}
+                        </h3>
+                        <p className="text-xs text-slate-500 font-medium font-mono mt-0.5">
+                          {i18n.language === "en" ? item.crop_name_bn : item.crop_name_en}
+                        </p>
+                      </div>
+
+                      {/* Confidence Progress Meter */}
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[11px] font-semibold text-slate-500">
+                          <span>{i18n.language === "en" ? "Agro-Ecological Fit" : "মাটি ও জলবায়ু সামঞ্জস্যতা"}</span>
+                          <span className="font-mono text-emerald-700 font-bold">{item.confidence_percentage}%</span>
+                        </div>
+                        <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+                          <div
+                            className="bg-emerald-600 h-full rounded-full transition-all duration-700"
+                            style={{ width: `${item.confidence_percentage}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200 font-bangla">
+                        {i18n.language === "en" ? (item.reason_en || item.reason_bn) : item.reason_bn}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-6 pt-0">
+                    {item.fertilizer_supported ? (
+                      <button
+                        type="button"
+                        onClick={() => handleSelectCropForFertilizer(item)}
+                        className="w-full py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
+                      >
+                        <span>{i18n.language === "en" ? "Calculate Fertilizer" : "সারের হিসাব দেখুন"}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    ) : (
+                      <div className="text-center py-2.5 px-3 rounded-xl bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200">
+                        {i18n.language === "en" ? "Fertilizer model not available for this crop" : "এই ফসলের সারের মডেল যুক্ত হয়নি"}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Disclaimer Banner */}

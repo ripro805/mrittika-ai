@@ -12,7 +12,9 @@ import {
   Info,
   CheckCircle2,
   Table as TableIcon,
+  Sparkles,
 } from "lucide-react";
+import { getCropImage, getFertilizerImage, FERTILIZER_IMAGES } from "../utils/agroImages";
 
 export const FertilizerPlanPage: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -353,40 +355,56 @@ export const FertilizerPlanPage: React.FC = () => {
       {/* Results Section */}
       {result && result.supported && (
         <div className="space-y-8 animate-in fade-in duration-300">
-          {/* Header Card */}
-          <div
-            className="banner-fertilizer-hero p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white"
-            style={{
-              background: "linear-gradient(135deg, #451a03 0%, #78350f 50%, #431407 100%)",
-              backgroundColor: "#451a03",
-            }}
-          >
-            <div>
-              <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
-                {i18n.language === "en" ? "Recommended Fertilizer Package" : "সুপারিশকৃত সারের প্যাকেজ"}
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                {i18n.language === "en" ? (result.crop_name_en || result.crop_name_bn) : result.crop_name_bn} - {result.fertilizer_plan}
-              </h2>
-              <p className="text-xs text-amber-200 mt-1 font-bangla">
-                {i18n.language === "en" ? "Land Area: " : "জমির পরিমাপ: "}
-                {formData.land_area}{" "}
-                {formData.land_unit === "bigha"
-                  ? (i18n.language === "en" ? "Bigha" : "বিঘা")
-                  : formData.land_unit === "decimal"
-                  ? (i18n.language === "en" ? "Decimal" : "শতক")
-                  : (i18n.language === "en" ? "Hectare" : "হেক্টর")}
-              </p>
-            </div>
+          {/* Header Card with Crop Photography */}
+          {(() => {
+            const cropImg = getCropImage(result.crop_name_en || result.crop_name_bn || formData.crop);
+            return (
+              <div
+                className="banner-fertilizer-hero p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-white"
+                style={{
+                  background: "linear-gradient(135deg, #451a03 0%, #78350f 50%, #431407 100%)",
+                  backgroundColor: "#451a03",
+                }}
+              >
+                <div className="flex items-center gap-4 sm:gap-5">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-amber-400/50 shadow-md shrink-0 bg-amber-900">
+                    <img
+                      src={cropImg.url}
+                      alt={cropImg.altEn}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
+                      {i18n.language === "en" ? "Recommended Fertilizer Package" : "সুপারিশকৃত সারের প্যাকেজ"}
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+                      {i18n.language === "en" ? (result.crop_name_en || result.crop_name_bn) : result.crop_name_bn} - {result.fertilizer_plan}
+                    </h2>
+                    <p className="text-xs text-amber-200 mt-1 font-bangla">
+                      {i18n.language === "en" ? "Land Area: " : "জমির পরিমাপ: "}
+                      {formData.land_area}{" "}
+                      {formData.land_unit === "bigha"
+                        ? (i18n.language === "en" ? "Bigha" : "বিঘা")
+                        : formData.land_unit === "decimal"
+                        ? (i18n.language === "en" ? "Decimal" : "শতক")
+                        : (i18n.language === "en" ? "Hectare" : "হেক্টর")}
+                    </p>
+                  </div>
+                </div>
 
-            <button
-              onClick={handleAskAssistant}
-              className="inline-flex items-center gap-2 bg-white text-amber-950 hover:bg-amber-50 px-4 py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all hover:-translate-y-0.5 cursor-pointer"
-            >
-              <MessageSquare className="w-4 h-4 text-amber-800" />
-              <span>{i18n.language === "en" ? "Ask AI Assistant" : "সহকারীকে প্রশ্ন করুন"}</span>
-            </button>
-          </div>
+                <button
+                  onClick={handleAskAssistant}
+                  className="inline-flex items-center gap-2 bg-white text-amber-950 hover:bg-amber-50 px-5 py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all hover:-translate-y-0.5 cursor-pointer shrink-0"
+                >
+                  <MessageSquare className="w-4 h-4 text-amber-800" />
+                  <span>{i18n.language === "en" ? "Ask AI Assistant" : "সহকারীকে প্রশ্ন করুন"}</span>
+                </button>
+              </div>
+            );
+          })()}
 
           {/* Unit Switcher */}
           <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs">
@@ -449,6 +467,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {result.fertilizer_items.map((item: any) => {
+                    const fertImg = getFertilizerImage(item.key || item.name_en || item.name_bn);
                     const kgUnit = i18n.language === "en" ? "kg" : "কেজি";
                     const rateDisplay =
                       activeUnit === "bigha"
@@ -459,12 +478,27 @@ export const FertilizerPlanPage: React.FC = () => {
 
                     return (
                       <tr key={item.key} className="hover:bg-slate-50/70 transition-colors">
-                        <td className="px-6 py-4 font-bold text-slate-900">
-                          {i18n.language === "en" ? (item.name_en || item.name_bn) : item.name_bn}
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={fertImg.url}
+                              alt={fertImg.altEn}
+                              className="w-10 h-10 rounded-xl object-cover border border-slate-200 shrink-0"
+                              loading="lazy"
+                            />
+                            <div>
+                              <span className="font-extrabold text-slate-900 block">
+                                {i18n.language === "en" ? (item.name_en || item.name_bn) : item.name_bn}
+                              </span>
+                              <span className="text-[10px] text-slate-500 font-medium">
+                                {i18n.language === "en" ? fertImg.categoryEn : fertImg.categoryBn}
+                              </span>
+                            </div>
+                          </div>
                         </td>
-                        <td className="px-6 py-4 text-slate-600 text-xs font-medium">{item.nutrient}</td>
+                        <td className="px-6 py-4 text-slate-600 text-xs font-semibold">{item.nutrient}</td>
                         <td className="px-6 py-4 font-semibold text-slate-800">{rateDisplay}</td>
-                        <td className="px-6 py-4 font-extrabold text-amber-950 bg-amber-50/60 font-mono">
+                        <td className="px-6 py-4 font-extrabold text-amber-950 bg-amber-50/60 font-mono text-base">
                           {item.total_quantity_kg} {kgUnit}
                         </td>
                       </tr>
@@ -472,6 +506,84 @@ export const FertilizerPlanPage: React.FC = () => {
                   })}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          {/* Visual Fertilizer Identification & Application Reference Cards */}
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-card space-y-5">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold border border-amber-200">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                <span>{i18n.language === "en" ? "Visual Identification & Application" : "সারের চাক্ষুষ সনাক্তকরণ ও প্রয়োগ নির্দেশিকা"}</span>
+              </div>
+              <h3 className="text-lg font-extrabold text-slate-900">
+                {i18n.language === "en" ? "Field Application & Nutrient Role Guide" : "প্রধান সারসমূহের পুষ্টিগুণ ও মাঠে প্রয়োগ কৌশল"}
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  key: "urea",
+                  nameEn: "Urea (White Prilled)",
+                  nameBn: "ইউরিয়া (সাদা দানাদার)",
+                  descEn: "Essential for lush vegetative growth, green foliage, and tillering. Apply in 2-3 split doses.",
+                  descBn: "গাছের দ্রুত বৃদ্ধি ও কুশি বৃদ্ধির মূল উৎস। সর্বদা ২-৩ কিস্তিতে উপরিপ্রয়োগ করতে হয়।",
+                  meta: FERTILIZER_IMAGES.urea,
+                },
+                {
+                  key: "tsp",
+                  nameEn: "TSP (Triple Super Phosphate)",
+                  nameBn: "টিএসপি (গাঢ় ধূসর ফসফেট)",
+                  descEn: "Develops deep root network and early plant vigor. Apply during final land preparation.",
+                  descBn: "ফসলের শিকড় মাটির গভীরে বিস্তার ও কুশির সতেজতায় জমি তৈরির শেষ চাষে প্রয়োগযোগ্য।",
+                  meta: FERTILIZER_IMAGES.tsp,
+                },
+                {
+                  key: "mop",
+                  nameEn: "MoP (Muriate of Potash)",
+                  nameBn: "এমওপি (লালচে দানাদার পটাশ)",
+                  descEn: "Strengthens stalks against lodging, drought, and fungal diseases. Aids grain filling.",
+                  descBn: "গাছ শক্ত করে ঝড়-বৃষ্টিতে হেলে পড়া রোধ ও ধানের দানাকে পুষ্ট ও ওজনদার করতে সহায়ক।",
+                  meta: FERTILIZER_IMAGES.mop,
+                },
+                {
+                  key: "gypsum",
+                  nameEn: "Gypsum (Calcium & Sulfur)",
+                  nameBn: "জিপসাম (সালফার ও ক্যালসিয়াম)",
+                  descEn: "Prevents yellowing and sulfur deficiency, especially in oilseeds, pulses, and rice.",
+                  descBn: "পাতার ডগা হলুদ হয়ে যাওয়া রোধ এবং তৈলবীজ ও ডালে তেলের পরিমাণ ও ফলন বৃদ্ধিতে অপরিহার্য।",
+                  meta: FERTILIZER_IMAGES.gypsum,
+                },
+              ].map((f) => (
+                <div
+                  key={f.key}
+                  className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 flex flex-col justify-between group hover:border-amber-400 hover:shadow-md transition-all"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src={f.meta.url}
+                      alt={f.nameEn}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                    <span className="absolute bottom-2 left-2.5 text-[10px] font-bold text-white bg-slate-900/80 px-2 py-0.5 rounded-full border border-white/20">
+                      {i18n.language === "en" ? f.meta.categoryEn : f.meta.categoryBn}
+                    </span>
+                  </div>
+                  <div className="p-3.5 space-y-1.5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-extrabold text-slate-900">
+                        {i18n.language === "en" ? f.nameEn : f.nameBn}
+                      </h4>
+                      <p className="text-[11px] text-slate-600 leading-snug font-bangla mt-1">
+                        {i18n.language === "en" ? f.descEn : f.descBn}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
+import { SCENIC_IMAGES } from "../utils/agroImages";
 import {
   UserPlus,
   User,
@@ -70,8 +71,16 @@ export const RegisterPage: React.FC = () => {
     <div className="max-w-6xl mx-auto py-2 sm:py-6 px-2 sm:px-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left Column: Showcase Panel */}
-        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-lg flex flex-col justify-between space-y-6">
-          <div className="space-y-5">
+        <div className="lg:col-span-5 relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-lg flex flex-col justify-between space-y-6">
+          {/* Authentic Agricultural Photographic Backdrop */}
+          <img
+            src={SCENIC_IMAGES.homepageHero.url}
+            alt={i18n.language === "en" ? SCENIC_IMAGES.homepageHero.altEn : SCENIC_IMAGES.homepageHero.altBn}
+            className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-20 pointer-events-none"
+            loading="lazy"
+          />
+
+          <div className="relative z-10 space-y-5">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>{i18n.language === "en" ? "Free Membership (Open Agritech)" : "বিনামূল্যে সদস্যপদ (Free Membership)"}</span>

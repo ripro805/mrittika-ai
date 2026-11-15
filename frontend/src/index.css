@@ -88,32 +88,32 @@
 
 /* Bulletproof High-Contrast Hero Banners across all portals */
 .banner-admin-hero {
-  background: #2e1065 linear-gradient(135deg, #2e1065 0%, #3b0764 50%, #0f172a 100%) !important;
   background-color: #2e1065 !important;
+  background-image: linear-gradient(135deg, #2e1065 0%, #3b0764 50%, #0f172a 100%) !important;
   color: #ffffff !important;
 }
 
 .banner-farmer-hero {
-  background: #052e16 linear-gradient(135deg, #052e16 0%, #064e3b 50%, #022c22 100%) !important;
   background-color: #052e16 !important;
+  background-image: linear-gradient(135deg, #052e16 0%, #064e3b 50%, #022c22 100%) !important;
   color: #ffffff !important;
 }
 
 .banner-officer-hero {
-  background: #042f2e linear-gradient(135deg, #042f2e 0%, #134e4a 50%, #022c22 100%) !important;
   background-color: #042f2e !important;
+  background-image: linear-gradient(135deg, #042f2e 0%, #134e4a 50%, #022c22 100%) !important;
   color: #ffffff !important;
 }
 
 .banner-fertilizer-hero {
-  background: #451a03 linear-gradient(135deg, #451a03 0%, #78350f 50%, #431407 100%) !important;
   background-color: #451a03 !important;
+  background-image: linear-gradient(135deg, #451a03 0%, #78350f 50%, #431407 100%) !important;
   color: #ffffff !important;
 }
 
 .banner-assistant-hero {
-  background: #020617 linear-gradient(135deg, #020617 0%, #052e16 50%, #0f172a 100%) !important;
   background-color: #020617 !important;
+  background-image: linear-gradient(135deg, #020617 0%, #052e16 50%, #0f172a 100%) !important;
   color: #ffffff !important;
 }
 

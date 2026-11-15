@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import apiClient from "../../services/api";
+import { SCENIC_IMAGES } from "../../utils/agroImages";
 import {
   Users,
   Sprout,
@@ -67,10 +68,18 @@ export const AdminDashboardPage: React.FC = () => {
       <div
         className="banner-admin-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-purple-800"
         style={{
-          background: "linear-gradient(135deg, #2e1065 0%, #3b0764 50%, #0f172a 100%)",
           backgroundColor: "#2e1065",
+          backgroundImage: "linear-gradient(135deg, rgba(46, 16, 101, 0.94) 0%, rgba(59, 7, 100, 0.90) 50%, rgba(15, 23, 42, 0.96) 100%)",
         }}
       >
+        {/* Authentic Agritech Research Photographic Backdrop */}
+        <img
+          src={SCENIC_IMAGES.researchLab.url}
+          alt={i18n.language === "en" ? SCENIC_IMAGES.researchLab.altEn : SCENIC_IMAGES.researchLab.altBn}
+          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-20 pointer-events-none"
+          loading="lazy"
+        />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-purple-200 border border-white/10">

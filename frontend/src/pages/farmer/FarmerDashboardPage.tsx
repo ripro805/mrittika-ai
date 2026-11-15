@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import apiClient from "../../services/api";
+import { AgroImage } from "../../components/AgroImage";
+import { getCropImage, SCENIC_IMAGES } from "../../utils/agroImages";
 import {
   Sprout,
   FlaskConical,
@@ -16,6 +18,7 @@ import {
   MapPin,
   AlertCircle,
   Loader2,
+  ChevronRight,
 } from "lucide-react";
 
 export const FarmerDashboardPage: React.FC = () => {
@@ -65,10 +68,18 @@ export const FarmerDashboardPage: React.FC = () => {
       <div
         className="banner-farmer-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-emerald-800"
         style={{
-          background: "linear-gradient(135deg, #052e16 0%, #064e3b 50%, #022c22 100%)",
           backgroundColor: "#052e16",
+          backgroundImage: "linear-gradient(135deg, rgba(5, 46, 22, 0.94) 0%, rgba(6, 78, 59, 0.90) 50%, rgba(2, 44, 34, 0.96) 100%)",
         }}
       >
+        {/* Authentic Agricultural Photographic Backdrop */}
+        <img
+          src={SCENIC_IMAGES.ruralLandscape.url}
+          alt={i18n.language === "en" ? SCENIC_IMAGES.ruralLandscape.altEn : SCENIC_IMAGES.ruralLandscape.altBn}
+          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-20 pointer-events-none"
+          loading="lazy"
+        />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-emerald-200 border border-white/10">
@@ -109,6 +120,63 @@ export const FarmerDashboardPage: React.FC = () => {
         {/* Ambient background leaf shape */}
         <div className="absolute right-0 bottom-0 translate-x-10 translate-y-10 opacity-10 pointer-events-none">
           <Sprout className="w-72 h-72 text-white" />
+        </div>
+      </div>
+
+      {/* Regional Priority Crops Photographic Carousel Strip */}
+      <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 shadow-card space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
+              <Sprout className="w-4 h-4" />
+            </div>
+            <h2 className="text-xs sm:text-sm font-extrabold text-slate-900">
+              {i18n.language === "en" ? "Recommended Regional Crops for Cultivation" : "আপনার অঞ্চলের জন্য উচ্চ ফলনশীল ফসল"}
+            </h2>
+          </div>
+          <Link
+            to="/farmer/crop-recommend"
+            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
+          >
+            <span>{i18n.language === "en" ? "All 24 Crops" : "২৪টি ফসল দেখুন"}</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          {[
+            { slug: "rice_boro", nameBn: "বোরো ধান", nameEn: "Boro Rice", tag: "Cereals" },
+            { slug: "potato", nameBn: "আলু", nameEn: "Potato", tag: "Vegetables" },
+            { slug: "mustard", nameBn: "সরিষা", nameEn: "Mustard", tag: "Oilseeds" },
+            { slug: "wheat", nameBn: "গম", nameEn: "Wheat", tag: "Cereals" },
+            { slug: "tomato", nameBn: "টমেটো", nameEn: "Tomato", tag: "Vegetables" },
+          ].map((item) => {
+            const cropData = getCropImage(item.slug);
+            return (
+              <Link
+                key={item.slug}
+                to="/farmer/crop-recommend"
+                className="group p-2.5 rounded-2xl border border-slate-200 hover:border-emerald-300 bg-slate-50/60 hover:bg-emerald-50/40 transition flex items-center gap-3 cursor-pointer"
+              >
+                <div className="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 shadow-2xs border border-slate-200">
+                  <AgroImage
+                    crop={cropData}
+                    lang={i18n.language === "en" ? "en" : "bn"}
+                    aspect="square"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-slate-900 truncate group-hover:text-emerald-900">
+                    {i18n.language === "en" ? item.nameEn : item.nameBn}
+                  </p>
+                  <span className="text-[10px] text-emerald-700 font-semibold block truncate">
+                    {item.tag}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
 
@@ -305,8 +373,27 @@ export const FarmerDashboardPage: React.FC = () => {
                           : (i18n.language === "en" ? "Fertilizer Plan" : "সারের হিসাব")}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-bold text-slate-900">
-                      {i18n.language === "en" ? (item.crop_name_en || item.crop_name_bn || item.crop_slug || "General") : (item.crop_name_bn || item.crop_slug || "সাধারণ")}
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 shadow-2xs border border-slate-200">
+                          <AgroImage
+                            crop={getCropImage(item.crop_slug || item.crop_name_en)}
+                            lang={i18n.language === "en" ? "en" : "bn"}
+                            aspect="square"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-bold text-slate-900">
+                            {i18n.language === "en"
+                              ? item.crop_name_en || item.crop_name_bn || item.crop_slug || "General Advisory"
+                              : item.crop_name_bn || item.crop_slug || "সাধারণ কৃষি পরামর্শ"}
+                          </p>
+                          <span className="text-[11px] text-slate-600 block">
+                            {item.crop_slug ? `#${item.crop_slug}` : ""}
+                          </span>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-slate-700 font-medium">
                       {item.rec_type === "CROP"

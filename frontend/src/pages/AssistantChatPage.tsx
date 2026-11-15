@@ -37,6 +37,7 @@ import {
   Wheat,
   ExternalLink,
 } from "lucide-react";
+import { SCENIC_IMAGES, CROP_IMAGES, FERTILIZER_IMAGES, getCropImage } from "../utils/agroImages";
 
 interface SourceItem {
   source: string;
@@ -823,17 +824,22 @@ export const AssistantChatPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* 4 Interactive Workstation Cards */}
+              {/* 4 Interactive Workstation Cards with Photographic Previews */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 {/* Card 1 */}
                 <button
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Urea application guidelines for Aman rice" : "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
+                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-emerald-500/60 shadow-xs"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-emerald-700 text-white flex items-center justify-center shadow-sm flex-shrink-0 group-hover:bg-emerald-800 transition-colors">
-                    <FlaskConical className="w-5 h-5" />
+                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                    <img
+                      src={FERTILIZER_IMAGES.application.url}
+                      alt="Urea application"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
@@ -849,7 +855,7 @@ export const AssistantChatPage: React.FC = () => {
                         ? "Top dressing split timing and guidelines for Aman and Boro rice"
                         : "আমন ও বোরো ধানে ইউরিয়া উপরিপ্রয়োগের সঠিক সময়সূচী ও নিয়মাবলী"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 pt-1 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 pt-0.5 group-hover:translate-x-0.5 transition-transform">
                       <span>{i18n.language === "en" ? "Ask Question" : "প্রশ্ন করুন"}</span>
                       <span>→</span>
                     </span>
@@ -861,10 +867,15 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Potato Late Blight symptoms and control" : "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
+                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-amber-500/60 shadow-xs"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-amber-700 text-white flex items-center justify-center shadow-sm flex-shrink-0 group-hover:bg-amber-800 transition-colors">
-                    <Bug className="w-5 h-5" />
+                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                    <img
+                      src={SCENIC_IMAGES.pestInspection.url}
+                      alt="Crop disease inspection"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
@@ -880,7 +891,7 @@ export const AssistantChatPage: React.FC = () => {
                         ? "Effective management of Late Blight in potatoes and Rice Blast disease"
                         : "আলুর লেইট ব্লাইট (নাভিধসা) ও ধানের ব্লাস্ট রোগের স্থায়ী চিকিৎসা"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 pt-1 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 pt-0.5 group-hover:translate-x-0.5 transition-transform">
                       <span>{i18n.language === "en" ? "Get Advice" : "পরামর্শ নিন"}</span>
                       <span>→</span>
                     </span>
@@ -892,10 +903,15 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Lime application dosage in acidic soil" : "অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
+                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-teal-500/60 shadow-xs"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-teal-700 text-white flex items-center justify-center shadow-sm flex-shrink-0 group-hover:bg-teal-800 transition-colors">
-                    <Sprout className="w-5 h-5" />
+                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                    <img
+                      src={SCENIC_IMAGES.soilTesting.url}
+                      alt="Soil nutrient analysis"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
@@ -911,7 +927,7 @@ export const AssistantChatPage: React.FC = () => {
                         ? "Accurate dosage and timing of lime and organic matter in acidic soils"
                         : "অম্লীয় মাটিতে চুন ও জৈব সার প্রয়োগের সঠিক অনুপাত ও পদ্ধতি"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-800 pt-1 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-800 pt-0.5 group-hover:translate-x-0.5 transition-transform">
                       <span>{i18n.language === "en" ? "View Dosages" : "মাত্রা জানুন"}</span>
                       <span>→</span>
                     </span>
@@ -923,10 +939,15 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Boro rice fertilizer management in sandy loam soil" : "বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
+                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-blue-500/60 shadow-xs"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-blue-700 text-white flex items-center justify-center shadow-sm flex-shrink-0 group-hover:bg-blue-800 transition-colors">
-                    <CloudSun className="w-5 h-5" />
+                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                    <img
+                      src={CROP_IMAGES.rice_boro.url}
+                      alt="Boro rice field"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
@@ -942,7 +963,7 @@ export const AssistantChatPage: React.FC = () => {
                         ? "Balanced fertilizer plans for Boro rice in loam and sandy-loam soils"
                         : "দোআঁশ ও বেলে মাটিতে বোরো ধান এবং রবি ফসলের সুষম সার পরিকল্পনা"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-800 pt-1 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-800 pt-0.5 group-hover:translate-x-0.5 transition-transform">
                       <span>{i18n.language === "en" ? "Explore Plan" : "পরিকল্পনা দেখুন"}</span>
                       <span>→</span>
                     </span>
@@ -951,9 +972,14 @@ export const AssistantChatPage: React.FC = () => {
               </div>
 
               {/* Regional Agro Tip Card */}
-              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80 shadow-2xs flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold text-lg">
-                  🌾
+              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80 shadow-2xs flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-emerald-300">
+                  <img
+                    src={CROP_IMAGES.rice_boro.url}
+                    alt="Boro Rice"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="text-xs leading-relaxed text-slate-700 font-bangla">
                   <span className="font-bold text-emerald-950">
