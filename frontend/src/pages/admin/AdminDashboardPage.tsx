@@ -198,68 +198,68 @@ export const AdminDashboardPage: React.FC = () => {
 
       {/* System Telemetry & Model Status */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-6 app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div className="lg:col-span-6 bg-white p-6 sm:p-8 rounded-[28px] border border-black/[0.06] shadow-apple space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-black/[0.05]">
             <div className="flex items-center gap-2">
               <Cpu className="w-5 h-5 text-purple-700" />
-              <h2 className="text-sm font-extrabold text-slate-900">
+              <h2 className="text-sm font-extrabold text-[#1d1d1f] tracking-tight">
                 {i18n.language === "en" ? "AI/ML Core Architecture Telemetry" : "এআই/এমএল কোর সিস্টেম আর্কিটেকচার"}
               </h2>
             </div>
-            <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-[10px] font-bold">
-              {i18n.language === "en" ? "Service Active (Healthy)" : "সার্ভিস সক্রিয় (Healthy)"}
+            <span className="px-3 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200/80 text-[10px] font-bold">
+              {i18n.language === "en" ? "Service Active" : "সার্ভিস সক্রিয়"}
             </span>
           </div>
 
           <div className="space-y-3 text-xs">
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#fbfbfd] border border-black/[0.05]">
               <div>
-                <p className="font-bold text-slate-900">
+                <p className="font-bold text-[#1d1d1f]">
                   {i18n.language === "en" ? "Crop Recommendation Model" : "ফসল সুপারিশ মডেল"}
                 </p>
-                <p className="text-slate-600 text-[11px] font-mono">{system_health.ml_crop_model}</p>
+                <p className="text-[#86868b] text-[11px] font-mono">{system_health.ml_crop_model}</p>
               </div>
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             </div>
 
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#fbfbfd] border border-black/[0.05]">
               <div>
-                <p className="font-bold text-slate-900">
+                <p className="font-bold text-[#1d1d1f]">
                   {i18n.language === "en" ? "Balanced Fertilizer Prediction Model" : "সুষম সার প্রেডিকশন মডেল"}
                 </p>
-                <p className="text-slate-600 text-[11px] font-mono">{system_health.ml_fertilizer_model}</p>
+                <p className="text-[#86868b] text-[11px] font-mono">{system_health.ml_fertilizer_model}</p>
               </div>
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             </div>
 
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#fbfbfd] border border-black/[0.05]">
               <div>
-                <p className="font-bold text-slate-900">
+                <p className="font-bold text-[#1d1d1f]">
                   {i18n.language === "en" ? "Vector Database (RAG)" : "ভেক্টর ডাটাবেজ (RAG)"}
                 </p>
-                <p className="text-slate-600 text-[11px] font-mono">{system_health.rag_vector_db}</p>
+                <p className="text-[#86868b] text-[11px] font-mono">{system_health.rag_vector_db}</p>
               </div>
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             </div>
 
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#fbfbfd] border border-black/[0.05]">
               <div>
-                <p className="font-bold text-slate-900">
+                <p className="font-bold text-[#1d1d1f]">
                   {i18n.language === "en" ? "Primary LLM Provider" : "প্রাইমারি এলএলএম প্রোভাইডার"}
                 </p>
-                <p className="text-slate-600 text-[11px] font-mono">{system_health.llm_primary}</p>
+                <p className="text-[#86868b] text-[11px] font-mono">{system_health.llm_primary}</p>
               </div>
-              <span className="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-900 border border-purple-200 text-[10px] font-bold font-mono">Groq Active</span>
+              <span className="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-900 border border-purple-200/80 text-[10px] font-bold font-mono">Groq Active</span>
             </div>
           </div>
         </div>
 
         {/* Live System Activity Feed */}
-        <div className="lg:col-span-6 app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div className="lg:col-span-6 bg-white p-6 sm:p-8 rounded-[28px] border border-black/[0.06] shadow-apple space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-black/[0.05]">
             <div className="flex items-center gap-2">
               <Activity className="w-5 h-5 text-indigo-700" />
-              <h2 className="text-sm font-extrabold text-slate-900">
+              <h2 className="text-sm font-extrabold text-[#1d1d1f] tracking-tight">
                 {i18n.language === "en" ? "Recent Platform Audit Log" : "সাম্প্রতিক প্ল্যাটফর্ম অডিট লগ"}
               </h2>
             </div>
@@ -272,14 +272,14 @@ export const AdminDashboardPage: React.FC = () => {
             </Link>
           </div>
 
-          <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto">
+          <div className="divide-y divide-black/[0.04] max-h-72 overflow-y-auto">
             {recent_activity.map((log: any) => (
               <div key={log.id} className="py-2.5 flex items-start justify-between gap-3 text-xs">
                 <div>
-                  <span className="font-bold text-slate-900">{log.action}: </span>
-                  <span className="text-slate-700 font-medium">{log.description}</span>
+                  <span className="font-bold text-[#1d1d1f]">{log.action}: </span>
+                  <span className="text-[#86868b] font-medium">{log.description}</span>
                 </div>
-                <span className="text-[10px] text-slate-500 font-mono whitespace-nowrap">
+                <span className="text-[10px] text-[#86868b] font-mono whitespace-nowrap">
                   {new Date(log.created_at).toLocaleTimeString(i18n.language === "en" ? "en-US" : "bn-BD", { hour: "2-digit", minute: "2-digit" })}
                 </span>
               </div>

@@ -93,15 +93,15 @@ export const AdminOfficerVerificationPage: React.FC = () => {
           officers.map((officer) => (
             <div
               key={officer.id}
-              className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card flex flex-col justify-between space-y-4 hover:border-teal-300 transition"
+              className="app-card bg-white p-6 rounded-[28px] border border-black/[0.06] shadow-apple hover:shadow-apple-hover flex flex-col justify-between space-y-4 transition-all duration-300"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-teal-50 text-teal-900 border border-teal-200 font-extrabold text-sm flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-50 text-teal-900 border border-teal-200/60 font-bold text-sm flex items-center justify-center shadow-2xs">
                     {officer.name.slice(0, 2)}
                   </div>
                   <span
-                    className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
+                    className={`px-3 py-0.5 rounded-full text-[11px] font-semibold border ${
                       officer.is_verified
                         ? "bg-emerald-50 text-emerald-900 border-emerald-200"
                         : "bg-amber-50 text-amber-900 border-amber-200"
@@ -112,11 +112,11 @@ export const AdminOfficerVerificationPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">{officer.name}</h3>
-                  <p className="text-xs text-slate-500 font-mono">{officer.phone}</p>
+                  <h3 className="text-sm font-bold text-[#1d1d1f] tracking-tight">{officer.name}</h3>
+                  <p className="text-xs text-[#86868b] font-mono mt-0.5">{officer.phone}</p>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+                <div className="flex items-center gap-1.5 text-xs text-[#86868b] font-medium">
                   <MapPin className="w-3.5 h-3.5 text-teal-700 flex-shrink-0" />
                   <span>
                     {officer.district || "বগুড়া"}, {officer.upazila || "শেরপুর"}
@@ -124,14 +124,14 @@ export const AdminOfficerVerificationPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-200">
+              <div className="pt-4 border-t border-black/[0.05]">
                 <button
                   onClick={() => handleToggleVerification(officer.id, officer.is_verified)}
                   disabled={updatingId === officer.id}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
+                  className={`w-full py-2.5 px-4 rounded-full text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-98 ${
                     officer.is_verified
-                      ? "bg-red-50 text-red-900 hover:bg-red-100 border border-red-200"
-                      : "bg-teal-700 text-white hover:bg-teal-800 shadow-sm"
+                      ? "bg-red-50 text-red-900 hover:bg-red-100 border border-red-200/80"
+                      : "bg-teal-700 text-white hover:bg-teal-800"
                   }`}
                 >
                   {updatingId === officer.id ? (

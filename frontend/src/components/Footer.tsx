@@ -15,10 +15,10 @@ export const Footer: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <footer className="bg-white border-t border-slate-200 mt-20 text-slate-700">
+    <footer className="bg-[#fbfbfd] border-t border-black/[0.06] mt-20 text-[#86868b]">
       {/* Prominent Agricultural Research Disclaimer Banner */}
-      <div className="bg-amber-50/80 border-b border-amber-200/60 py-3 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2.5 text-xs text-amber-900 font-medium text-center">
+      <div className="bg-amber-500/10 border-b border-amber-500/15 py-3 px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2.5 text-xs text-amber-950 font-medium text-center">
           <AlertTriangle className="w-4 h-4 text-amber-700 flex-shrink-0" />
           <span>{t("disclaimer")}</span>
         </div>
@@ -29,15 +29,15 @@ export const Footer: React.FC = () => {
           {/* Col 1: Brand & National Initiative (2 cols wide on desktop) */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-800 to-emerald-950 flex items-center justify-center text-white shadow-xs">
-                <Sprout className="w-5 h-5 text-emerald-300" />
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white shadow-xs">
+                <Sprout className="w-5 h-5 text-emerald-100" />
               </div>
-              <span className="text-xl font-extrabold text-slate-900 tracking-tight">
+              <span className="text-xl font-bold text-[#1d1d1f] tracking-tight">
                 মৃত্তিকা এআই (Mrittika AI)
               </span>
             </Link>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm">
+            <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed max-w-sm">
               {i18n.language === "bn"
                 ? "বাংলাদেশের কৃষকদের জন্য কৃত্রিম বুদ্ধিমত্তা ও জাতীয় কৃষি গবেষণা তথ্যের সমন্বয়ে তৈরি আধুনিক, নির্ভরযোগ্য ও নিরপেক্ষ সিদ্ধান্ত সহায়ক প্ল্যাটফর্ম।"
                 : "A modern, reliable agricultural decision-support platform designed for Bangladeshi farmers using AI and national research guidelines."}

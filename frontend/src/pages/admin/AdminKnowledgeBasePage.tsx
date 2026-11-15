@@ -108,15 +108,15 @@ export const AdminKnowledgeBasePage: React.FC = () => {
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-[#1d1d1f] tracking-tight flex items-center gap-2">
             <BookOpenCheck className="w-6 h-6 text-purple-700" />
             <span>
               {i18n.language === "en"
-                ? "Agricultural Research Documents & Vector Index (RAG Knowledge Base)"
-                : "কৃষি গবেষণা নথিপত্র ও ভেক্টর ইন্ডেক্স (RAG Knowledge Base)"}
+                ? "Agricultural Research Documents & Vector Index"
+                : "কৃষি গবেষণা নথিপত্র ও ভেক্টর ইন্ডেক্স"}
             </span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-bangla">
+          <p className="text-xs sm:text-sm text-[#86868b] font-bangla">
             {i18n.language === "en"
               ? "Core ground-truth source for Agri Assistant: authoritative handbooks from national research bodies."
               : "কৃষি সহকারী চ্যাটবটের নির্ভুলতার মূল উৎস: সরকারি গবেষণা প্রতিষ্ঠানের স্বীকৃত হ্যান্ডবুক ও নির্দেশিকা"}
@@ -126,19 +126,19 @@ export const AdminKnowledgeBasePage: React.FC = () => {
         <button
           onClick={handleTriggerReindex}
           disabled={isReindexing}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm disabled:opacity-50 cursor-pointer"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition-all shadow-apple active:scale-[0.98] disabled:opacity-50 cursor-pointer"
         >
           <RefreshCw className={`w-4 h-4 ${isReindexing ? "animate-spin" : ""}`} />
           <span>
             {isReindexing
               ? (i18n.language === "en" ? "Indexing..." : "ইন্ডেক্সিং চলছে...")
-              : (i18n.language === "en" ? "Trigger Re-index" : "পুনর্-ইন্ডেক্স করুন (Re-index)")}
+              : (i18n.language === "en" ? "Trigger Re-index" : "পুনর্-ইন্ডেক্স করুন")}
           </span>
         </button>
       </div>
 
       {reindexSuccess && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-2 font-bold font-bangla">
+        <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-2 font-bold font-bangla">
           <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
           <span>{reindexSuccess}</span>
         </div>
@@ -146,53 +146,53 @@ export const AdminKnowledgeBasePage: React.FC = () => {
 
       {/* RAG Telemetry Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card space-y-1">
-          <span className="text-xs font-bold text-slate-700">
+        <div className="bg-white p-6 rounded-[28px] border border-black/[0.06] shadow-apple space-y-1">
+          <span className="text-xs font-semibold text-[#86868b]">
             {i18n.language === "en" ? "Total Indexed Publications" : "মোট ইন্ডেক্সকৃত গবেষণা নথি"}
           </span>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono">
             {documents.length} {i18n.language === "en" ? "Publications" : "টি প্রকাশনা"}
           </p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-[11px] text-[#86868b] font-medium">
             {i18n.language === "en" ? "Official BARC, BRRI, BARI & DAE corpora" : "BARC, BRRI, BARI ও DAE অফিসিয়াল ডাটা"}
           </p>
         </div>
 
-        <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card space-y-1">
-          <span className="text-xs font-bold text-slate-700">
+        <div className="bg-white p-6 rounded-[28px] border border-black/[0.06] shadow-apple space-y-1">
+          <span className="text-xs font-semibold text-[#86868b]">
             {i18n.language === "en" ? "Total Embedded Chunks (Vectors)" : "মোট এমবেডেড চাঙ্ক (Vector Chunks)"}
           </span>
           <p className="text-2xl sm:text-3xl font-extrabold text-purple-900 font-mono">
             {totalChunks || 3440} {i18n.language === "en" ? "Chunks" : "টি"}
           </p>
-          <p className="text-[11px] text-slate-500 font-medium font-bangla">
+          <p className="text-[11px] text-[#86868b] font-medium font-bangla">
             {i18n.language === "en" ? "Segmented passages for semantic retrieval" : "সিম্যান্টিক সার্চের জন্য খণ্ড খণ্ড অংশ"}
           </p>
         </div>
 
-        <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card space-y-1">
-          <span className="text-xs font-bold text-slate-700">
+        <div className="bg-white p-6 rounded-[28px] border border-black/[0.06] shadow-apple space-y-1">
+          <span className="text-xs font-semibold text-[#86868b]">
             {i18n.language === "en" ? "Vector Embedding Model" : "ভেক্টর এমবেডিং মডেল"}
           </span>
-          <p className="text-lg sm:text-xl font-extrabold text-slate-900 font-mono truncate">multilingual-e5-large</p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-lg sm:text-xl font-extrabold text-[#1d1d1f] font-mono truncate">multilingual-e5-large</p>
+          <p className="text-[11px] text-[#86868b] font-medium">
             {i18n.language === "en" ? "1024-dim • ChromaDB Persistent Store" : "1024 ডাইমেনশন • ChromaDB লোকাল ভেক্টর স্টোর"}
           </p>
         </div>
       </div>
 
       {/* Document Library Table */}
-      <div className="app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden">
-        <div className="p-6 border-b border-slate-200 flex items-center justify-between">
+      <div className="bg-white rounded-[28px] border border-black/[0.06] shadow-apple overflow-hidden">
+        <div className="p-6 border-b border-black/[0.05] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200">
+            <div className="w-9 h-9 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200/80">
               <FileText className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-extrabold text-slate-900">
+              <h2 className="text-base font-extrabold text-[#1d1d1f] tracking-tight">
                 {i18n.language === "en" ? "Verified Research Publications Roster" : "স্বীকৃত গবেষণা প্রকাশনা তালিকা"}
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[#86868b]">
                 {i18n.language === "en"
                   ? "Authoritative institutional reference guides backing AI responses"
                   : "যেসব নথির আলোকে চ্যাটবট উত্তর তৈরি করে"}
@@ -201,18 +201,18 @@ export const AdminKnowledgeBasePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-black/[0.04]">
           {documents.map((doc, idx) => (
-            <div key={idx} className="p-5 hover:bg-slate-50/70 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div key={idx} className="p-5 hover:bg-black/[0.02] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-[10px] font-bold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200/80 text-[10px] font-bold">
                     {i18n.language === "en" ? "Vectorized" : "ভেক্টরাইজড"}
                   </span>
-                  <span className="text-xs text-slate-500 font-mono">{doc.filename}</span>
+                  <span className="text-xs text-[#86868b] font-mono">{doc.filename}</span>
                 </div>
-                <h3 className="text-sm font-bold text-slate-900">{doc.title || doc.filename}</h3>
-                <p className="text-xs text-slate-600 font-medium">
+                <h3 className="text-sm font-bold text-[#1d1d1f]">{doc.title || doc.filename}</h3>
+                <p className="text-xs text-[#86868b] font-medium">
                   {i18n.language === "en"
                     ? `Pages: ${doc.pages_count || "100+"} • Chunks: ${doc.chunks_count || doc.vector_count}`
                     : `পৃষ্ঠা: ${doc.pages_count || "১০০+"} • চাঙ্ক সংখ্যা: ${doc.chunks_count || doc.vector_count} টি`}

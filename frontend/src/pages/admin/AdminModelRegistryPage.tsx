@@ -27,83 +27,83 @@ export const AdminModelRegistryPage: React.FC = () => {
       {/* Model Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Crop Recommendation Model */}
-        <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div className="app-card bg-white p-6 sm:p-7 rounded-[28px] border border-black/[0.06] shadow-apple space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-black/[0.05]">
             <div className="flex items-center gap-2">
               <Brain className="w-5 h-5 text-emerald-700" />
-              <h2 className="text-base font-extrabold text-slate-900">ফসল নির্বাচন ক্লাসিফায়ার</h2>
+              <h2 className="text-base font-extrabold text-[#1d1d1f]">ফসল নির্বাচন ক্লাসিফায়ার</h2>
             </div>
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-[10px] font-bold">
               সক্রিয় (Active)
             </span>
           </div>
 
-          <div className="space-y-2 text-xs text-slate-700 font-medium">
+          <div className="space-y-2 text-xs text-[#1d1d1f] font-medium">
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">অ্যালগরিদম:</span>
-              <span className="font-mono text-slate-900 font-bold">ExtraTreesClassifier</span>
+              <span className="font-bold text-[#1d1d1f]">অ্যালগরিদম:</span>
+              <span className="font-mono text-[#1d1d1f] font-bold">ExtraTreesClassifier</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">ইনপুট বৈশিষ্ট্য (Features):</span>
-              <span className="text-slate-900">N, P, K, pH, তাপমাত্রা, আর্দ্রতা, বৃষ্টিপাত</span>
+              <span className="font-bold text-[#1d1d1f]">ইনপুট বৈশিষ্ট্য (Features):</span>
+              <span className="text-[#86868b]">N, P, K, pH, তাপমাত্রা, আর্দ্রতা, বৃষ্টিপাত</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">আউটপুট ক্লাস:</span>
+              <span className="font-bold text-[#1d1d1f]">আউটপুট ক্লাস:</span>
               <span className="font-bold text-emerald-900">২৪টি বাংলাদেশি ক্যানোনিকাল ফসল</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">মডেল একুরেসি (Validation):</span>
-              <span className="font-mono text-slate-900 font-bold">৯৪.৮%</span>
+              <span className="font-bold text-[#1d1d1f]">মডেল একুরেসি (Validation):</span>
+              <span className="font-mono text-[#1d1d1f] font-bold">৯৪.৮%</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">আর্টিফ্যাক্ট ফাইল:</span>
-              <span className="font-mono text-slate-700">mrittika_crop_model.pkl</span>
+              <span className="font-bold text-[#1d1d1f]">আর্টিফ্যাক্ট ফাইল:</span>
+              <span className="font-mono text-[#86868b]">mrittika_crop_model.pkl</span>
             </div>
           </div>
         </div>
 
         {/* Fertilizer Recommendation Model */}
-        <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div className="app-card bg-white p-6 sm:p-7 rounded-[28px] border border-black/[0.06] shadow-apple space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-black/[0.05]">
             <div className="flex items-center gap-2">
               <Layers className="w-5 h-5 text-amber-700" />
-              <h2 className="text-base font-extrabold text-slate-900">সুষম সার প্রেডিকশন রিগ্রেসর</h2>
+              <h2 className="text-base font-extrabold text-[#1d1d1f]">সুষম সার প্রেডিকশন রিগ্রেসর</h2>
             </div>
             <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-bold">
               সক্রিয় (Active)
             </span>
           </div>
 
-          <div className="space-y-2 text-xs text-slate-700 font-medium">
+          <div className="space-y-2 text-xs text-[#1d1d1f] font-medium">
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">অ্যালগরিদম:</span>
-              <span className="font-mono text-slate-900 font-bold">MultiOutputRegressor (XGBoost)</span>
+              <span className="font-bold text-[#1d1d1f]">অ্যালগরিদম:</span>
+              <span className="font-mono text-[#1d1d1f] font-bold">MultiOutputRegressor (XGBoost)</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">লক্ষ্য উপাদান (Targets):</span>
-              <span className="text-slate-900">Urea, TSP, MoP, Compost (kg/ha)</span>
+              <span className="font-bold text-[#1d1d1f]">লক্ষ্য উপাদান (Targets):</span>
+              <span className="text-[#86868b]">Urea, TSP, MoP, Compost (kg/ha)</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">সহায়ক প্রধান ফসল:</span>
+              <span className="font-bold text-[#1d1d1f]">সহায়ক প্রধান ফসল:</span>
               <span className="font-bold text-amber-950">১৩টি প্রধান খাদ্য ও অর্থকরী ফসল</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">মডেল স্কোর (R² Score):</span>
-              <span className="font-mono text-slate-900 font-bold">০.৯৬২</span>
+              <span className="font-bold text-[#1d1d1f]">মডেল স্কোর (R² Score):</span>
+              <span className="font-mono text-[#1d1d1f] font-bold">০.৯৬২</span>
             </div>
             <div className="flex justify-between py-1.5 border-b border-slate-100">
-              <span className="font-bold text-slate-800">আর্টিফ্যাক্ট ফাইল:</span>
-              <span className="font-mono text-slate-700">mrittika_fertilizer_model.pkl</span>
+              <span className="font-bold text-[#1d1d1f]">আর্টিফ্যাক্ট ফাইল:</span>
+              <span className="font-mono text-[#86868b]">mrittika_fertilizer_model.pkl</span>
             </div>
           </div>
         </div>
 
         {/* Vector Embedding (RAG) */}
-        <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div className="app-card bg-white p-6 sm:p-7 rounded-[28px] border border-black/[0.06] shadow-apple space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-black/[0.05]">
             <div className="flex items-center gap-2">
               <Database className="w-5 h-5 text-blue-700" />
-              <h2 className="text-base font-extrabold text-slate-900">ভেক্টর এমবেডিং ও সেমান্টিক সার্চ</h2>
+              <h2 className="text-base font-extrabold text-[#1d1d1f]">ভেক্টর এমবেডিং ও সেমান্টিক সার্চ</h2>
             </div>
             <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-900 border border-blue-200 text-[10px] font-bold font-mono">
               ChromaDB

@@ -86,36 +86,36 @@ export const AdminUserManagementPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Role Filters */}
-        <div className="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-semibold">
+        {/* Role Filters (Apple Segmented Pill Container) */}
+        <div className="inline-flex rounded-full bg-black/[0.04] p-1 border border-black/[0.05] text-xs font-semibold">
           <button
             onClick={() => setRoleFilter("")}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-              roleFilter === "" ? "bg-white text-slate-900 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+              roleFilter === "" ? "bg-white text-[#1d1d1f] shadow-xs font-bold" : "text-[#86868b] hover:text-[#1d1d1f]"
             }`}
           >
             {i18n.language === "en" ? `All (${totalCount})` : `সব (${totalCount})`}
           </button>
           <button
             onClick={() => setRoleFilter("FARMER")}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-              roleFilter === "FARMER" ? "bg-white text-emerald-900 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+              roleFilter === "FARMER" ? "bg-white text-emerald-900 shadow-xs font-bold" : "text-[#86868b] hover:text-[#1d1d1f]"
             }`}
           >
             {i18n.language === "en" ? "Farmers" : "কৃষক"}
           </button>
           <button
             onClick={() => setRoleFilter("OFFICER")}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-              roleFilter === "OFFICER" ? "bg-white text-teal-900 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+              roleFilter === "OFFICER" ? "bg-white text-teal-900 shadow-xs font-bold" : "text-[#86868b] hover:text-[#1d1d1f]"
             }`}
           >
             {i18n.language === "en" ? "Officers" : "কর্মকর্তা"}
           </button>
           <button
             onClick={() => setRoleFilter("ADMIN")}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-              roleFilter === "ADMIN" ? "bg-white text-purple-900 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+              roleFilter === "ADMIN" ? "bg-white text-purple-900 shadow-xs font-bold" : "text-[#86868b] hover:text-[#1d1d1f]"
             }`}
           >
             {i18n.language === "en" ? "Admins" : "অ্যাডমিন"}
@@ -131,7 +131,7 @@ export const AdminUserManagementPage: React.FC = () => {
       )}
 
       {/* Search Bar */}
-      <div className="app-card bg-white p-4 rounded-2xl border border-slate-200 shadow-card">
+      <div className="app-card bg-white p-4 rounded-[22px] border border-black/[0.06] shadow-apple">
         <div className="relative">
           <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
           <input
@@ -143,13 +143,13 @@ export const AdminUserManagementPage: React.FC = () => {
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 focus:outline-none font-bangla"
+            className="w-full pl-9 pr-4 py-2 bg-[#fbfbfd] border border-black/[0.08] rounded-xl text-xs sm:text-sm text-[#1d1d1f] placeholder:text-[#86868b] focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 focus:outline-none font-bangla"
           />
         </div>
       </div>
 
       {/* Users Table */}
-      <div className="app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden">
+      <div className="app-card bg-white rounded-[28px] border border-black/[0.06] shadow-apple overflow-hidden">
         {isLoading ? (
           <div className="p-12 text-center text-xs text-slate-500 flex flex-col items-center gap-2">
             <Loader2 className="w-6 h-6 animate-spin text-purple-700" />

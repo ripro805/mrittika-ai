@@ -36,25 +36,25 @@ export const AboutModelInfoPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Prominent Synthetic Data Warning */}
-      <div className="p-6 rounded-3xl bg-amber-50 border-2 border-amber-300 text-amber-950 space-y-2.5 shadow-card">
+      {/* Prominent Synthetic Data Warning (Apple Notice Card) */}
+      <div className="p-6 rounded-[28px] bg-amber-50/70 border border-amber-300/80 text-amber-950 space-y-2.5 shadow-apple">
         <div className="flex items-center gap-2">
-          <AlertTriangle className="w-6 h-6 text-amber-700 flex-shrink-0" />
-          <h2 className="text-base font-extrabold text-amber-950">
+          <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0" />
+          <h2 className="text-sm sm:text-base font-bold text-amber-950 tracking-tight">
             {i18n.language === "en"
               ? "Important Notice: Synthetic Dataset Calibration & Advisory Limitations"
               : "গুরুত্বপূর্ণ বিজ্ঞপ্তি: সিন্থেটিক ডেটাসেট সীমাবদ্ধতা"}
           </h2>
         </div>
-        <p className="text-xs sm:text-sm leading-relaxed pl-8 font-bangla text-amber-950">
+        <p className="text-xs sm:text-sm leading-relaxed pl-7 font-bangla text-amber-950">
           {i18n.language === "en" ? (
             <>
               Datasets used in the current models (
-              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded font-mono text-xs text-amber-950 font-bold">
+              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded-lg font-mono text-xs text-amber-950 font-bold">
                 bangladesh_crop_recommendation.csv
               </code>{" "}
               and{" "}
-              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded font-mono text-xs text-amber-950 font-bold">
+              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded-lg font-mono text-xs text-amber-950 font-bold">
                 bangladesh_fertilizer_recommendation.csv
               </code>
               ) are calibrated synthetic agronomic data. These outputs serve as a decision-support guide for farmers. Always verify with your local Upazila Agriculture Officer or SAAO prior to field chemical application.
@@ -62,11 +62,11 @@ export const AboutModelInfoPage: React.FC = () => {
           ) : (
             <>
               বর্তমান মডেলগুলোতে ব্যবহৃত ডেটাসেট (
-              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded font-mono text-xs text-amber-950 font-bold">
+              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded-lg font-mono text-xs text-amber-950 font-bold">
                 bangladesh_crop_recommendation.csv
               </code>{" "}
               ও{" "}
-              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded font-mono text-xs text-amber-950 font-bold">
+              <code className="bg-amber-100/90 px-1.5 py-0.5 rounded-lg font-mono text-xs text-amber-950 font-bold">
                 bangladesh_fertilizer_recommendation.csv
               </code>
               ) কৃত্রিম বা সিন্থেটিক তথ্যের সমন্বয়ে তৈরি। এই সুপারিশগুলো কৃষকদের মাঠপর্যায়ে সহায়তার জন্য একটি সিদ্ধান্ত-সহায়ক প্রোটোটাইপ গাইড। জমিতে সার ও কীটনাশক ব্যবহারের পূর্বে সর্বদা স্থানীয় উপজেলা কৃষি কর্মকর্তা বা এসএএও (SAAO) এর পরামর্শ গ্রহণ করুন।
@@ -78,7 +78,7 @@ export const AboutModelInfoPage: React.FC = () => {
       {/* Model Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Crop Recommendation Model */}
-        <div className="app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden space-y-4">
+        <div className="app-card bg-white rounded-[28px] border border-black/[0.06] shadow-apple overflow-hidden space-y-4">
           <div className="relative h-32 w-full overflow-hidden">
             <img
               src={SCENIC_IMAGES.precisionFarming.url}
@@ -196,21 +196,21 @@ export const AboutModelInfoPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1.5 font-medium">
+            <div className="bg-[#fbfbfd] p-4 rounded-2xl border border-black/[0.05] space-y-2 font-medium">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-600">
+              <span className="text-[#86868b]">
                 {i18n.language === "en" ? "Classifier Accuracy:" : "শ্রেণিকরণ নির্ভুলতা (Classifier Acc):"}
               </span>
               <span className="font-extrabold text-amber-900 font-mono">96.17%</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-slate-600">
+              <span className="text-[#86868b]">
                 {i18n.language === "en" ? "Regressor R² Score:" : "রিগ্রেশন R² স্কোর (Regressor R²):"}
               </span>
               <span className="font-extrabold text-amber-900 font-mono">0.9740</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-slate-600">
+              <span className="text-[#86868b]">
                 {i18n.language === "en" ? "Mean Absolute Error (MAE):" : "গড় পরম ত্রুটি (MAE):"}
               </span>
               <span className="font-extrabold text-amber-900 font-mono">29.22 kg/ha</span>
@@ -220,43 +220,43 @@ export const AboutModelInfoPage: React.FC = () => {
       </div>
     </div>
 
-      {/* RAG & Embeddings */}
-      <div className="app-card bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-card space-y-4">
+      {/* RAG & Embeddings (Apple Bento Card) */}
+      <div className="app-card bg-white p-6 sm:p-8 rounded-[28px] border border-black/[0.06] shadow-apple space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center border border-blue-200">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center border border-blue-200/60 shadow-2xs">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-extrabold text-slate-900 text-base">
+            <h3 className="font-bold text-[#1d1d1f] text-base tracking-tight">
               {i18n.language === "en"
                 ? "3. Agri Assistant (RAG) & Vector Database"
                 : "৩. কৃষি সহকারী (RAG) ও ভেক্টর স্টোর"}
             </h3>
-            <span className="text-xs text-slate-500 font-mono">ChromaDB + Multilingual E5 Embeddings</span>
+            <span className="text-xs text-[#86868b] font-mono">ChromaDB + Multilingual E5 Embeddings</span>
           </div>
         </div>
 
-        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-bangla">
+        <p className="text-xs sm:text-sm text-[#1d1d1f] leading-relaxed font-bangla">
           {i18n.language === "en"
             ? "Mrittika AI's agricultural assistant is not an open-ended chatbot. It operates on a strictly bounded Retrieval-Augmented Generation (RAG) pipeline sourcing verified publications from the Bangladesh Agricultural Research Council (BARC), Bangladesh Rice Research Institute (BRRI), and the Department of Agricultural Extension (DAE), citing specific source documents."
             : "মৃত্তিকা এআই-এর কৃষি সহকারী কোনো সাধারণ আড্ডাবাজ বট নয়। এটি একটি কঠোরভাবে সীমারেখাযুক্ত আরএজি (RAG) আর্কিটেকচার যা বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC), বাংলাদেশ ধান গবেষণা ইনস্টিটিউট (BRRI) ও কৃষি সম্প্রসারণ অধিদপ্তর (DAE)-এর নথি থেকে তথ্য সংগ্রহ করে পৃষ্ঠা নম্বরসহ উত্তর উপস্থাপন করে।"}
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-center">
-          <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-            <span className="text-[11px] text-slate-500 font-bold block">
+          <div className="bg-[#fbfbfd] p-4 rounded-2xl border border-black/[0.05]">
+            <span className="text-[11px] text-[#86868b] font-semibold block">
               {i18n.language === "en" ? "Vector Store" : "ভেক্টর স্টোর"}
             </span>
-            <span className="text-xs font-bold text-slate-900">ChromaDB Persistent</span>
+            <span className="text-xs font-bold text-[#1d1d1f] mt-0.5 block">ChromaDB Persistent</span>
           </div>
-          <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-            <span className="text-[11px] text-slate-500 font-bold block">
+          <div className="bg-[#fbfbfd] p-4 rounded-2xl border border-black/[0.05]">
+            <span className="text-[11px] text-[#86868b] font-semibold block">
               {i18n.language === "en" ? "Embedding Model" : "এমবেডিং মডেল"}
             </span>
-            <span className="text-xs font-bold text-slate-900">Multilingual MiniLM / E5</span>
+            <span className="text-xs font-bold text-[#1d1d1f] mt-0.5 block">Multilingual MiniLM / E5</span>
           </div>
-          <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-            <span className="text-[11px] text-slate-500 font-bold block">
+          <div className="bg-[#fbfbfd] p-4 rounded-2xl border border-black/[0.05]">
+            <span className="text-[11px] text-[#86868b] font-semibold block">
               {i18n.language === "en" ? "Safety & Fallback" : "সুরক্ষা ও ফলব্যাক"}
             </span>
             <span className="text-xs font-bold text-slate-900">

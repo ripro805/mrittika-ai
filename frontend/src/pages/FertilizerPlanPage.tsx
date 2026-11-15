@@ -136,18 +136,18 @@ export const FertilizerPlanPage: React.FC = () => {
       )}
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="app-card p-6 sm:p-8 rounded-3xl border border-slate-200/90 bg-white shadow-card space-y-6">
+      <form onSubmit={handleSubmit} className="app-card p-6 sm:p-9 rounded-[28px] sm:rounded-[36px] border border-black/[0.06] bg-white shadow-apple space-y-6">
         {/* Crop Selection & Area */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-1">
-            <label className="block text-xs font-bold text-slate-800 mb-1">
+            <label className="block text-xs font-semibold text-[#1d1d1f] mb-1.5">
               {i18n.language === "en" ? "Target Crop" : "উদ্দিষ্ট ফসল (Target Crop)"}
             </label>
             <select
               name="crop"
               value={formData.crop}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
+              className="w-full px-3.5 py-2.5 bg-white border border-black/[0.1] rounded-2xl text-sm font-semibold text-[#1d1d1f] focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 focus:outline-none shadow-2xs transition-all"
             >
               {crops.map((c) => (
                 <option key={c.slug} value={c.slug}>
@@ -158,7 +158,7 @@ export const FertilizerPlanPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">
+            <label className="block text-xs font-semibold text-[#1d1d1f] mb-1.5">
               {i18n.language === "en" ? "Land Area" : "জমির পরিমাণ (Land Area)"}
             </label>
             <input
@@ -169,19 +169,19 @@ export const FertilizerPlanPage: React.FC = () => {
               value={formData.land_area}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
+              className="w-full px-3.5 py-2.5 bg-white border border-black/[0.1] rounded-2xl text-sm font-semibold text-[#1d1d1f] focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 focus:outline-none shadow-2xs transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">
+            <label className="block text-xs font-semibold text-[#1d1d1f] mb-1.5">
               {i18n.language === "en" ? "Measurement Unit" : "জমির একক (Unit)"}
             </label>
             <select
               name="land_unit"
               value={formData.land_unit}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
+              className="w-full px-3.5 py-2.5 bg-white border border-black/[0.1] rounded-2xl text-sm font-semibold text-[#1d1d1f] focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 focus:outline-none shadow-2xs transition-all"
             >
               <option value="bigha">{i18n.language === "en" ? "Bigha (33 Decimal)" : "বিঘা (৩৩ শতক)"}</option>
               <option value="decimal">{i18n.language === "en" ? "Decimal / Shotok" : "শতক / ডেসিমাল"}</option>
@@ -336,10 +336,10 @@ export const FertilizerPlanPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting || !isCropSupported}
-            className={`w-full py-3.5 px-6 rounded-xl font-extrabold text-sm shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all ${
+            className={`w-full py-4 px-6 rounded-full font-semibold text-sm shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] ${
               isCropSupported
-                ? "bg-amber-700 hover:bg-amber-800 text-white shadow-amber-700/20 hover:-translate-y-0.5"
-                : "bg-slate-200 text-slate-600 border border-slate-300 cursor-not-allowed font-bold"
+                ? "bg-amber-700 hover:bg-amber-800 text-white shadow-amber-700/20"
+                : "bg-slate-200 text-slate-500 border border-slate-300 cursor-not-allowed"
             }`}
           >
             {isSubmitting ? (
@@ -355,12 +355,12 @@ export const FertilizerPlanPage: React.FC = () => {
       {/* Results Section */}
       {result && result.supported && (
         <div className="space-y-8 animate-in fade-in duration-300">
-          {/* Header Card with Crop Photography */}
+          {/* Header Card with Crop Photography (Apple Pro Bento) */}
           {(() => {
             const cropImg = getCropImage(result.crop_name_en || result.crop_name_bn || formData.crop);
             return (
               <div
-                className="banner-fertilizer-hero p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-white"
+                className="banner-fertilizer-hero p-6 sm:p-8 rounded-[28px] sm:rounded-[36px] shadow-[0_20px_50px_-15px_rgba(69,26,3,0.4)] border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-white"
                 style={{
                   background: "linear-gradient(135deg, #451a03 0%, #78350f 50%, #431407 100%)",
                   backgroundColor: "#451a03",
@@ -380,7 +380,7 @@ export const FertilizerPlanPage: React.FC = () => {
                     <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
                       {i18n.language === "en" ? "Recommended Fertilizer Package" : "সুপারিশকৃত সারের প্যাকেজ"}
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
                       {i18n.language === "en" ? (result.crop_name_en || result.crop_name_bn) : result.crop_name_bn} - {result.fertilizer_plan}
                     </h2>
                     <p className="text-xs text-amber-200 mt-1 font-bangla">
@@ -397,7 +397,7 @@ export const FertilizerPlanPage: React.FC = () => {
 
                 <button
                   onClick={handleAskAssistant}
-                  className="inline-flex items-center gap-2 bg-white text-amber-950 hover:bg-amber-50 px-5 py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all hover:-translate-y-0.5 cursor-pointer shrink-0"
+                  className="inline-flex items-center gap-2 bg-white text-amber-950 hover:bg-amber-50 px-5 py-2.5 rounded-full font-semibold text-xs shadow-xs transition-all active:scale-98 cursor-pointer shrink-0"
                 >
                   <MessageSquare className="w-4 h-4 text-amber-800" />
                   <span>{i18n.language === "en" ? "Ask AI Assistant" : "সহকারীকে প্রশ্ন করুন"}</span>
@@ -406,18 +406,18 @@ export const FertilizerPlanPage: React.FC = () => {
             );
           })()}
 
-          {/* Unit Switcher */}
-          <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs">
-            <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+          {/* Unit Switcher (Apple Segmented Capsule Pill) */}
+          <div className="flex items-center justify-between bg-white p-4 sm:p-5 rounded-[22px] border border-black/[0.06] shadow-apple">
+            <span className="text-xs font-semibold text-[#1d1d1f] flex items-center gap-1.5">
               <TableIcon className="w-4 h-4 text-amber-700" />
               <span>{i18n.language === "en" ? "Display Unit Rate:" : "সারের হার প্রদর্শন একক:"}</span>
             </span>
-            <div className="inline-flex rounded-xl p-1 bg-slate-100">
+            <div className="inline-flex rounded-full p-1 bg-black/[0.04] border border-black/[0.05]">
               <button
                 type="button"
                 onClick={() => setActiveUnit("bigha")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                  activeUnit === "bigha" ? "bg-white text-amber-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  activeUnit === "bigha" ? "bg-white text-amber-950 shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                 }`}
               >
                 {i18n.language === "en" ? "Bigha (33 Decimal)" : "বিঘা (৩৩ শতক)"}
@@ -425,8 +425,8 @@ export const FertilizerPlanPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveUnit("decimal")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                  activeUnit === "decimal" ? "bg-white text-amber-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  activeUnit === "decimal" ? "bg-white text-amber-950 shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                 }`}
               >
                 {i18n.language === "en" ? "Decimal / Shotok" : "শতক (ডেসিমাল)"}
@@ -434,8 +434,8 @@ export const FertilizerPlanPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveUnit("ha")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                  activeUnit === "ha" ? "bg-white text-amber-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  activeUnit === "ha" ? "bg-white text-amber-950 shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                 }`}
               >
                 {i18n.language === "en" ? "Hectare" : "হেক্টর"}
@@ -444,7 +444,7 @@ export const FertilizerPlanPage: React.FC = () => {
           </div>
 
           {/* Fertilizer Dosages Table */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-card">
+          <div className="bg-white rounded-[28px] border border-black/[0.06] overflow-hidden shadow-apple">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
                 <thead className="bg-slate-50">
