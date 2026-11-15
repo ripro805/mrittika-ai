@@ -60,10 +60,10 @@ export const AdminDashboardPage: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Executive Command Banner */}
-      <div className="relative overflow-hidden bg-linear-to-r from-purple-950 via-purple-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-card border border-purple-800/40">
+      <div className="relative overflow-hidden bg-purple-950 bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-card border border-purple-800">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs text-xs font-semibold text-purple-200 border border-white/10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-purple-200 border border-white/10">
               <ShieldCheck className="w-3.5 h-3.5 text-purple-300" />
               <span>সিস্টেম অ্যাডমিনিস্ট্রেশন কমান্ড প্ল্যাটফর্ম</span>
             </div>

@@ -348,7 +348,7 @@ export const FertilizerPlanPage: React.FC = () => {
       {result && result.supported && (
         <div className="space-y-8 animate-in fade-in duration-300">
           {/* Header Card */}
-          <div className="bg-linear-to-r from-amber-950 via-amber-900 to-orange-950 text-white p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-amber-950 bg-gradient-to-r from-amber-950 via-amber-900 to-orange-950 text-white p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
                 সুপারিশকৃত সারের প্যাকেজ

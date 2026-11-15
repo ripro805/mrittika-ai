@@ -92,6 +92,9 @@ export default {
         "floating": "0 20px 40px -8px rgba(15, 23, 42, 0.12), 0 1px 3px 0 rgba(15, 23, 42, 0.04)",
         "focus-emerald": "0 0 0 3px rgba(21, 128, 61, 0.18)",
       },
+      backdropBlur: {
+        xs: "2px",
+      },
       borderRadius: {
         "2xl": "1rem",
         "3xl": "1.25rem",

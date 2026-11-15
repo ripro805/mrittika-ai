@@ -579,7 +579,7 @@ export const AdminCacheManagementPage: React.FC = () => {
 
       {/* Details & Invalidation Modal */}
       {activeModalItem && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="app-card max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 shadow-2xl">
             <div className="flex items-start justify-between border-b border-slate-200 pb-4">
               <div>

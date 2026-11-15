@@ -748,7 +748,7 @@ export const AssistantChatPage: React.FC = () => {
             /* Agricultural AI Command Hub */
             <div className="max-w-4xl mx-auto py-2 sm:py-4 space-y-6 animate-in fade-in duration-300">
               {/* Hero Showcase Card */}
-              <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-950 via-emerald-950 to-slate-900 p-6 sm:p-8 text-white border border-emerald-800/40 shadow-card">
+              <div className="relative overflow-hidden rounded-3xl bg-slate-950 bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 p-6 sm:p-8 text-white border border-emerald-800 shadow-card">
                 <div className="relative z-10 space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-400" />

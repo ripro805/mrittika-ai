@@ -86,7 +86,7 @@ export const OfficerAnalyticsPage: React.FC = () => {
                   </div>
                   <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
                     <div
-                      className="h-full rounded-full bg-linear-to-r from-teal-700 to-emerald-700 transition-all duration-500"
+                      className="h-full rounded-full bg-teal-700 bg-gradient-to-r from-teal-700 to-emerald-700 transition-all duration-500"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
