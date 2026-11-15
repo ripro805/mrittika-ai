@@ -123,13 +123,13 @@ export const AdminActivityLogsPage: React.FC = () => {
       {/* Search Bar */}
       <div className="app-card p-4">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
           <input
             type="text"
             placeholder="বিবরণ বা আইপি অ্যাড্রেস দিয়ে অডিট লগ খুঁজুন..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="app-input pl-10 text-slate-900 placeholder:text-slate-400 font-bangla text-sm"
+            className="app-input pl-10 text-slate-900 placeholder:text-slate-500 font-bangla text-sm"
           />
         </div>
       </div>

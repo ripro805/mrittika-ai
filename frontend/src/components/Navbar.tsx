@@ -115,7 +115,7 @@ export const Navbar: React.FC = () => {
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? "text-emerald-700" : "text-slate-400"}`} />
+                  <Icon className={`w-4 h-4 ${active ? "text-emerald-700" : "text-slate-500"}`} />
                   <span>{link.label}</span>
                 </Link>
               );
@@ -164,7 +164,7 @@ export const Navbar: React.FC = () => {
                   {navLoggingRole === "farmer" ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-700" />
                   ) : (
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover/item:translate-x-0.5 transition-transform" />
                   )}
                 </button>
 
@@ -186,7 +186,7 @@ export const Navbar: React.FC = () => {
                   {navLoggingRole === "officer" ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-teal-700" />
                   ) : (
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover/item:translate-x-0.5 transition-transform" />
                   )}
                 </button>
 
@@ -208,7 +208,7 @@ export const Navbar: React.FC = () => {
                   {navLoggingRole === "admin" ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-700" />
                   ) : (
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover/item:translate-x-0.5 transition-transform" />
                   )}
                 </button>
               </div>
@@ -306,7 +306,7 @@ export const Navbar: React.FC = () => {
                   active ? "bg-emerald-50 text-emerald-900 font-bold" : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${active ? "text-emerald-700" : "text-slate-400"}`} />
+                <Icon className={`w-4 h-4 ${active ? "text-emerald-700" : "text-slate-500"}`} />
                 <span>{link.label}</span>
               </Link>
             );
@@ -314,7 +314,7 @@ export const Navbar: React.FC = () => {
 
           {/* Quick Login Bar on Mobile */}
           <div className="pt-2 pb-1 border-t border-slate-100">
-            <p className="text-[10px] font-bold text-gray-500 uppercase px-1 mb-1.5 flex items-center gap-1">
+            <p className="text-[11px] font-bold text-slate-700 uppercase px-1 mb-1.5 flex items-center gap-1 font-bangla">
               <Zap className="w-3 h-3 text-amber-500 fill-amber-400" />
               ১-ক্লিক দ্রুত লগইন:
             </p>

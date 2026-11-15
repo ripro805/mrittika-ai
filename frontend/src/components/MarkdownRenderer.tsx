@@ -18,12 +18,12 @@ const CodeBlock: React.FC<{ language?: string; children: string }> = ({ language
   };
 
   return (
-    <div className="relative my-3 rounded-xl overflow-hidden border border-gray-800 bg-gray-900 text-gray-100 text-xs font-mono shadow-sm">
-      <div className="flex items-center justify-between px-3.5 py-1.5 bg-gray-800 text-gray-300 text-[11px] border-b border-gray-700">
+    <div className="relative my-3 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 text-slate-100 text-xs font-mono shadow-sm">
+      <div className="flex items-center justify-between px-3.5 py-1.5 bg-slate-800 text-slate-200 text-[11px] border-b border-slate-700">
         <span className="uppercase font-semibold tracking-wider">{language || "Code"}</span>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer"
           title="অনুলিপি করুন"
         >
           {copied ? (
@@ -50,37 +50,37 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
   if (!content) return null;
 
   return (
-    <div className={`prose-chat text-sm leading-relaxed text-gray-800 font-bangla ${className}`}>
+    <div className={`prose-chat text-sm leading-relaxed text-slate-800 font-bangla ${className}`}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           // Headings
           h1: ({ children }) => (
-            <h1 className="text-lg sm:text-xl font-black text-gray-900 mt-4 mb-2 pb-1.5 border-b border-gray-200 flex items-center gap-2">
+            <h1 className="text-lg sm:text-xl font-black text-slate-900 mt-4 mb-2 pb-1.5 border-b border-slate-200 flex items-center gap-2">
               <span className="w-1.5 h-5 bg-emerald-600 rounded-full inline-block shrink-0" />
               <span>{children}</span>
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-base sm:text-lg font-bold text-gray-900 mt-3 mb-1.5 flex items-center gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 mt-3 mb-1.5 flex items-center gap-2">
               <span className="w-1.5 h-4 bg-emerald-500 rounded-full inline-block shrink-0" />
               <span>{children}</span>
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-sm sm:text-base font-bold text-gray-900 mt-2.5 mb-1 text-emerald-950">
+            <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-2.5 mb-1 text-emerald-950">
               {children}
             </h3>
           ),
           h4: ({ children }) => (
-            <h4 className="text-xs sm:text-sm font-bold text-gray-800 mt-2 mb-1">
+            <h4 className="text-xs sm:text-sm font-bold text-slate-800 mt-2 mb-1">
               {children}
             </h4>
           ),
 
           // Paragraph
           p: ({ children }) => (
-            <p className="my-1.5 leading-relaxed text-gray-800 font-bangla whitespace-normal">
+            <p className="my-1.5 leading-relaxed text-slate-800 font-bangla whitespace-normal">
               {children}
             </p>
           ),
@@ -92,14 +92,14 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="my-2 space-y-1.5 pl-5 list-decimal text-sm text-gray-800 marker:font-bold marker:text-emerald-700">
+            <ol className="my-2 space-y-1.5 pl-5 list-decimal text-sm text-slate-800 marker:font-bold marker:text-emerald-700">
               {children}
             </ol>
           ),
           li: ({ children, node, ...props }) => {
             // Check if parent is an unordered list (ul) to add custom bullet point
             return (
-              <li className="flex items-start gap-2 text-sm text-gray-800 leading-relaxed font-bangla" {...props}>
+              <li className="flex items-start gap-2 text-sm text-slate-800 leading-relaxed font-bangla" {...props}>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 shrink-0 inline-block" />
                 <span className="flex-1">{children}</span>
               </li>
@@ -108,17 +108,17 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
 
           // Bold & Emphasis
           strong: ({ children }) => (
-            <strong className="font-bold text-gray-950 text-[0.925rem]">
+            <strong className="font-bold text-slate-950 text-[0.925rem]">
               {children}
             </strong>
           ),
           em: ({ children }) => (
-            <em className="italic text-gray-700">{children}</em>
+            <em className="italic text-slate-700">{children}</em>
           ),
 
           // Tables
           table: ({ children }) => (
-            <div className="my-3 overflow-x-auto rounded-xl border border-gray-200 shadow-2xs bg-white">
+            <div className="my-3 overflow-x-auto rounded-xl border border-slate-200 shadow-2xs bg-white">
               <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[320px]">
                 {children}
               </table>
@@ -135,17 +135,17 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
             </th>
           ),
           tbody: ({ children }) => (
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <tbody className="divide-y divide-slate-100 bg-white">
               {children}
             </tbody>
           ),
           tr: ({ children }) => (
-            <tr className="hover:bg-emerald-50/30 transition-colors even:bg-gray-50/50">
+            <tr className="hover:bg-emerald-50/30 transition-colors even:bg-slate-50/60">
               {children}
             </tr>
           ),
           td: ({ children }) => (
-            <td className="py-2.5 px-3.5 text-gray-800 border-r border-gray-100 last:border-r-0 font-bangla align-top">
+            <td className="py-2.5 px-3.5 text-slate-800 border-r border-slate-100 last:border-r-0 font-bangla align-top">
               {children}
             </td>
           ),

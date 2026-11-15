@@ -59,7 +59,7 @@ export const LandingPage: React.FC = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-base text-slate-200 font-medium leading-relaxed max-w-xl font-bangla">
               {i18n.language === "bn"
                 ? "আপনার জমির N-P-K মাত্রা, পিএইচ ও আবহাওয়া বিশ্লেষণ করে সর্বোচ্চ উপযোগী ফসল, সুষম সারের সময়সূচী এবং সরকারি নির্দেশিকা ভিত্তিক তাৎক্ষণিক বাংলা পরামর্শ।"
                 : "Analyze soil nutrients, pH, and local weather to receive top crop recommendations, stage-by-stage fertilizer dosages, and research-grounded Bangla agricultural advice."}
@@ -89,19 +89,19 @@ export const LandingPage: React.FC = () => {
             <div className="pt-6 border-t border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-medium">
               <div className="space-y-0.5">
                 <p className="text-xl font-extrabold text-white">২৪ টি ফসল</p>
-                <p className="text-[11px] text-slate-400">ক্যানোনিকাল শ্রেণিবিভাগ</p>
+                <p className="text-[11px] text-slate-300 font-medium">ক্যানোনিকাল শ্রেণিবিভাগ</p>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl font-extrabold text-white">৩০ টি AEZ</p>
-                <p className="text-[11px] text-slate-400">আঞ্চলিক জলবায়ু উপাত্ত</p>
+                <p className="text-[11px] text-slate-300 font-medium">আঞ্চলিক জলবায়ু উপাত্ত</p>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl font-extrabold text-white">৯৮.৪%</p>
-                <p className="text-[11px] text-slate-400">মডেল একুরেসি স্কোর</p>
+                <p className="text-[11px] text-slate-300 font-medium">মডেল একুরেসি স্কোর</p>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl font-extrabold text-white">১০০%</p>
-                <p className="text-[11px] text-slate-400">যাচাইকৃত নথি সূত্র</p>
+                <p className="text-[11px] text-slate-300 font-medium">যাচাইকৃত নথি সূত্র</p>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ export const LandingPage: React.FC = () => {
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider">
                       লাইভ কৃষি সিমুলেটর (Live Model Preview)
                     </h3>
-                    <p className="text-[10px] text-slate-400">জেলা: বগুড়া • দোআঁশ মাটি</p>
+                    <p className="text-[10px] text-slate-300">জেলা: বগুড়া • দোআঁশ মাটি</p>
                   </div>
                 </div>
                 <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 text-[10px] font-mono border border-emerald-500/40 font-bold">
@@ -128,26 +128,26 @@ export const LandingPage: React.FC = () => {
 
               {/* Nutrients Gauges */}
               <div className="space-y-2.5">
-                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">
                   মাটির পুষ্টি উপাদান মাত্রা (N-P-K):
                 </p>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span className="text-[10px] text-slate-400">নাইট্রোজেন (N)</span>
+                    <span className="text-[10px] text-slate-300 font-medium">নাইট্রোজেন (N)</span>
                     <p className="text-sm font-extrabold text-emerald-400 font-mono">৯০ kg/ha</p>
                     <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                       <div className="bg-emerald-400 h-full w-[75%]" />
                     </div>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span className="text-[10px] text-slate-400">ফসফরাস (P)</span>
+                    <span className="text-[10px] text-slate-300 font-medium">ফসফরাস (P)</span>
                     <p className="text-sm font-extrabold text-teal-400 font-mono">৪৫ kg/ha</p>
                     <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                       <div className="bg-teal-400 h-full w-[65%]" />
                     </div>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span className="text-[10px] text-slate-400">পটাশিয়াম (K)</span>
+                    <span className="text-[10px] text-slate-300 font-medium">পটাশিয়াম (K)</span>
                     <p className="text-sm font-extrabold text-amber-400 font-mono">৬০ kg/ha</p>
                     <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                       <div className="bg-amber-400 h-full w-[80%]" />
@@ -170,7 +170,7 @@ export const LandingPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-base font-extrabold text-white">আমন ধান (Aman Rice)</h4>
-                    <p className="text-[11px] text-slate-300">দোআঁশ মাটি • পিএইচ ৬.৫ • ২৫০মিমি বৃষ্টিপাত</p>
+                    <p className="text-[11px] text-slate-200">দোআঁশ মাটি • পিএইচ ৬.৫ • ২৫০মিমি বৃষ্টিপাত</p>
                   </div>
                   <Link
                     to="/crop"
@@ -181,7 +181,7 @@ export const LandingPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+              <div className="flex items-center justify-between text-[11px] text-slate-300 pt-1">
                 <span className="flex items-center gap-1">
                   <CloudSun className="w-3.5 h-3.5 text-amber-400" />
                   আবহাওয়া: ২৫.৭°C • আর্দ্রতা ৭২%
@@ -300,7 +300,7 @@ export const LandingPage: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               কৃষক, কর্মকর্তা ও প্রশাসকের জন্য নির্দিষ্ট ওয়ার্কস্পেস
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300">
+            <p className="text-xs sm:text-sm text-slate-200 font-medium font-bangla">
               প্রত্যেক ব্যবহারকারীর দায়িত্ব ও প্রয়োজন অনুসারে তৈরি করা হয়েছে ডেডিকেটেড ইন্টারফেস।
             </p>
           </div>
@@ -321,12 +321,12 @@ export const LandingPage: React.FC = () => {
               🌾
             </div>
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-white">কৃষক ডিজিটাল পোর্টাল</h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-bangla">
+              <h3 className="text-base font-bold text-white font-bangla">কৃষক ডিজিটাল পোর্টাল</h3>
+              <p className="text-xs text-slate-200 leading-relaxed font-bangla font-medium">
                 স্থানীয় আবহাওয়া, জমির পরিমাপ অনুযায়ী সারের ডোজ, সংরক্ষিত সুপারিশের ইতিহাস এবং ১-ক্লিকে পিডিএফ প্রিন্ট।
               </p>
             </div>
-            <ul className="text-xs text-slate-300 space-y-1.5 pt-2 font-bangla">
+            <ul className="text-xs text-slate-200 space-y-1.5 pt-2 font-bangla font-medium">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                 <span>ব্যক্তিগত খামার ড্যাশবোর্ড ও পরামর্শ লগ</span>
@@ -344,12 +344,12 @@ export const LandingPage: React.FC = () => {
               🛡️
             </div>
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-white">উপজেলা কর্মকর্তা পোর্টাল</h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-bangla">
+              <h3 className="text-base font-bold text-white font-bangla">উপজেলা কর্মকর্তা পোর্টাল</h3>
+              <p className="text-xs text-slate-200 leading-relaxed font-bangla font-medium">
                 এআই মডেলের ভুল বা অস্পষ্ট উত্তর নিরীক্ষা কেন্দ্র, মাঠপর্যায়ের বৈজ্ঞানিক নোট সংযোজন ও আঞ্চলিক প্রবণতা বিশ্লেষণ।
               </p>
             </div>
-            <ul className="text-xs text-slate-300 space-y-1.5 pt-2 font-bangla">
+            <ul className="text-xs text-slate-200 space-y-1.5 pt-2 font-bangla font-medium">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
                 <span>ফ্ল্যাগকৃত প্রশ্নোত্তর সংশোধন ও অনুমোদন</span>
@@ -367,12 +367,12 @@ export const LandingPage: React.FC = () => {
               👑
             </div>
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-white">অ্যাডমিন কমান্ড সেন্টার</h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-bangla">
+              <h3 className="text-base font-bold text-white font-bangla">অ্যাডমিন কমান্ড সেন্টার</h3>
+              <p className="text-xs text-slate-200 leading-relaxed font-bangla font-medium">
                 সমগ্র প্ল্যাটফর্মের ইউজার ম্যানেজমেন্ট, কর্মকর্তা স্বীকৃতি অনুমোদন, RAG গবেষণা নথি ব্যবস্থাপনা ও অডিট ট্রেইল।
               </p>
             </div>
-            <ul className="text-xs text-slate-300 space-y-1.5 pt-2 font-bangla">
+            <ul className="text-xs text-slate-200 space-y-1.5 pt-2 font-bangla font-medium">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
                 <span>মডেল আর্কিটেকচার ও আরএজি রি-ইন্ডেক্স</span>

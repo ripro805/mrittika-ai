@@ -285,7 +285,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 placeholder="না জানা থাকলে খালি রাখুন"
                 value={formData.S}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
               />
             </div>
             <div>
@@ -301,7 +301,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 placeholder="না জানা থাকলে খালি রাখুন"
                 value={formData.Zn}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
               />
             </div>
             <div>
@@ -317,7 +317,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 placeholder="না জানা থাকলে খালি রাখুন"
                 value={formData.organic_matter}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
               />
             </div>
           </div>
@@ -331,7 +331,7 @@ export const FertilizerPlanPage: React.FC = () => {
             className={`w-full py-3.5 px-6 rounded-xl font-extrabold text-sm shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all ${
               isCropSupported
                 ? "bg-amber-700 hover:bg-amber-800 text-white shadow-amber-700/20 hover:-translate-y-0.5"
-                : "bg-slate-200 text-slate-400 cursor-not-allowed"
+                : "bg-slate-200 text-slate-600 border border-slate-300 cursor-not-allowed font-bold"
             }`}
           >
             {isSubmitting ? (

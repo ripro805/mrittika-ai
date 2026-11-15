@@ -15,7 +15,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowe
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
         <div className="w-10 h-10 border-4 border-mrittika-600 border-t-transparent rounded-full animate-spin" />
-        <span className="text-xs text-gray-500 font-medium">তথ্য লোড হচ্ছে...</span>
+        <span className="text-sm text-slate-700 font-bold font-bangla">তথ্য লোড হচ্ছে...</span>
       </div>
     );
   }

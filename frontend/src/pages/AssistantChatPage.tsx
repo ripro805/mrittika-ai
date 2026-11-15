@@ -616,10 +616,10 @@ export const AssistantChatPage: React.FC = () => {
               </p>
             </div>
           ) : sessions.length === 0 ? (
-            <div className="text-center py-8 px-4 text-slate-500 space-y-2">
-              <MessageSquare className="w-8 h-8 mx-auto opacity-40 text-slate-400" />
-              <p className="text-xs font-medium">কোনো পূর্বের আলোচনা নেই।</p>
-              <p className="text-[10px] text-slate-400">নতুন প্রশ্ন জিজ্ঞাসা করলে এখানে যুক্ত হবে।</p>
+            <div className="text-center py-8 px-4 text-slate-700 space-y-2 font-bangla">
+              <MessageSquare className="w-8 h-8 mx-auto text-slate-400" />
+              <p className="text-xs font-bold text-slate-800">কোনো পূর্বের আলোচনা নেই।</p>
+              <p className="text-[11px] text-slate-500 font-medium">নতুন প্রশ্ন জিজ্ঞাসা করলে এখানে যুক্ত হবে।</p>
             </div>
           ) : (
             sessions.map((s) => {
@@ -756,16 +756,16 @@ export const AssistantChatPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white">
+                    <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white font-bangla">
                       মৃত্তিকা এআই বাংলা কৃষি সহকারীতে স্বাগতম
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-bangla">
+                    <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed max-w-2xl font-bangla">
                       ফসলের যেকোনো রোগ, সুষম সার প্রয়োগের সঠিক কিস্তি, বালাই দমন কিংবা আবহাওয়া সংক্রান্ত প্রশ্ন বাংলায় লিখুন। নিচে দেওয়া জনপ্রিয় বিষয়গুলোতে চাপ দিয়েও সরাসরি আলোচনা শুরু করতে পারেন:
                     </p>
                   </div>
 
                   {/* Feature Badges */}
-                  <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-semibold text-emerald-200">
+                  <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-bold text-emerald-100 font-bangla">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
                       <Zap className="w-3.5 h-3.5 text-amber-400" />
                       সাব-মিলি-সেকেন্ড দ্রুততম রেসপন্স
@@ -1199,7 +1199,7 @@ export const AssistantChatPage: React.FC = () => {
               }}
               placeholder="আপনার প্রশ্নটি বাংলায় লিখুন... (Enter চাপলে সেন্ড হবে)"
               disabled={isLoading}
-              className="flex-1 bg-transparent border-0 text-sm focus:outline-none resize-none max-h-32 min-h-[2.25rem] py-1 text-slate-900 placeholder:text-slate-400 font-bangla"
+              className="flex-1 bg-transparent border-0 text-sm focus:outline-none resize-none max-h-32 min-h-[2.25rem] py-1 text-slate-900 placeholder:text-slate-500 font-bangla"
             />
 
             <div className="flex items-center gap-2">
@@ -1286,7 +1286,7 @@ export const AssistantChatPage: React.FC = () => {
                     value={feedbackComment}
                     onChange={(e) => setFeedbackComment(e.target.value)}
                     placeholder="উত্তরের ত্রুটি বিস্তারিত লিখুন..."
-                    className="w-full text-xs p-2.5 rounded-xl border border-slate-300 text-slate-900 bg-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 font-bangla"
+                    className="w-full text-xs p-2.5 rounded-xl border border-slate-300 text-slate-900 bg-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 font-bangla"
                   />
                 </div>
 

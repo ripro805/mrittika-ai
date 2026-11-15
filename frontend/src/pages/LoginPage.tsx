@@ -149,47 +149,47 @@ export const LoginPage: React.FC = () => {
                   স্মার্ট এআই প্রযুক্তি
                 </span>
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-bangla">
+              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-bangla">
                 একটি অ্যাকাউন্টের মাধ্যমে সংরক্ষিত ফসলের হিসাব, সার প্রয়োগ পরিকল্পনা এবং এআই কৃষি সহকারীর সাথে পূর্ববর্তী আলোচনার ইতিহাস পর্যালোচনা করুন।
               </p>
             </div>
 
             {/* 3 Dedicated Portals Preview */}
             <div className="space-y-3 pt-2">
-              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
+              <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-emerald-900/80 text-emerald-300 flex items-center justify-center shrink-0">
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white">কৃষক পোর্টাল</h4>
-                  <p className="text-[11px] text-slate-400">মাটি বিশ্লেষণ, সারের সাশ্রয়ী হিসাব ও সংরক্ষিত পরামর্শ</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">কৃষক পোর্টাল</h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">মাটি বিশ্লেষণ, সারের সাশ্রয়ী হিসাব ও সংরক্ষিত পরামর্শ</p>
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
+              <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-teal-900/80 text-teal-300 flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white">কর্মকর্তা পোর্টাল (SAAO / UAO)</h4>
-                  <p className="text-[11px] text-slate-400">মাঠপর্যায়ের কৃষকের আবেদন ও এআই প্রতিক্রিয়া অডিট</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">কর্মকর্তা পোর্টাল (SAAO / UAO)</h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">মাঠপর্যায়ের কৃষকের আবেদন ও এআই প্রতিক্রিয়া অডিট</p>
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
+              <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-purple-900/80 text-purple-300 flex items-center justify-center shrink-0">
                   <UserCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white">অ্যাডমিন কনসোল</h4>
-                  <p className="text-[11px] text-slate-400">নলেজবেস পরিচালনা, ক্যাশ নিয়ন্ত্রণ ও নিরাপত্তা লগ</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">অ্যাডমিন কনসোল</h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">নলেজবেস পরিচালনা, ক্যাশ নিয়ন্ত্রণ ও নিরাপত্তা লগ</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Security Telemetry Footer */}
-          <div className="pt-4 border-t border-slate-800 grid grid-cols-2 gap-3 text-[11px] text-slate-400">
+          <div className="pt-4 border-t border-slate-800 grid grid-cols-2 gap-3 text-[11px] text-slate-200 font-medium font-bangla">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>JWT নিরাপদ প্রমাণীকরণ</span>
@@ -297,35 +297,35 @@ export const LoginPage: React.FC = () => {
           {/* Manual Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                 ১১ ডিজিটের মোবাইল নম্বর (Phone)
               </label>
               <div className="relative">
-                <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <Phone className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   placeholder="01712345678"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all font-mono font-medium"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                 পাসওয়ার্ড (Password)
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                 <input
                   type="password"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>

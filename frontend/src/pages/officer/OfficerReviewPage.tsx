@@ -140,13 +140,13 @@ export const OfficerReviewPage: React.FC = () => {
           {/* Search box */}
           <div className="p-4 border-b border-slate-200">
             <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+              <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
               <input
                 type="text"
                 placeholder="প্রশ্ন বা মন্তব্য খুঁজুন..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none"
+                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none font-bangla"
               />
             </div>
           </div>
@@ -154,9 +154,9 @@ export const OfficerReviewPage: React.FC = () => {
           {/* Items list */}
           <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
             {isLoading ? (
-              <div className="p-8 text-center text-xs text-slate-400">লোড হচ্ছে...</div>
+              <div className="p-8 text-center text-xs font-bold text-slate-700 font-bangla">লোড হচ্ছে...</div>
             ) : filteredItems.length === 0 ? (
-              <div className="p-8 text-center text-xs text-slate-500">কোনো প্রশ্নোত্তর মেলেনি।</div>
+              <div className="p-8 text-center text-xs font-semibold text-slate-600 font-bangla">কোনো প্রশ্নোত্তর মেলেনি।</div>
             ) : (
               filteredItems.map((item) => {
                 const isSelected = activeItem?.id === item.id;
@@ -269,7 +269,7 @@ export const OfficerReviewPage: React.FC = () => {
                     value={correctionText}
                     onChange={(e) => setCorrectionText(e.target.value)}
                     placeholder="মাঠ পর্যায়ের বাস্তব অভিজ্ঞতা ও বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC) অনুসারে সঠিক ডোজ, পদ্ধতি ও সময়সূচী লিখুন..."
-                    className="w-full p-4 rounded-2xl border border-slate-300 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none font-bangla"
+                    className="w-full p-4 rounded-2xl border border-slate-300 text-xs sm:text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none font-bangla"
                     required
                   />
                   <p className="text-[11px] text-slate-500 font-bangla">

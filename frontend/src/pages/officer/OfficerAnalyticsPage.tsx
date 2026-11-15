@@ -33,7 +33,7 @@ export const OfficerAnalyticsPage: React.FC = () => {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-teal-700" />
-        <span className="text-xs text-gray-500 font-medium">আঞ্চলিক কৃষিতাত্ত্বিক পরিসংখ্যান লোড হচ্ছে...</span>
+        <span className="text-sm text-slate-700 font-bold font-bangla">আঞ্চলিক কৃষিতাত্ত্বিক পরিসংখ্যান লোড হচ্ছে...</span>
       </div>
     );
   }

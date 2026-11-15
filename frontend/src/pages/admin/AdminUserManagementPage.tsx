@@ -121,13 +121,13 @@ export const AdminUserManagementPage: React.FC = () => {
       {/* Search Bar */}
       <div className="app-card bg-white p-4 rounded-2xl border border-slate-200 shadow-card">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
           <input
             type="text"
             placeholder="নাম, মোবাইল নম্বর বা জেলা দিয়ে ব্যবহারকারী খুঁজুন..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 focus:outline-none"
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 focus:outline-none font-bangla"
           />
         </div>
       </div>
@@ -183,7 +183,7 @@ export const AdminUserManagementPage: React.FC = () => {
                           <span>যাচাইকৃত</span>
                         </span>
                       ) : (
-                        <span className="text-slate-400 text-xs font-medium">সাধারণ</span>
+                        <span className="text-slate-700 text-xs font-bold font-bangla bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">সাধারণ</span>
                       )}
                     </td>
                     <td className="px-6 py-4 text-right">

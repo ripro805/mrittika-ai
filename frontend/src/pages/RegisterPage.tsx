@@ -82,7 +82,7 @@ export const RegisterPage: React.FC = () => {
                   যুক্ত হোন
                 </span>
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-bangla">
+              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-bangla">
                 একটি নিবন্ধিত অ্যাকাউন্টের মাধ্যমে আপনার জমির মাটির বিশ্লেষণ ও ফসলের ইতিহাস আজীবন নিরাপদ রাখুন।
               </p>
             </div>
@@ -93,8 +93,8 @@ export const RegisterPage: React.FC = () => {
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white">ব্যক্তিগত ফসল হিসাব সংরক্ষণ</h4>
-                  <p className="text-[11px] text-slate-400">প্রতিটি মৌসুমের সার প্রয়োগ ও খরচ বিবরণী সহজে পর্যবেক্ষণ</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">ব্যক্তিগত ফসল হিসাব সংরক্ষণ</h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">প্রতিটি মৌসুমের সার প্রয়োগ ও খরচ বিবরণী সহজে পর্যবেক্ষণ</p>
                 </div>
               </div>
 
@@ -103,8 +103,8 @@ export const RegisterPage: React.FC = () => {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white">কর্মকর্তা দ্বারা দ্রুত সাড়া</h4>
-                  <p className="text-[11px] text-slate-400">স্থানীয় উপ-সহকারী কৃষি কর্মকর্তা (SAAO) সরাসরি পরামর্শ ও অডিট</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">কর্মকর্তা দ্বারা দ্রুত সাড়া</h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">স্থানীয় উপ-সহকারী কৃষি কর্মকর্তা (SAAO) সরাসরি পরামর্শ ও অডিট</p>
                 </div>
               </div>
 
@@ -113,14 +113,14 @@ export const RegisterPage: React.FC = () => {
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white">২৪/৭ স্মার্ট বাংলা এআই সহায়তা</h4>
-                  <p className="text-[11px] text-slate-400">সরকারি নলেজবেস থেকে নির্ভুল রোগ ও পোকা দমনের সমাধান</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">২৪/৭ স্মার্ট বাংলা এআই সহায়তা</h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">সরকারি নলেজবেস থেকে নির্ভুল রোগ ও পোকা দমনের সমাধান</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-200 font-medium font-bangla">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
               <span>কোনো গোপনীয় চার্জ নেই</span>
@@ -150,11 +150,11 @@ export const RegisterPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                 আপনার পূর্ণ নাম (Full Name)
               </label>
               <div className="relative">
-                <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   name="name"
@@ -162,17 +162,17 @@ export const RegisterPage: React.FC = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all font-bangla"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                 ১১ ডিজিটের মোবাইল নম্বর (Phone)
               </label>
               <div className="relative">
-                <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <Phone className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   name="phone"
@@ -180,17 +180,17 @@ export const RegisterPage: React.FC = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all font-mono font-medium"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                 পাসওয়ার্ড (Password - অন্তত ৮ অক্ষর)
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                 <input
                   type="password"
                   name="password"
@@ -199,41 +199,41 @@ export const RegisterPage: React.FC = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                   জেলা (District)
                 </label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                  <MapPin className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                   <input
                     type="text"
                     name="district"
                     placeholder="Bogra / বগুড়া"
                     value={formData.district}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                    className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all font-bangla"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
                   উপজেলা (Upazila)
                 </label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                  <MapPin className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                   <input
                     type="text"
                     name="upazila"
                     placeholder="Sherpur / শেরপুর"
                     value={formData.upazila}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
+                    className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all font-bangla"
                   />
                 </div>
               </div>

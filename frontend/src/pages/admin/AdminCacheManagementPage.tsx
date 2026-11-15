@@ -188,8 +188,8 @@ export const AdminCacheManagementPage: React.FC = () => {
   const getStatusBadge = (item: CacheItem) => {
     if (item.is_expired) {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-300">
-          <Clock className="w-3 h-3 text-gray-500" /> মেয়াদোত্তীর্ণ (Expired)
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-800 border border-slate-300">
+          <Clock className="w-3.5 h-3.5 text-slate-600" /> মেয়াদোত্তীর্ণ (Expired)
         </span>
       );
     }
@@ -379,13 +379,13 @@ export const AdminCacheManagementPage: React.FC = () => {
       <div className="app-card bg-white p-4 rounded-2xl border border-slate-200 shadow-card space-y-3">
         <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+            <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="প্রশ্ন, ফসল বা উত্তরের বিবরণ দিয়ে খুঁজুন..."
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 focus:bg-white transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 focus:bg-white transition-all font-bangla"
             />
           </div>
           <button
@@ -450,25 +450,25 @@ export const AdminCacheManagementPage: React.FC = () => {
       </div>
 
       {/* Cache Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
+      <div className="app-card overflow-hidden">
         {isLoading ? (
-          <div className="p-12 text-center text-gray-500">
-            <RefreshCw className="w-8 h-8 text-purple-600 animate-spin mx-auto mb-3" />
+          <div className="p-12 text-center text-slate-600 font-bangla">
+            <RefreshCw className="w-8 h-8 text-purple-700 animate-spin mx-auto mb-3" />
             <p className="text-sm font-semibold">ক্যাশ ডাটা লোড হচ্ছে...</p>
           </div>
         ) : items.length === 0 ? (
-          <div className="p-12 text-center text-gray-500">
-            <Database className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-            <p className="text-base font-bold text-gray-700">কোনো ক্যাশ এন্ট্রি পাওয়া যায়নি</p>
-            <p className="text-xs text-gray-500 mt-1">
+          <div className="p-12 text-center text-slate-600 font-bangla">
+            <Database className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+            <p className="text-base font-bold text-slate-800">কোনো ক্যাশ এন্ট্রি পাওয়া যায়নি</p>
+            <p className="text-xs text-slate-500 mt-1">
               ব্যবহারকারীরা চ্যাটবটে প্রশ্ন জিজ্ঞেস করলে উত্তর এখানে স্বয়ংক্রিয়ভাবে সংরক্ষিত হবে।
             </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-gray-600 border-collapse">
+            <table className="w-full text-left text-sm text-slate-700 border-collapse">
               <thead>
-                <tr className="bg-gray-50/80 border-b border-gray-200 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-700 uppercase tracking-wider">
                   <th className="py-3.5 px-4">প্রশ্ন ও ক্যাটাগরি</th>
                   <th className="py-3.5 px-3">ভাষা / ফসল</th>
                   <th className="py-3.5 px-3 text-center">হিট সংখ্যা</th>
@@ -477,17 +477,17 @@ export const AdminCacheManagementPage: React.FC = () => {
                   <th className="py-3.5 px-4 text-right">পদক্ষেপ</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-slate-100">
                 {items.map((item) => (
-                  <tr key={item.id} className="hover:bg-purple-50/30 transition-colors">
+                  <tr key={item.id} className="hover:bg-slate-50/70 transition-colors">
                     <td className="py-3.5 px-4 max-w-md">
-                      <div className="font-bold text-gray-900 line-clamp-1">{item.original_question}</div>
+                      <div className="font-bold text-slate-900 line-clamp-1 font-bangla">{item.original_question}</div>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs font-semibold px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-100">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200">
                           {getCategoryLabel(item.category)}
                         </span>
                         {item.has_embedding && (
-                          <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+                          <span className="text-[10px] font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200">
                             ভেক্টর ইনডেক্সড
                           </span>
                         )}
@@ -495,21 +495,21 @@ export const AdminCacheManagementPage: React.FC = () => {
                     </td>
 
                     <td className="py-3.5 px-3 whitespace-nowrap">
-                      <div className="text-xs font-semibold text-gray-800">
+                      <div className="text-xs font-bold text-slate-800">
                         {item.language === "bn" ? "বাংলা" : "English"}
                       </div>
-                      <div className="text-xs text-gray-500">{item.crop_name || "সার্বজনীন"}</div>
+                      <div className="text-xs font-medium text-slate-500">{item.crop_name || "সার্বজনীন"}</div>
                     </td>
 
                     <td className="py-3.5 px-3 text-center whitespace-nowrap">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                         {item.hit_count} বার
                       </span>
                     </td>
 
                     <td className="py-3.5 px-3 whitespace-nowrap">{getStatusBadge(item)}</td>
 
-                    <td className="py-3.5 px-3 text-xs text-gray-500 whitespace-nowrap">
+                    <td className="py-3.5 px-3 text-xs font-medium text-slate-600 whitespace-nowrap">
                       {item.expires_at ? new Date(item.expires_at).toLocaleDateString("bn-BD") : "সীমাহীন"}
                     </td>
 
@@ -517,7 +517,7 @@ export const AdminCacheManagementPage: React.FC = () => {
                       <div className="inline-flex items-center gap-1.5">
                         <button
                           onClick={() => setActiveModalItem(item)}
-                          className="p-1.5 text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-lg transition-all cursor-pointer"
+                          className="p-1.5 text-slate-600 hover:text-purple-700 hover:bg-purple-50 rounded-lg transition-all cursor-pointer"
                           title="বিস্তারিত পরিদর্শন করুন"
                         >
                           <Eye className="w-4 h-4" />
@@ -527,7 +527,7 @@ export const AdminCacheManagementPage: React.FC = () => {
                           <button
                             onClick={() => handleAction(item.id, "verify")}
                             disabled={isActionLoading}
-                            className="p-1.5 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-all cursor-pointer"
+                            className="p-1.5 text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 rounded-lg transition-all cursor-pointer"
                             title="যাচাইকৃত হিসেবে মার্ক করুন"
                           >
                             <Check className="w-4 h-4" />
@@ -537,7 +537,7 @@ export const AdminCacheManagementPage: React.FC = () => {
                         <button
                           onClick={() => handleAction(item.id, "delete")}
                           disabled={isActionLoading}
-                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all cursor-pointer"
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all cursor-pointer"
                           title="মুছে ফেলুন"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -553,22 +553,22 @@ export const AdminCacheManagementPage: React.FC = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="py-3 px-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-600 bg-gray-50/50">
+          <div className="py-3 px-4 border-t border-slate-200 flex items-center justify-between text-xs font-medium text-slate-700 bg-slate-50 font-bangla">
             <div>
-              পৃষ্ঠা <strong>{currentPage}</strong> এর <strong>{totalPages}</strong> (মোট {totalCount} টি প্রশ্ন)
+              পৃষ্ঠা <strong className="text-slate-900 font-bold">{currentPage}</strong> এর <strong className="text-slate-900 font-bold">{totalPages}</strong> (মোট {totalCount} টি প্রশ্ন)
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => fetchCacheList(currentPage - 1)}
                 disabled={currentPage <= 1 || isLoading}
-                className="p-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 disabled:opacity-40 transition-all cursor-pointer text-slate-700"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => fetchCacheList(currentPage + 1)}
                 disabled={currentPage >= totalPages || isLoading}
-                className="p-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 disabled:opacity-40 transition-all cursor-pointer text-slate-700"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -579,47 +579,47 @@ export const AdminCacheManagementPage: React.FC = () => {
 
       {/* Details & Invalidation Modal */}
       {activeModalItem && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 shadow-2xl p-6 space-y-6">
-            <div className="flex items-start justify-between border-b border-gray-100 pb-4">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="app-card max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 shadow-2xl">
+            <div className="flex items-start justify-between border-b border-slate-200 pb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   {getStatusBadge(activeModalItem)}
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-purple-50 text-purple-700">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200">
                     {getCategoryLabel(activeModalItem.category)}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">ক্যাশ এন্ট্রি বিস্তারিত ও পরিদর্শন</h3>
+                <h3 className="text-lg font-black text-slate-900 font-bangla">ক্যাশ এন্ট্রি বিস্তারিত ও পরিদর্শন</h3>
               </div>
               <button
                 onClick={() => setActiveModalItem(null)}
-                className="p-1.5 text-gray-400 hover:text-gray-700 rounded-lg"
+                className="p-1.5 text-slate-500 hover:text-slate-900 rounded-lg"
               >
                 ✕
               </button>
             </div>
 
             {/* Questions Comparison */}
-            <div className="space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-200 text-xs">
+            <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
               <div>
-                <span className="font-bold text-gray-500 uppercase tracking-wider block mb-1">মূল প্রশ্ন (Original Query):</span>
-                <p className="text-sm font-semibold text-gray-900">{activeModalItem.original_question}</p>
+                <span className="font-bold text-slate-700 uppercase tracking-wider block mb-1">মূল প্রশ্ন (Original Query):</span>
+                <p className="text-sm font-bold text-slate-900 font-bangla">{activeModalItem.original_question}</p>
               </div>
-              <div className="pt-2 border-t border-gray-200">
-                <span className="font-bold text-gray-500 uppercase tracking-wider block mb-1">
+              <div className="pt-2 border-t border-slate-200">
+                <span className="font-bold text-slate-700 uppercase tracking-wider block mb-1">
                   নরমালাইজড প্রশ্ন (Normalized Text):
                 </span>
-                <p className="font-mono text-xs text-gray-700">{activeModalItem.normalized_question}</p>
+                <p className="font-mono text-xs text-slate-800 bg-white p-2 rounded border border-slate-200">{activeModalItem.normalized_question}</p>
               </div>
-              <div className="pt-2 border-t border-gray-200 flex flex-wrap gap-4 text-gray-500">
+              <div className="pt-2 border-t border-slate-200 flex flex-wrap gap-4 text-slate-700 font-bangla">
                 <div>
-                  <span className="font-semibold">মডেল:</span> {activeModalItem.model_name || "Groq / Gemini"}
+                  <span className="font-bold text-slate-900">মডেল:</span> {activeModalItem.model_name || "Groq / Gemini"}
                 </div>
                 <div>
-                  <span className="font-semibold">হিট সংখ্যা:</span> {activeModalItem.hit_count} বার
+                  <span className="font-bold text-slate-900">হিট সংখ্যা:</span> {activeModalItem.hit_count} বার
                 </div>
                 <div>
-                  <span className="font-semibold">মেয়াদ শেষ:</span>{" "}
+                  <span className="font-bold text-slate-900">মেয়াদ শেষ:</span>{" "}
                   {new Date(activeModalItem.expires_at).toLocaleString("bn-BD")}
                 </div>
               </div>
@@ -627,10 +627,10 @@ export const AdminCacheManagementPage: React.FC = () => {
 
             {/* Cached AI Response */}
             <div className="space-y-2">
-              <span className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
-                <FileText className="w-4 h-4 text-purple-600" /> সংরক্ষিত এআই উত্তর (Cached Answer):
+              <span className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <FileText className="w-4 h-4 text-purple-700" /> সংরক্ষিত এআই উত্তর (Cached Answer):
               </span>
-              <div className="p-4 bg-purple-50/40 border border-purple-100 rounded-xl text-sm leading-relaxed text-gray-800 whitespace-pre-wrap max-h-60 overflow-y-auto">
+              <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm leading-relaxed text-slate-800 font-bangla whitespace-pre-wrap max-h-60 overflow-y-auto">
                 {activeModalItem.response_text}
               </div>
             </div>
@@ -638,13 +638,13 @@ export const AdminCacheManagementPage: React.FC = () => {
             {/* Source References */}
             {activeModalItem.source_references && activeModalItem.source_references.length > 0 && (
               <div className="space-y-2">
-                <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                   কৃষি গবেষণা তথ্যসূত্র (Sources & Citations):
                 </span>
-                <div className="space-y-1.5">
+                <div className="space-y-1.5 font-bangla">
                   {activeModalItem.source_references.map((src, i) => (
-                    <div key={i} className="text-xs p-2 bg-gray-50 rounded-lg border border-gray-200 text-gray-700">
-                      <strong>{src.filename || src.source}</strong> (পৃষ্ঠা: {src.page || "১"}): {src.snippet}
+                    <div key={i} className="text-xs p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-slate-800">
+                      <strong className="text-slate-900 font-bold">{src.filename || src.source}</strong> (পৃষ্ঠা: {src.page || "১"}): {src.snippet}
                     </div>
                   ))}
                 </div>
@@ -652,28 +652,28 @@ export const AdminCacheManagementPage: React.FC = () => {
             )}
 
             {/* Action Bar */}
-            <div className="pt-4 border-t border-gray-200 space-y-4">
+            <div className="pt-4 border-t border-slate-200 space-y-4">
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={invalidationReason}
                   onChange={(e) => setInvalidationReason(e.target.value)}
                   placeholder="বাতিলের কারণ লিখুন (যদি বাতিল করতে চান)..."
-                  className="flex-1 px-3 py-2 bg-gray-50 border border-gray-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="app-input flex-1 text-slate-900 placeholder:text-slate-400 font-bangla text-xs"
                 />
                 <button
                   onClick={() => handleAction(activeModalItem.id, "invalidate")}
                   disabled={isActionLoading}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer"
+                  className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer"
                 >
                   উত্তর বাতিল করুন (Invalidate)
                 </button>
               </div>
 
-              <div className="flex justify-end gap-3">
+              <div className="flex justify-end gap-3 font-bangla">
                 <button
                   onClick={() => setActiveModalItem(null)}
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl cursor-pointer"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl cursor-pointer"
                 >
                   বন্ধ করুন
                 </button>
