@@ -23,7 +23,7 @@ def set_refresh_cookie(response: Response, refresh_token: str):
     """Stores the refresh token in a secure httpOnly cookie."""
     response.set_cookie(
         key=settings.AUTH_COOKIE_NAME,
-        value=str(refresh_token),
+        value=refresh_token,
         max_age=7 * 24 * 3600,
         httponly=settings.AUTH_COOKIE_HTTPONLY,
         samesite=settings.AUTH_COOKIE_SAMESITE,
