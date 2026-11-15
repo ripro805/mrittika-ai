@@ -121,30 +121,30 @@ export const CropRecommendPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Title */}
-      <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-mrittika-100 text-mrittika-800 text-xs font-bold">
-          <Sprout className="w-3.5 h-3.5" />
+      <div className="text-center space-y-2.5">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-850 text-xs font-bold border border-emerald-200 shadow-2xs">
+          <Sprout className="w-3.5 h-3.5 text-emerald-700" />
           <span>মডিউল ১: ফসল নির্বাচন</span>
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           মাটি ও আবহাওয়ার ভিত্তিতে সেরা ফসল
         </h1>
-        <p className="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto">
+        <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-bangla">
           আপনার জমির পুষ্টির মাত্রা এবং স্থানীয় আবহাওয়া প্রদান করুন; এআই মডেল বিশ্লেষণ করে সেরা ৩টি ফসল সুপারিশ করবে।
         </p>
       </div>
 
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm flex items-center gap-2">
+        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-sm flex items-center gap-2.5 shadow-2xs">
           <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600" />
-          <span>{errorMessage}</span>
+          <span className="font-medium font-bangla">{errorMessage}</span>
         </div>
       )}
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="card-3d p-6 sm:p-8 rounded-3xl border border-emerald-100/90 bg-white/95 shadow-lg space-y-6">
+      <form onSubmit={handleSubmit} className="app-card p-6 sm:p-8 rounded-3xl border border-slate-200/90 bg-white shadow-card space-y-6">
         {/* District & Weather Autofill */}
-        <div className="bg-slate-50/90 p-4 rounded-2xl border border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-4 badge-3d">
+        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="w-full sm:w-1/2">
             <label className="block text-xs font-bold text-slate-800 mb-1">
               আপনার জেলা নির্বাচন করুন
@@ -153,7 +153,7 @@ export const CropRecommendPage: React.FC = () => {
               name="district"
               value={formData.district}
               onChange={handleDistrictChange}
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
             >
               {districts.map((d) => (
                 <option key={d.name_en} value={d.name_en}>
@@ -162,7 +162,7 @@ export const CropRecommendPage: React.FC = () => {
               ))}
             </select>
             {weatherMeta && (
-              <p className="mt-1.5 text-[11px] text-slate-600 flex items-center gap-1 font-medium font-bangla">
+              <p className="mt-1.5 text-[11px] text-slate-600 flex items-center gap-1 font-semibold font-bangla">
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
                 <span>
                   {weatherMeta.district_bn || formData.district}: {weatherMeta.fallback ? "আঞ্চলিক জলবায়ু উপাত্ত" : "Open-Meteo লাইভ আবহাওয়া"}
@@ -175,7 +175,7 @@ export const CropRecommendPage: React.FC = () => {
             type="button"
             onClick={handleAutofillWeather}
             disabled={isLoadingWeather}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-xs font-bold text-slate-800 hover:bg-slate-100 transition-all shadow-xs hover:-translate-y-0.5 cursor-pointer badge-3d"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-xs font-bold text-slate-800 hover:bg-slate-100 hover:text-slate-950 transition-all shadow-2xs hover:-translate-y-0.5 cursor-pointer"
           >
             {isLoadingWeather ? (
               <Loader2 className="w-4 h-4 animate-spin text-emerald-700" />
@@ -188,13 +188,13 @@ export const CropRecommendPage: React.FC = () => {
 
         {/* Soil Nutrients Grid */}
         <div>
-          <h3 className="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2 mb-4">
+          <h3 className="text-sm font-extrabold text-slate-900 border-b border-slate-200 pb-2 mb-4">
             ১. মাটির উপাদান (Soil Nutrients)
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                নাইট্রোজেন (N) <span className="text-gray-400 font-normal">kg/ha</span>
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                নাইট্রোজেন (N) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -205,13 +205,13 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.N}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                ফসফরাস (P) <span className="text-gray-400 font-normal">kg/ha</span>
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                ফসফরাস (P) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -222,13 +222,13 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.P}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                পটাশিয়াম (K) <span className="text-gray-400 font-normal">kg/ha</span>
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                পটাশিয়াম (K) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -239,13 +239,13 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.K}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                মাটির পিএইচ (pH) <span className="text-gray-400 font-normal">3.5-9.5</span>
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                মাটির পিএইচ (pH) <span className="text-slate-500 font-mono text-[10px] font-normal">3.5-9.5</span>
               </label>
               <input
                 type="number"
@@ -256,7 +256,7 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.pH}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
           </div>
@@ -264,20 +264,20 @@ export const CropRecommendPage: React.FC = () => {
 
         {/* Environmental Factors Grid */}
         <div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-2 mb-4 gap-2">
-            <h3 className="text-sm font-bold text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-2 mb-4 gap-2">
+            <h3 className="text-sm font-extrabold text-slate-900">
               ২. পরিবেশ ও আবহাওয়া (Climate & Environment)
             </h3>
             {weatherMeta && (
-              <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200 font-medium w-fit">
-                <CloudSun className="w-3.5 h-3.5 text-blue-600" />
+              <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-blue-50 text-blue-900 border border-blue-200 font-bold w-fit">
+                <CloudSun className="w-3.5 h-3.5 text-blue-700" />
                 <span>{weatherMeta.district_bn || formData.district} ({weatherMeta.fallback ? "আঞ্চলিক গড়" : "লাইভ"})</span>
               </span>
             )}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1">
                 তাপমাত্রা (°C)
               </label>
               <input
@@ -289,12 +289,12 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.temperature}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1">
                 বায়ুর আর্দ্রতা (%)
               </label>
               <input
@@ -306,12 +306,12 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.humidity}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-bold text-slate-800 mb-1">
                 বৃষ্টিপাত (মিলিমিটার)
               </label>
               <input
@@ -323,7 +323,7 @@ export const CropRecommendPage: React.FC = () => {
                 value={formData.rainfall}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
               />
             </div>
           </div>
@@ -332,14 +332,14 @@ export const CropRecommendPage: React.FC = () => {
         {/* Season & Soil Type */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
+            <label className="block text-xs font-bold text-slate-800 mb-1">
               মৌসুম (Season)
             </label>
             <select
               name="season"
               value={formData.season}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
             >
               {seasons.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -350,14 +350,14 @@ export const CropRecommendPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
+            <label className="block text-xs font-bold text-slate-800 mb-1">
               মাটির ধরন (Soil Type)
             </label>
             <select
               name="soil_type"
               value={formData.soil_type}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-mrittika-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none"
             >
               {soilTypes.map((st) => (
                 <option key={st.id} value={st.id}>
@@ -372,12 +372,12 @@ export const CropRecommendPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-3d-emerald w-full py-4 px-6 rounded-2xl font-extrabold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3.5 px-6 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
           >
             {isSubmitting ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin text-white" />
             ) : (
-              <Sparkles className="w-5 h-5 text-yellow-300" />
+              <Sparkles className="w-5 h-5 text-amber-300" />
             )}
             <span>{t("buttons.recommend_crop")}</span>
           </button>
@@ -392,7 +392,7 @@ export const CropRecommendPage: React.FC = () => {
               <CheckCircle className="w-6 h-6 text-emerald-600" />
               <span>প্রস্তাবিত শীর্ষ ৩টি ফসল</span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 font-bangla">
+            <p className="text-xs sm:text-sm text-slate-600 font-bangla">
               আপনার জমির পুষ্টি ও আবহাওয়া অনুসারে সম্ভাব্য উৎপাদনশীলতার ভিত্তিতে সাজানো।
             </p>
           </div>
@@ -401,15 +401,15 @@ export const CropRecommendPage: React.FC = () => {
             {result.recommendations.map((item: any) => (
               <div
                 key={item.crop_slug}
-                className={`card-3d card-3d-interactive rounded-3xl p-6 shadow-md flex flex-col justify-between transition-all ${
+                className={`app-card rounded-3xl p-6 flex flex-col justify-between transition-all bg-white ${
                   item.rank === 1
-                    ? "border-2 border-emerald-500 ring-2 ring-emerald-200/60 shadow-lg"
-                    : "border border-slate-200/90"
+                    ? "border-2 border-emerald-600 ring-2 ring-emerald-600/20 shadow-elevated"
+                    : "border border-slate-200 shadow-card"
                 }`}
               >
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 badge-3d">
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
                       অগ্রাধিকার #{item.rank}
                     </span>
                     <span className="text-sm font-extrabold text-emerald-800 font-mono">
@@ -421,7 +421,7 @@ export const CropRecommendPage: React.FC = () => {
                     <h3 className="text-xl font-bold text-slate-900">
                       {item.crop_name_bn}
                     </h3>
-                    <p className="text-xs text-slate-400 font-medium">
+                    <p className="text-xs text-slate-500 font-medium font-mono">
                       {item.crop_name_en}
                     </p>
                   </div>
@@ -429,12 +429,12 @@ export const CropRecommendPage: React.FC = () => {
                   {/* Confidence Bar */}
                   <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
                     <div
-                      className="bg-linear-to-r from-emerald-500 to-teal-600 h-full rounded-full transition-all duration-700"
+                      className="bg-emerald-600 h-full rounded-full transition-all duration-700"
                       style={{ width: `${item.confidence_percentage}%` }}
                     />
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100 font-bangla">
+                  <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200 font-bangla">
                     {item.reason_bn}
                   </p>
                 </div>
@@ -444,13 +444,13 @@ export const CropRecommendPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleSelectCropForFertilizer(item)}
-                      className="btn-3d-emerald w-full py-3 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+                      className="w-full py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
                     >
                       <span>সারের হিসাব দেখুন</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   ) : (
-                    <div className="text-center py-2.5 px-3 rounded-xl bg-slate-100 text-slate-500 text-xs font-medium">
+                    <div className="text-center py-2.5 px-3 rounded-xl bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200">
                       এই ফসলের সারের মডেল যুক্ত হয়নি
                     </div>
                   )}
@@ -460,7 +460,7 @@ export const CropRecommendPage: React.FC = () => {
           </div>
 
           {/* Disclaimer Banner */}
-          <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-xs text-amber-900 leading-relaxed">
+          <div className="bg-amber-50 border border-amber-300 p-4 rounded-2xl text-xs text-amber-950 leading-relaxed font-bangla">
             {result.disclaimer_bn}
           </div>
         </div>

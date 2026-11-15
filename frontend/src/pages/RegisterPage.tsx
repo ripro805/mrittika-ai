@@ -65,15 +65,12 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
+    <div className="max-w-6xl mx-auto py-2 sm:py-6 px-2 sm:px-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* Left Column: 3D Showcase Panel */}
-        <div className="lg:col-span-5 card-3d p-6 sm:p-8 rounded-3xl bg-linear-to-br from-slate-900 via-slate-950 to-emerald-950 text-white border border-slate-800 shadow-xl flex flex-col justify-between space-y-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-semibold backdrop-blur-md badge-3d">
+        {/* Left Column: Showcase Panel */}
+        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-lg flex flex-col justify-between space-y-6">
+          <div className="space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>বিনামূল্যে সদস্যপদ (Free Membership)</span>
             </div>
@@ -81,7 +78,7 @@ export const RegisterPage: React.FC = () => {
             <div className="space-y-2">
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
                 মৃত্তিকা এআই নেটওয়ার্কে{" "}
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
+                <span className="text-emerald-400">
                   যুক্ত হোন
                 </span>
               </h2>
@@ -91,8 +88,8 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             <div className="space-y-3 pt-2">
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 backdrop-blur-xs">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-emerald-900/80 text-emerald-300 flex items-center justify-center shrink-0 mt-0.5">
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
@@ -101,8 +98,8 @@ export const RegisterPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 backdrop-blur-xs">
-                <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-teal-900/80 text-teal-300 flex items-center justify-center shrink-0 mt-0.5">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
@@ -111,8 +108,8 @@ export const RegisterPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 backdrop-blur-xs">
-                <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-purple-900/80 text-purple-300 flex items-center justify-center shrink-0 mt-0.5">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
@@ -123,7 +120,7 @@ export const RegisterPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="relative z-10 pt-4 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
               <span>কোনো গোপনীয় চার্জ নেই</span>
@@ -132,10 +129,10 @@ export const RegisterPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: 3D Form Card */}
-        <div className="lg:col-span-7 card-3d p-6 sm:p-8 rounded-3xl bg-white/95 border border-emerald-100 shadow-[0_20px_50px_-10px_rgba(6,78,59,0.12)] space-y-6">
+        {/* Right Column: Clean Registration Form Card */}
+        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <div className="text-center space-y-1.5">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-emerald-600 to-teal-800 text-white flex items-center justify-center mx-auto shadow-md shadow-emerald-700/25 border border-emerald-400/40">
+            <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center mx-auto shadow-xs border border-emerald-800">
               <UserPlus className="w-6 h-6" />
             </div>
             <h1 className="text-2xl font-extrabold text-slate-900">নতুন অ্যাকাউন্ট তৈরি করুন</h1>
@@ -145,9 +142,9 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           {errorMessage && (
-            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-xs flex items-center gap-2.5 shadow-xs animate-in fade-in">
+            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs flex items-center gap-2.5 shadow-2xs">
               <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-              <span className="font-medium">{errorMessage}</span>
+              <span className="font-semibold">{errorMessage}</span>
             </div>
           )}
 
@@ -165,7 +162,7 @@ export const RegisterPage: React.FC = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -183,7 +180,7 @@ export const RegisterPage: React.FC = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -202,7 +199,7 @@ export const RegisterPage: React.FC = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -220,7 +217,7 @@ export const RegisterPage: React.FC = () => {
                     placeholder="Bogra / বগুড়া"
                     value={formData.district}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                    className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                   />
                 </div>
               </div>
@@ -236,7 +233,7 @@ export const RegisterPage: React.FC = () => {
                     placeholder="Sherpur / শেরপুর"
                     value={formData.upazila}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                    className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                   />
                 </div>
               </div>
@@ -250,13 +247,13 @@ export const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFormData((p) => ({ ...p, role: "FARMER" }))}
-                  className={`p-3 rounded-2xl border text-left transition-all flex items-center gap-2.5 cursor-pointer ${
+                  className={`p-3 rounded-xl border text-left transition-all flex items-center gap-2.5 cursor-pointer ${
                     formData.role === "FARMER"
-                      ? "bg-emerald-50 border-emerald-500 text-emerald-950 ring-2 ring-emerald-500/20 font-bold"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 font-medium"
+                      ? "bg-emerald-50 border-emerald-600 text-emerald-950 ring-2 ring-emerald-600/15 font-bold shadow-2xs"
+                      : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50 font-medium"
                   }`}
                 >
-                  <Wheat className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <Wheat className="w-5 h-5 text-emerald-700 shrink-0" />
                   <div>
                     <p className="text-xs font-bold">কৃষক (Farmer)</p>
                     <p className="text-[10px] text-slate-500">তাৎক্ষণিক এক্সেস</p>
@@ -266,13 +263,13 @@ export const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFormData((p) => ({ ...p, role: "OFFICER" }))}
-                  className={`p-3 rounded-2xl border text-left transition-all flex items-center gap-2.5 cursor-pointer ${
+                  className={`p-3 rounded-xl border text-left transition-all flex items-center gap-2.5 cursor-pointer ${
                     formData.role === "OFFICER"
-                      ? "bg-teal-50 border-teal-500 text-teal-950 ring-2 ring-teal-500/20 font-bold"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 font-medium"
+                      ? "bg-teal-50 border-teal-600 text-teal-950 ring-2 ring-teal-600/15 font-bold shadow-2xs"
+                      : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50 font-medium"
                   }`}
                 >
-                  <ShieldCheck className="w-5 h-5 text-teal-600 shrink-0" />
+                  <ShieldCheck className="w-5 h-5 text-teal-700 shrink-0" />
                   <div>
                     <p className="text-xs font-bold">কৃষি কর্মকর্তা</p>
                     <p className="text-[10px] text-slate-500">অ্যাডমিন অডিট সাপেক্ষে</p>
@@ -284,7 +281,7 @@ export const RegisterPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 px-4 rounded-xl btn-3d-emerald text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+              className="w-full py-3 px-4 rounded-xl app-btn-primary text-white font-bold text-sm shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
             >
               {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               <span>নিবন্ধন সম্পন্ন করুন</span>
@@ -292,7 +289,7 @@ export const RegisterPage: React.FC = () => {
             </button>
           </form>
 
-          <div className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
+          <div className="text-center text-xs text-slate-600 pt-2 border-t border-slate-100">
             ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
             <Link to="/login" className="font-bold text-emerald-800 hover:text-emerald-950 underline">
               লগইন করুন

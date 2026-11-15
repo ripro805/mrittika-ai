@@ -94,11 +94,11 @@ export const AdminKnowledgeBasePage: React.FC = () => {
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
             <BookOpenCheck className="w-6 h-6 text-purple-700" />
             <span>কৃষি গবেষণা নথিপত্র ও ভেক্টর ইন্ডেক্স (RAG Knowledge Base)</span>
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500">
+          <p className="text-xs sm:text-sm text-slate-600 font-bangla">
             কৃষি সহকারী চ্যাটবটের নির্ভুলতার মূল উৎস: সরকারি গবেষণা প্রতিষ্ঠানের স্বীকৃত হ্যান্ডবুক ও নির্দেশিকা
           </p>
         </div>
@@ -106,7 +106,7 @@ export const AdminKnowledgeBasePage: React.FC = () => {
         <button
           onClick={handleTriggerReindex}
           disabled={isReindexing}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-800 hover:bg-purple-900 text-white text-xs font-bold transition shadow-sm disabled:opacity-50"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold transition shadow-sm disabled:opacity-50 cursor-pointer"
         >
           <RefreshCw className={`w-4 h-4 ${isReindexing ? "animate-spin" : ""}`} />
           <span>{isReindexing ? "ইন্ডেক্সিং চলছে..." : "পুনর্-ইন্ডেক্স করুন (Re-index)"}</span>
@@ -114,7 +114,7 @@ export const AdminKnowledgeBasePage: React.FC = () => {
       </div>
 
       {reindexSuccess && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 font-medium">
+        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-2 font-bold font-bangla">
           <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
           <span>{reindexSuccess}</span>
         </div>
@@ -122,58 +122,58 @@ export const AdminKnowledgeBasePage: React.FC = () => {
 
       {/* RAG Telemetry Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
-          <span className="text-xs font-semibold text-gray-500">মোট ইন্ডেক্সকৃত গবেষণা নথি</span>
-          <p className="text-2xl sm:text-3xl font-extrabold text-gray-900">{documents.length} টি প্রকাশনা</p>
-          <p className="text-[11px] text-gray-500">BARC, BRRI, BARI ও DAE অফিসিয়াল ডাটা</p>
+        <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card space-y-1">
+          <span className="text-xs font-bold text-slate-700">মোট ইন্ডেক্সকৃত গবেষণা নথি</span>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{documents.length} টি প্রকাশনা</p>
+          <p className="text-[11px] text-slate-500 font-medium">BARC, BRRI, BARI ও DAE অফিসিয়াল ডাটা</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
-          <span className="text-xs font-semibold text-gray-500">মোট এমবেডেড চাঙ্ক (Vector Chunks)</span>
-          <p className="text-2xl sm:text-3xl font-extrabold text-purple-800">{totalChunks || 3440} টি</p>
-          <p className="text-[11px] text-gray-500">সিম্যান্টিক সার্চের জন্য খণ্ড খণ্ড অংশ</p>
+        <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card space-y-1">
+          <span className="text-xs font-bold text-slate-700">মোট এমবেডেড চাঙ্ক (Vector Chunks)</span>
+          <p className="text-2xl sm:text-3xl font-extrabold text-purple-900 font-mono">{totalChunks || 3440} টি</p>
+          <p className="text-[11px] text-slate-500 font-medium font-bangla">সিম্যান্টিক সার্চের জন্য খণ্ড খণ্ড অংশ</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
-          <span className="text-xs font-semibold text-gray-500">ভেক্টর এমবেডিং মডেল</span>
-          <p className="text-lg sm:text-xl font-bold text-gray-900 truncate">multilingual-e5-large</p>
-          <p className="text-[11px] text-gray-500">1024 ডাইমেনশন • ChromaDB লোকাল ভেক্টর স্টোর</p>
+        <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card space-y-1">
+          <span className="text-xs font-bold text-slate-700">ভেক্টর এমবেডিং মডেল</span>
+          <p className="text-lg sm:text-xl font-extrabold text-slate-900 font-mono truncate">multilingual-e5-large</p>
+          <p className="text-[11px] text-slate-500 font-medium">1024 ডাইমেনশন • ChromaDB লোকাল ভেক্টর স্টোর</p>
         </div>
       </div>
 
       {/* Document Library Table */}
-      <div className="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden">
-        <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+      <div className="app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden">
+        <div className="p-6 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200">
               <FileText className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-gray-900">স্বীকৃত গবেষণা প্রকাশনা তালিকা</h2>
-              <p className="text-xs text-gray-500">যেসব নথির আলোকে চ্যাটবট উত্তর তৈরি করে</p>
+              <h2 className="text-base font-extrabold text-slate-900">স্বীকৃত গবেষণা প্রকাশনা তালিকা</h2>
+              <p className="text-xs text-slate-500">যেসব নথির আলোকে চ্যাটবট উত্তর তৈরি করে</p>
             </div>
           </div>
         </div>
 
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-slate-100">
           {documents.map((doc, idx) => (
-            <div key={idx} className="p-5 hover:bg-gray-50/50 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div key={idx} className="p-5 hover:bg-slate-50/70 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 text-[10px] font-bold">
                     ভেক্টরাইজড
                   </span>
-                  <span className="text-xs text-gray-400 font-mono">{doc.filename}</span>
+                  <span className="text-xs text-slate-500 font-mono">{doc.filename}</span>
                 </div>
-                <h3 className="text-sm font-bold text-gray-900">{doc.title || doc.filename}</h3>
-                <p className="text-xs text-gray-500">
+                <h3 className="text-sm font-bold text-slate-900">{doc.title || doc.filename}</h3>
+                <p className="text-xs text-slate-600 font-medium">
                   পৃষ্ঠা: {doc.pages_count || "১০০+"} • চাঙ্ক সংখ্যা: {doc.chunks_count || doc.vector_count} টি
                 </p>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   <span>সক্রিয় লাইভ ইন্ডেক্স</span>
                 </span>
               </div>

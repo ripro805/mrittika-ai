@@ -95,37 +95,37 @@ export const OfficerReviewPage: React.FC = () => {
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 flex items-center gap-2">
-            <ShieldAlert className="w-6 h-6 text-amber-600" />
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+            <ShieldAlert className="w-6 h-6 text-amber-700" />
             <span>ফ্ল্যাগকৃত প্রশ্নোত্তর নিরীক্ষা ও সংশোধন কেন্দ্র</span>
           </h1>
-          <p className="text-xs sm:text-sm text-gray-500">
+          <p className="text-xs sm:text-sm text-slate-600 font-bangla">
             কৃষকের চিহ্নিত ত্রুটিপূর্ণ উত্তরসমূহ বৈজ্ঞানিকভাবে যাচাই করুন এবং সঠিক দিকনির্দেশনা প্রদান করুন।
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="inline-flex rounded-xl bg-gray-100 p-1 border border-gray-200 text-xs font-semibold">
+        <div className="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-semibold">
           <button
             onClick={() => setFilterStatus("pending")}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              filterStatus === "pending" ? "bg-white text-red-700 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
+              filterStatus === "pending" ? "bg-white text-red-700 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
             }`}
           >
             অপেক্ষমাণ ({items.filter((i) => !i.is_resolved).length})
           </button>
           <button
             onClick={() => setFilterStatus("resolved")}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              filterStatus === "resolved" ? "bg-white text-emerald-700 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
+              filterStatus === "resolved" ? "bg-white text-emerald-800 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
             }`}
           >
             সমাধানকৃত ({items.filter((i) => i.is_resolved).length})
           </button>
           <button
             onClick={() => setFilterStatus("all")}
-            className={`px-3 py-1.5 rounded-lg transition ${
-              filterStatus === "all" ? "bg-white text-gray-900 shadow-xs" : "text-gray-600 hover:text-gray-900"
+            className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
+              filterStatus === "all" ? "bg-white text-slate-900 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
             }`}
           >
             সব ({items.length})
@@ -136,27 +136,27 @@ export const OfficerReviewPage: React.FC = () => {
       {/* Main Split Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: List of Flagged Items */}
-        <div className="lg:col-span-5 bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden flex flex-col h-[700px]">
+        <div className="lg:col-span-5 app-card bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden flex flex-col h-[700px]">
           {/* Search box */}
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-4 border-b border-slate-200">
             <div className="relative">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
                 type="text"
                 placeholder="প্রশ্ন বা মন্তব্য খুঁজুন..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none"
               />
             </div>
           </div>
 
           {/* Items list */}
-          <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
+          <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
             {isLoading ? (
-              <div className="p-8 text-center text-xs text-gray-400">লোড হচ্ছে...</div>
+              <div className="p-8 text-center text-xs text-slate-400">লোড হচ্ছে...</div>
             ) : filteredItems.length === 0 ? (
-              <div className="p-8 text-center text-xs text-gray-400">কোনো প্রশ্নোত্তর মেলেনি।</div>
+              <div className="p-8 text-center text-xs text-slate-500">কোনো প্রশ্নোত্তর মেলেনি।</div>
             ) : (
               filteredItems.map((item) => {
                 const isSelected = activeItem?.id === item.id;
@@ -164,30 +164,30 @@ export const OfficerReviewPage: React.FC = () => {
                   <button
                     key={item.id}
                     onClick={() => handleSelectItem(item)}
-                    className={`w-full text-left p-4 transition flex flex-col gap-1.5 ${
+                    className={`w-full text-left p-4 transition flex flex-col gap-1.5 cursor-pointer ${
                       isSelected
-                        ? "bg-teal-50/80 border-l-4 border-teal-700"
-                        : "hover:bg-gray-50/70"
+                        ? "bg-teal-50 border-l-4 border-teal-700"
+                        : "hover:bg-slate-50"
                     }`}
                   >
                     <div className="flex items-center justify-between text-xs">
                       <span
-                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                           item.is_resolved
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-emerald-50 text-emerald-900 border-emerald-200"
+                            : "bg-red-50 text-red-900 border-red-200"
                         }`}
                       >
                         {item.is_resolved ? "সমাধানকৃত" : "অপেক্ষমাণ"}
                       </span>
-                      <span className="text-[11px] text-gray-400">
+                      <span className="text-[11px] text-slate-500 font-mono">
                         {new Date(item.created_at).toLocaleDateString("bn-BD")}
                       </span>
                     </div>
-                    <p className="text-xs font-bold text-gray-900 line-clamp-2">
+                    <p className="text-xs font-bold text-slate-900 line-clamp-2 font-bangla">
                       {item.context_data?.question || item.comment || `ফিডব্যাক #${item.id}`}
                     </p>
-                    <p className="text-[11px] text-gray-500 truncate">
+                    <p className="text-[11px] text-slate-500 truncate font-mono">
                       মডিউল: {item.module_type} • রেটিং: {item.rating}★
                     </p>
                   </button>
@@ -198,36 +198,36 @@ export const OfficerReviewPage: React.FC = () => {
         </div>
 
         {/* Right Column: Detailed Inspector and Correction Form */}
-        <div className="lg:col-span-7 bg-white rounded-3xl border border-gray-200 shadow-xs p-6 space-y-6">
+        <div className="lg:col-span-7 app-card bg-white rounded-3xl border border-slate-200 shadow-card p-6 space-y-6">
           {activeItem ? (
             <>
               {/* Feedback Status Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                 <div className="flex items-center gap-2">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-bold ${
+                    className={`px-3 py-1 rounded-full text-xs font-bold border ${
                       activeItem.is_resolved
-                        ? "bg-emerald-100 text-emerald-800"
-                        : "bg-red-100 text-red-800"
+                        ? "bg-emerald-50 text-emerald-900 border-emerald-200"
+                        : "bg-red-50 text-red-900 border-red-200"
                     }`}
                   >
                     {activeItem.is_resolved ? "সমাধান সম্পন্ন হয়েছে" : "পর্যালোচনা অপেক্ষমাণ"}
                   </span>
-                  <span className="text-xs font-medium text-gray-500">
+                  <span className="text-xs font-semibold text-slate-600 font-mono">
                     আইডি: #{activeItem.id}
                   </span>
                 </div>
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-slate-500 font-mono">
                   তারিখ: {new Date(activeItem.created_at).toLocaleString("bn-BD")}
                 </span>
               </div>
 
               {/* Farmer's Context */}
               <div className="space-y-2">
-                <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                   ১. কৃষকের মূল প্রশ্ন / প্রেক্ষাপট
                 </h3>
-                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 text-sm font-semibold text-gray-900 leading-relaxed">
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-900 leading-relaxed font-bangla">
                   {activeItem.context_data?.question || activeItem.comment || "বিবরণ উপলব্ধ নেই।"}
                 </div>
               </div>
@@ -235,10 +235,10 @@ export const OfficerReviewPage: React.FC = () => {
               {/* AI's Generated Answer */}
               {activeItem.context_data?.assistant_response && (
                 <div className="space-y-2">
-                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                  <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                     ২. এআই মডেলের প্রাথমিক উত্তর (যা ফ্ল্যাগ করা হয়েছে)
                   </h3>
-                  <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200 text-xs sm:text-sm text-gray-800 leading-relaxed max-h-48 overflow-y-auto">
+                  <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm text-slate-800 leading-relaxed max-h-48 overflow-y-auto font-bangla">
                     {activeItem.context_data.assistant_response}
                   </div>
                 </div>
@@ -246,20 +246,20 @@ export const OfficerReviewPage: React.FC = () => {
 
               {/* Alert Feedback Messages */}
               {successMessage && (
-                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 font-medium">
+                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-2 font-bold font-bangla">
                   <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                   <span>{successMessage}</span>
                 </div>
               )}
               {errorMessage && (
-                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2 font-medium">
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs flex items-center gap-2 font-bold font-bangla">
                   <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
               )}
 
               {/* Officer Correction Form */}
-              <form onSubmit={handleSubmitCorrection} className="space-y-4 pt-2 border-t border-gray-100">
+              <form onSubmit={handleSubmitCorrection} className="space-y-4 pt-2 border-t border-slate-200">
                 <div className="space-y-2">
                   <label className="block text-xs font-bold text-teal-900 uppercase tracking-wider">
                     ৩. কৃষি কর্মকর্তার অনুমোদিত সঠিক পরামর্শ (Authoritative Agronomic Note)
@@ -269,10 +269,10 @@ export const OfficerReviewPage: React.FC = () => {
                     value={correctionText}
                     onChange={(e) => setCorrectionText(e.target.value)}
                     placeholder="মাঠ পর্যায়ের বাস্তব অভিজ্ঞতা ও বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC) অনুসারে সঠিক ডোজ, পদ্ধতি ও সময়সূচী লিখুন..."
-                    className="w-full p-4 rounded-2xl border border-gray-300 text-xs sm:text-sm focus:ring-2 focus:ring-teal-600 focus:outline-none"
+                    className="w-full p-4 rounded-2xl border border-slate-300 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none font-bangla"
                     required
                   />
-                  <p className="text-[11px] text-gray-500">
+                  <p className="text-[11px] text-slate-500 font-bangla">
                     এই সংশোধনীটি সংরক্ষিত হবে এবং স্থানীয় কৃষকদের সতর্কবার্তা প্রদানে ব্যবহৃত হবে।
                   </p>
                 </div>
@@ -281,12 +281,12 @@ export const OfficerReviewPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting || !correctionText.trim()}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white text-xs font-bold transition disabled:opacity-50 shadow-sm"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition disabled:opacity-50 shadow-sm cursor-pointer"
                   >
                     {isSubmitting ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
                     ) : (
-                      <Send className="w-4 h-4" />
+                      <Send className="w-4 h-4 text-white" />
                     )}
                     <span>সংশোধনী অনুমোদন ও সংরক্ষণ করুন</span>
                   </button>
@@ -294,7 +294,7 @@ export const OfficerReviewPage: React.FC = () => {
               </form>
             </>
           ) : (
-            <div className="p-12 text-center text-gray-400 text-xs">
+            <div className="p-12 text-center text-slate-500 text-xs">
               বাম পাশের তালিকা থেকে একটি ফ্ল্যাগকৃত প্রশ্ন নির্বাচন করুন।
             </div>
           )}

@@ -54,11 +54,11 @@ export const OfficerAnalyticsPage: React.FC = () => {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Title */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
           <BarChart3 className="w-6 h-6 text-teal-700" />
           <span>আঞ্চলিক কৃষিতাত্ত্বিক উপাত্ত ও ফসলের প্রবণতা</span>
         </h1>
-        <p className="text-xs sm:text-sm text-gray-500">
+        <p className="text-xs sm:text-sm text-slate-600 font-bangla">
           কৃষকদের সুপারিশ ইতিহাস এবং মডেল মূল্যায়নের ভিত্তিতে পুষ্টি ও ফসলের চাহিদা বিশ্লেষণ
         </p>
       </div>
@@ -66,13 +66,13 @@ export const OfficerAnalyticsPage: React.FC = () => {
       {/* Grid: Top Crops Bar Chart & Feedback Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Top Crops Query Frequency */}
-        <div className="lg:col-span-7 bg-white p-6 rounded-3xl border border-gray-200 shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div className="lg:col-span-7 app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
             <div className="flex items-center gap-2">
               <Sprout className="w-4 h-4 text-emerald-700" />
-              <h2 className="text-sm font-bold text-gray-900">সর্বাধিক অনুসন্ধানকৃত ফসলসমূহ</h2>
+              <h2 className="text-sm font-extrabold text-slate-900">সর্বাধিক অনুসন্ধানকৃত ফসলসমূহ</h2>
             </div>
-            <span className="text-xs text-gray-400">সুপারিশ ফ্রিকোয়েন্সি</span>
+            <span className="text-xs text-slate-500 font-mono">সুপারিশ ফ্রিকোয়েন্সি</span>
           </div>
 
           <div className="space-y-3 pt-2">
@@ -81,12 +81,12 @@ export const OfficerAnalyticsPage: React.FC = () => {
               return (
                 <div key={crop.crop_slug} className="space-y-1">
                   <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="text-gray-800">{crop.crop_name_bn || crop.crop_slug}</span>
-                    <span className="text-teal-800 font-bold">{crop.query_count} টি সুপারিশ</span>
+                    <span className="text-slate-900 font-bold">{crop.crop_name_bn || crop.crop_slug}</span>
+                    <span className="text-teal-900 font-bold font-mono">{crop.query_count} টি সুপারিশ</span>
                   </div>
-                  <div className="w-full h-3 rounded-full bg-gray-100 overflow-hidden">
+                  <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 transition-all duration-500"
+                      className="h-full rounded-full bg-linear-to-r from-teal-700 to-emerald-700 transition-all duration-500"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -99,45 +99,45 @@ export const OfficerAnalyticsPage: React.FC = () => {
         {/* Ratings and Module Breakdown */}
         <div className="lg:col-span-5 space-y-6">
           {/* Ratings Distribution Card */}
-          <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-xs space-y-4">
-            <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
+          <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-slate-200">
               <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-              <h2 className="text-sm font-bold text-gray-900">কৃষক সন্তুষ্টি রেটিং বণ্টন</h2>
+              <h2 className="text-sm font-extrabold text-slate-900">কৃষক সন্তুষ্টি রেটিং বণ্টন</h2>
             </div>
 
             <div className="space-y-2.5">
               {ratings_distribution.map((r: any) => (
                 <div key={r.rating} className="flex items-center gap-3 text-xs">
-                  <div className="w-14 flex items-center gap-1 font-bold text-gray-700">
+                  <div className="w-14 flex items-center gap-1 font-bold text-slate-800">
                     <span>{r.rating}</span>
                     <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                   </div>
-                  <div className="flex-1 h-2.5 rounded-full bg-gray-100 overflow-hidden">
+                  <div className="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
                     <div
-                      className="h-full bg-amber-400 rounded-full"
+                      className="h-full bg-amber-500 rounded-full"
                       style={{ width: `${Math.min(100, r.count * 1.5)}%` }}
                     />
                   </div>
-                  <span className="w-8 text-right font-bold text-gray-600">{r.count}</span>
+                  <span className="w-8 text-right font-bold text-slate-700 font-mono">{r.count}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Module Breakdown Card */}
-          <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-xs space-y-3">
-            <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+          <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-3">
+            <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
               <TrendingUp className="w-4 h-4 text-teal-700" />
-              <h2 className="text-sm font-bold text-gray-900">মডিউলভিত্তিক প্রতিক্রিয়া</h2>
+              <h2 className="text-sm font-extrabold text-slate-900">মডিউলভিত্তিক প্রতিক্রিয়া</h2>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 pt-2">
+            <div className="grid grid-cols-3 gap-2.5 pt-2">
               {module_feedback_counts.map((m: any) => (
-                <div key={m.module_type} className="p-3 rounded-2xl bg-gray-50 border border-gray-100 text-center">
-                  <p className="text-xs text-gray-500 font-medium">
+                <div key={m.module_type} className="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                  <p className="text-[11px] text-slate-600 font-bold">
                     {m.module_type === "CHAT" ? "কৃষি সহকারী" : m.module_type === "CROP" ? "ফসল নির্বাচন" : "সারের হিসাব"}
                   </p>
-                  <p className="text-lg font-extrabold text-teal-900 mt-0.5">{m.count}</p>
+                  <p className="text-lg font-extrabold text-teal-950 font-mono mt-0.5">{m.count}</p>
                 </div>
               ))}
             </div>

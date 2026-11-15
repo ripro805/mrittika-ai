@@ -53,16 +53,13 @@ const PublicLayout: React.FC = () => {
   const isAssistant = location.pathname.startsWith("/assistant");
 
   return (
-    <div className="flex flex-col min-h-screen bg-agro-mesh relative selection:bg-emerald-200 selection:text-emerald-900">
-      {/* Ambient 3D background light blobs */}
-      <div className="fixed top-0 left-1/4 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="fixed bottom-10 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
+    <div className="flex flex-col min-h-screen bg-agro-clean relative selection:bg-emerald-100 selection:text-emerald-900">
       <Navbar />
       <main
         className={
           isAssistant
-            ? "flex-1 w-full mx-auto px-2 sm:px-4 py-2 flex flex-col min-h-0"
-            : "flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6"
+            ? "flex-1 w-full mx-auto px-2 sm:px-4 py-2 sm:py-3 flex flex-col min-h-0"
+            : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
         }
       >
         <Routes>

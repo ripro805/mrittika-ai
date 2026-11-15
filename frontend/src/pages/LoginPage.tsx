@@ -39,7 +39,7 @@ export const LoginPage: React.FC = () => {
       icon: Wheat,
       color: "emerald",
       badgeText: "কৃষক",
-      bgLight: "bg-emerald-50/90 hover:bg-emerald-100/90 border-emerald-200/90 text-emerald-950",
+      bgLight: "bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-950",
       btnBg: "bg-emerald-700 hover:bg-emerald-800 text-white",
       targetPath: "/farmer/overview",
     },
@@ -53,7 +53,7 @@ export const LoginPage: React.FC = () => {
       icon: ShieldCheck,
       color: "teal",
       badgeText: "কর্মকর্তা",
-      bgLight: "bg-teal-50/90 hover:bg-teal-100/90 border-teal-200/90 text-teal-950",
+      bgLight: "bg-teal-50 hover:bg-teal-100 border-teal-200 text-teal-950",
       btnBg: "bg-teal-700 hover:bg-teal-800 text-white",
       targetPath: "/officer/overview",
     },
@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () => {
       icon: UserCheck,
       color: "purple",
       badgeText: "অ্যাডমিন",
-      bgLight: "bg-purple-50/90 hover:bg-purple-100/90 border-purple-200/90 text-purple-950",
+      bgLight: "bg-purple-50 hover:bg-purple-100 border-purple-200 text-purple-950",
       btnBg: "bg-purple-700 hover:bg-purple-800 text-white",
       targetPath: "/admin-portal/overview",
     },
@@ -131,17 +131,13 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
+    <div className="max-w-6xl mx-auto py-2 sm:py-6 px-2 sm:px-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* Left Column: 3D Agritech Showcase & Security Telemetry Panel */}
-        <div className="lg:col-span-5 card-3d p-6 sm:p-8 rounded-3xl bg-linear-to-br from-slate-900 via-slate-950 to-emerald-950 text-white border border-slate-800 shadow-xl flex flex-col justify-between space-y-6 relative overflow-hidden">
-          {/* Subtle glowing orbs */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 space-y-5">
+        {/* Left Column: Agritech Showcase & Security Telemetry Panel */}
+        <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-lg flex flex-col justify-between space-y-6">
+          <div className="space-y-5">
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-semibold backdrop-blur-md badge-3d">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>নিরাপদ কৃষি প্ল্যাটফর্ম (Verified Auth)</span>
             </div>
@@ -149,7 +145,7 @@ export const LoginPage: React.FC = () => {
             <div className="space-y-2">
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
                 বাংলাদেশের আধুনিক কৃষি বিপ্লবে{" "}
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
+                <span className="text-emerald-400">
                   স্মার্ট এআই প্রযুক্তি
                 </span>
               </h2>
@@ -160,8 +156,8 @@ export const LoginPage: React.FC = () => {
 
             {/* 3 Dedicated Portals Preview */}
             <div className="space-y-3 pt-2">
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3 backdrop-blur-xs">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-emerald-900/80 text-emerald-300 flex items-center justify-center shrink-0">
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
@@ -170,8 +166,8 @@ export const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3 backdrop-blur-xs">
-                <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center shrink-0">
+              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-teal-900/80 text-teal-300 flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
@@ -180,8 +176,8 @@ export const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3 backdrop-blur-xs">
-                <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-purple-900/80 text-purple-300 flex items-center justify-center shrink-0">
                   <UserCheck className="w-5 h-5" />
                 </div>
                 <div>
@@ -193,7 +189,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Security Telemetry Footer */}
-          <div className="relative z-10 pt-4 border-t border-slate-800 grid grid-cols-2 gap-3 text-[11px] text-slate-400">
+          <div className="pt-4 border-t border-slate-800 grid grid-cols-2 gap-3 text-[11px] text-slate-400">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>JWT নিরাপদ প্রমাণীকরণ</span>
@@ -205,11 +201,11 @@ export const LoginPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: 3D Glassmorphic Auth Card */}
-        <div className="lg:col-span-7 card-3d p-6 sm:p-8 rounded-3xl bg-white/95 border border-emerald-100 shadow-[0_20px_50px_-10px_rgba(6,78,59,0.12)] space-y-6">
+        {/* Right Column: Clean Auth Card */}
+        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           {/* Header */}
           <div className="text-center space-y-1.5">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-emerald-600 to-teal-800 text-white flex items-center justify-center mx-auto shadow-md shadow-emerald-700/25 border border-emerald-400/40">
+            <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center mx-auto shadow-xs border border-emerald-800">
               <LogIn className="w-6 h-6" />
             </div>
             <h1 className="text-2xl font-extrabold text-slate-900">লগইন করুন (Account Login)</h1>
@@ -220,20 +216,20 @@ export const LoginPage: React.FC = () => {
 
           {/* Error Alert */}
           {errorMessage && (
-            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-xs flex items-center gap-2.5 shadow-xs animate-in fade-in">
+            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs flex items-center gap-2.5 shadow-2xs">
               <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-              <span className="font-medium">{errorMessage}</span>
+              <span className="font-semibold">{errorMessage}</span>
             </div>
           )}
 
           {/* 1-Click Quick Login Cards */}
-          <div className="bg-linear-to-b from-emerald-50/80 via-teal-50/50 to-slate-50 p-4 sm:p-5 rounded-2xl border border-emerald-200/80 shadow-xs space-y-3">
+          <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-xs font-extrabold text-emerald-950 uppercase tracking-wider">
+              <span className="flex items-center gap-1.5 text-xs font-bold text-slate-900 uppercase tracking-wider">
                 <Zap className="w-4 h-4 text-amber-500 fill-amber-400" />
                 ১-ক্লিক ডেমো লগইন (Quick Access)
               </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-200/60 text-emerald-900 badge-3d">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
                 সরাসরি প্রবেশ
               </span>
             </div>
@@ -252,24 +248,24 @@ export const LoginPage: React.FC = () => {
                     type="button"
                     onClick={() => handleQuickLogin(acc)}
                     disabled={isLoading}
-                    className={`group text-left p-3 rounded-2xl border transition-all shadow-xs hover:shadow-md flex flex-col justify-between gap-2.5 ${acc.bgLight} disabled:opacity-60 cursor-pointer card-3d-interactive`}
+                    className={`text-left p-3 rounded-xl border transition-all shadow-2xs hover:shadow-xs flex flex-col justify-between gap-2.5 ${acc.bgLight} disabled:opacity-60 cursor-pointer`}
                   >
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-xl bg-white shadow-2xs flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-lg bg-white shadow-2xs flex items-center justify-center">
                           <IconComp className="w-4 h-4" />
                         </div>
-                        <span className="text-xs font-bold">{acc.title}</span>
+                        <span className="text-xs font-bold text-slate-900">{acc.title}</span>
                       </div>
                     </div>
 
                     <div>
-                      <p className="text-[11px] font-medium opacity-85 truncate">{acc.name}</p>
-                      <p className="text-[10px] font-mono opacity-70 tracking-tight">{acc.phone}</p>
+                      <p className="text-[11px] font-medium text-slate-800 truncate">{acc.name}</p>
+                      <p className="text-[10px] font-mono text-slate-500 tracking-tight">{acc.phone}</p>
                     </div>
 
                     <div
-                      className={`w-full py-1.5 px-2 rounded-xl ${acc.btnBg} text-[11px] font-bold flex items-center justify-center gap-1 shadow-2xs group-hover:scale-[1.02] transition-transform`}
+                      className={`w-full py-1.5 px-2 rounded-lg ${acc.btnBg} text-[11px] font-bold flex items-center justify-center gap-1 shadow-2xs`}
                     >
                       {isLoggingThis ? (
                         <>
@@ -279,7 +275,7 @@ export const LoginPage: React.FC = () => {
                       ) : (
                         <>
                           <span>প্রবেশ করুন</span>
-                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-3 h-3" />
                         </>
                       )}
                     </div>
@@ -292,7 +288,7 @@ export const LoginPage: React.FC = () => {
           {/* Divider */}
           <div className="relative flex py-1 items-center">
             <div className="grow border-t border-slate-200"></div>
-            <span className="shrink mx-4 text-slate-400 text-[11px] font-medium">
+            <span className="shrink mx-4 text-slate-500 text-[11px] font-semibold">
               বা মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে লগইন করুন
             </span>
             <div className="grow border-t border-slate-200"></div>
@@ -312,7 +308,7 @@ export const LoginPage: React.FC = () => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -329,7 +325,7 @@ export const LoginPage: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none transition-all"
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-600/15 focus:border-emerald-600 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -337,7 +333,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 rounded-xl btn-3d-emerald text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+              className="w-full py-3 px-4 rounded-xl app-btn-primary text-white font-bold text-sm shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
             >
               {isLoading && !activeRoleLoggingIn && <Loader2 className="w-4 h-4 animate-spin" />}
               <span>লগইন করুন</span>
@@ -345,7 +341,7 @@ export const LoginPage: React.FC = () => {
             </button>
           </form>
 
-          <div className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
+          <div className="text-center text-xs text-slate-600 pt-2 border-t border-slate-100">
             অ্যাকাউন্ট নেই?{" "}
             <Link to="/register" className="font-bold text-emerald-800 hover:text-emerald-950 underline">
               নতুন কৃষক বা কর্মকর্তা হিসেবে বিনামূল্যে নিবন্ধন করুন

@@ -16,46 +16,42 @@ import {
   BarChart3,
   Bot,
   ChevronRight,
+  Zap,
 } from "lucide-react";
 
 export const LandingPage: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <div className="space-y-16 lg:space-y-24 py-4">
+    <div className="space-y-16 lg:space-y-24 py-2 sm:py-4">
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-900 via-slate-950 to-emerald-950 text-white border border-slate-800/80 shadow-[0_20px_50px_rgba(0,0,0,0.3)] px-6 py-12 sm:px-10 sm:py-16 lg:px-12">
-        {/* Subtle grid pattern & ambient glows */}
-        <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-10 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-
+      <section className="relative overflow-hidden rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl px-6 py-12 sm:px-10 sm:py-16 lg:px-12">
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Headlines & CTA */}
           <div className="lg:col-span-7 space-y-6">
             {/* Status Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-xs font-semibold backdrop-blur-md badge-3d">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>
                 {i18n.language === "bn"
-                  ? "বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC) মানসম্মত এআই প্রযুক্তি"
+                  ? "বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC) সার নির্দেশিকা মানসম্মত"
                   : "BARC Fertilizer Recommendation Standards Compliant"}
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-5.5xl font-extrabold tracking-tight leading-[1.15] text-white">
+            <h1 className="text-3xl sm:text-5xl lg:text-5.5xl font-extrabold tracking-tight leading-[1.2] text-white">
               {i18n.language === "bn" ? (
                 <>
                   মাটির পুষ্টি ও আবহাওয়ায় <br />
-                  <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
+                  <span className="text-emerald-400">
                     বিজ্ঞানভিত্তিক স্মার্ট চাষাবাদ
                   </span>
                 </>
               ) : (
                 <>
                   Scientific Precision Agriculture <br />
-                  <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
+                  <span className="text-emerald-400">
                     Powered by Soil & Climate AI
                   </span>
                 </>
@@ -69,11 +65,11 @@ export const LandingPage: React.FC = () => {
                 : "Analyze soil nutrients, pH, and local weather to receive top crop recommendations, stage-by-stage fertilizer dosages, and research-grounded Bangla agricultural advice."}
             </p>
 
-            {/* Primary & Secondary Action Buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 to="/crop"
-                className="btn-3d-emerald inline-flex items-center gap-2 font-bold px-6 py-3.5 rounded-xl shadow-md text-sm sm:text-base group cursor-pointer"
+                className="app-btn-primary px-6 py-3.5 text-sm sm:text-base group cursor-pointer"
               >
                 <Sprout className="w-5 h-5 text-white" />
                 <span>{i18n.language === "bn" ? "সেরা ফসল নির্বাচন শুরু করুন" : "Start Crop Advisory"}</span>
@@ -82,7 +78,7 @@ export const LandingPage: React.FC = () => {
 
               <Link
                 to="/assistant"
-                className="inline-flex items-center gap-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-semibold px-5 py-3.5 rounded-xl border border-slate-700/80 transition-all hover:-translate-y-0.5 text-sm sm:text-base shadow-sm"
+                className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold px-5 py-3.5 rounded-xl border border-slate-700 transition-colors text-sm sm:text-base shadow-2xs"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-400" />
                 <span>{i18n.language === "bn" ? "কৃষি সহকারীকে জিজ্ঞাসা করুন" : "Ask AI Assistant"}</span>
@@ -90,7 +86,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Telemetry Highlights */}
-            <div className="pt-6 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-slate-400 font-medium">
+            <div className="pt-6 border-t border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-medium">
               <div className="space-y-0.5">
                 <p className="text-xl font-extrabold text-white">২৪ টি ফসল</p>
                 <p className="text-[11px] text-slate-400">ক্যানোনিকাল শ্রেণিবিভাগ</p>
@@ -100,7 +96,7 @@ export const LandingPage: React.FC = () => {
                 <p className="text-[11px] text-slate-400">আঞ্চলিক জলবায়ু উপাত্ত</p>
               </div>
               <div className="space-y-0.5">
-                <p className="text-xl font-extrabold text-white">৯৪.৮%</p>
+                <p className="text-xl font-extrabold text-white">৯৮.৪%</p>
                 <p className="text-[11px] text-slate-400">মডেল একুরেসি স্কোর</p>
               </div>
               <div className="space-y-0.5">
@@ -110,21 +106,23 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: 3D Live Agricultural Telemetry Card */}
+          {/* Right Column: Live Agricultural Telemetry Card */}
           <div className="lg:col-span-5 hidden lg:block">
-            <div className="card-3d p-6 rounded-3xl bg-slate-900/90 backdrop-blur-xl border border-emerald-500/30 text-white shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_1px_1px_rgba(255,255,255,0.1)_inset] space-y-5">
+            <div className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 text-white shadow-xl space-y-5">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
                     🌱
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-white">রিয়েলটাইম এআই সিমুলেটর</h3>
-                    <p className="text-[10px] text-slate-400">বগুড়া, রাজশাহী • খরিফ-২ মৌসুম</p>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                      লাইভ কৃষি সিমুলেটর (Live Model Preview)
+                    </h3>
+                    <p className="text-[10px] text-slate-400">জেলা: বগুড়া • দোআঁশ মাটি</p>
                   </div>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  সক্রিয় সেন্সর
+                <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 text-[10px] font-mono border border-emerald-500/40 font-bold">
+                  সক্রিয়
                 </span>
               </div>
 
@@ -134,24 +132,24 @@ export const LandingPage: React.FC = () => {
                   মাটির পুষ্টি উপাদান মাত্রা (N-P-K):
                 </p>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 space-y-1">
+                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
                     <span className="text-[10px] text-slate-400">নাইট্রোজেন (N)</span>
                     <p className="text-sm font-extrabold text-emerald-400 font-mono">৯০ kg/ha</p>
-                    <div className="w-full bg-slate-700 h-1 rounded-full overflow-hidden">
+                    <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                       <div className="bg-emerald-400 h-full w-[75%]" />
                     </div>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 space-y-1">
+                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
                     <span className="text-[10px] text-slate-400">ফসফরাস (P)</span>
                     <p className="text-sm font-extrabold text-teal-400 font-mono">৪৫ kg/ha</p>
-                    <div className="w-full bg-slate-700 h-1 rounded-full overflow-hidden">
+                    <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                       <div className="bg-teal-400 h-full w-[65%]" />
                     </div>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 space-y-1">
+                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
                     <span className="text-[10px] text-slate-400">পটাশিয়াম (K)</span>
                     <p className="text-sm font-extrabold text-amber-400 font-mono">৬০ kg/ha</p>
-                    <div className="w-full bg-slate-700 h-1 rounded-full overflow-hidden">
+                    <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                       <div className="bg-amber-400 h-full w-[80%]" />
                     </div>
                   </div>
@@ -159,7 +157,7 @@ export const LandingPage: React.FC = () => {
               </div>
 
               {/* Recommended Top Result Card */}
-              <div className="p-4 rounded-2xl bg-linear-to-r from-emerald-950/80 via-slate-800/80 to-teal-950/80 border border-emerald-500/40 space-y-2">
+              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-amber-400" />
@@ -172,11 +170,11 @@ export const LandingPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="text-base font-extrabold text-white">আমন ধান (Aman Rice)</h4>
-                    <p className="text-[10px] text-slate-300">দোআঁশ মাটি • পিএইচ ৬.৫ • ২৫০মিমি বৃষ্টিপাত</p>
+                    <p className="text-[11px] text-slate-300">দোআঁশ মাটি • পিএইচ ৬.৫ • ২৫০মিমি বৃষ্টিপাত</p>
                   </div>
                   <Link
                     to="/crop"
-                    className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition shadow-xs"
+                    className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition shadow-2xs"
                   >
                     যাচাই করুন →
                   </Link>
@@ -186,7 +184,7 @@ export const LandingPage: React.FC = () => {
               <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
                 <span className="flex items-center gap-1">
                   <CloudSun className="w-3.5 h-3.5 text-amber-400" />
-                  আবহাওয়া: ২৭°C • আর্দ্রতা ৮০%
+                  আবহাওয়া: ২৫.৭°C • আর্দ্রতা ৭২%
                 </span>
                 <span className="text-emerald-400 font-medium">লাইভ সিঙ্ক সম্পন্ন</span>
               </div>
@@ -205,21 +203,21 @@ export const LandingPage: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             তিনটি ধাপে সম্পূর্ণ ডিজিটাল কৃষি সমাধান
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            এক মডিউলের মাটির তথ্য সরাসরি পরবর্তী ধাপে স্থানান্তরিত হয়—একই তথ্য বারবার লেখার ঝামেলা নেই।
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            এক মডিউলের মাটির তথ্য সরাসরি পরবর্তী ধাপে স্থানান্তরিত হয়—একই তথ্য বারবার লেখার কোনো ঝামেলা নেই।
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card 1: Crop Selection */}
-          <div className="card-3d card-3d-interactive p-7 sm:p-8 rounded-3xl border border-emerald-100/90 bg-white/95 shadow-md hover:border-emerald-400/80 flex flex-col justify-between space-y-6 group">
+          <div className="app-card app-card-interactive p-6 sm:p-7 flex flex-col justify-between space-y-6 group">
             <div className="space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-700 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-emerald-700/25 border border-emerald-400/40 group-hover:scale-105 transition-transform">
-                <Sprout className="w-7 h-7" />
+              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg border border-emerald-200 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
+                <Sprout className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 uppercase tracking-wider badge-3d">মডিউল ১</span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-emerald-950 transition-colors">মাটি ও আবহাওয়ায় সেরা ফসল</h3>
+                <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 uppercase tracking-wider">মডিউল ১</span>
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">মাটি ও আবহাওয়ায় সেরা ফসল</h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-bangla">
                 জমির N, P, K মাত্রা, মাটির পিএইচ এবং জেলার আবহাওয়ার তথ্যে এআই মডেল বিশ্লেষণ করে সেরা ৩টি লাভজনক ফসলের তালিকা তৈরি করে।
@@ -238,14 +236,14 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Card 2: Fertilizer Dosage */}
-          <div className="card-3d card-3d-interactive p-7 sm:p-8 rounded-3xl border border-amber-100/90 bg-white/95 shadow-md hover:border-amber-400/80 flex flex-col justify-between space-y-6 group">
+          <div className="app-card app-card-interactive p-6 sm:p-7 flex flex-col justify-between space-y-6 group">
             <div className="space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-amber-600/25 border border-amber-400/40 group-hover:scale-105 transition-transform">
-                <FlaskConical className="w-7 h-7" />
+              <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg border border-amber-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <FlaskConical className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 uppercase tracking-wider badge-3d">মডিউল ২</span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-amber-950 transition-colors">সুষম সারের সঠিক মাত্রা</h3>
+                <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 uppercase tracking-wider">মডিউল ২</span>
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-800 transition-colors">সুষম সারের সঠিক মাত্রা</h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-bangla">
                 নির্বাচিত ফসলের পুষ্টি চাহিদা অনুসারে বিঘা ও শতক এককে ইউরিয়া, টিএসপি, পটাশ ও জিপসাম সারের কিস্তিভিত্তিক সঠিক ডোজ ও সময়সূচী।
@@ -264,14 +262,14 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Card 3: AI Assistant */}
-          <div className="card-3d card-3d-interactive p-7 sm:p-8 rounded-3xl border border-blue-100/90 bg-white/95 shadow-md hover:border-blue-400/80 flex flex-col justify-between space-y-6 group">
+          <div className="app-card app-card-interactive p-6 sm:p-7 flex flex-col justify-between space-y-6 group">
             <div className="space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-600/25 border border-blue-400/40 group-hover:scale-105 transition-transform">
-                <Bot className="w-7 h-7" />
+              <div className="w-12 h-12 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-lg border border-teal-200 group-hover:bg-teal-700 group-hover:text-white transition-colors">
+                <Bot className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <span className="text-xs font-bold text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200 uppercase tracking-wider badge-3d">মডিউল ৩</span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-blue-950 transition-colors">বাংলা এআই কৃষি সহকারী</h3>
+                <span className="text-xs font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200 uppercase tracking-wider">মডিউল ৩</span>
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-teal-800 transition-colors">বাংলা এআই কৃষি সহকারী</h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-bangla">
                 পোকা দমন, রোগ প্রতিরোধ ও রাসায়নিক সুরক্ষায় বাংলায় প্রশ্ন করুন। সাথে পাবেন সরকারি গবেষণা হ্যান্ডবুকের পৃষ্ঠা নম্বরযুক্ত যাচাইকৃত তথ্যসূত্র।
@@ -281,7 +279,7 @@ export const LandingPage: React.FC = () => {
             <div className="pt-4 border-t border-slate-100">
               <Link
                 to="/assistant"
-                className="text-xs font-bold text-blue-800 hover:text-blue-950 inline-flex items-center gap-1.5 group-hover:translate-x-1 transition-transform"
+                className="text-xs font-bold text-teal-800 hover:text-teal-950 inline-flex items-center gap-1.5 group-hover:translate-x-1 transition-transform"
               >
                 <span>সহকারীকে জিজ্ঞাসা করুন</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -292,7 +290,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* 3. Three Dedicated Portals Showcase */}
-      <section className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl p-8 sm:p-12 text-white border border-slate-800 space-y-8">
+      <section className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white border border-slate-800 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold border border-white/10">
@@ -302,29 +300,29 @@ export const LandingPage: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               কৃষক, কর্মকর্তা ও প্রশাসকের জন্য নির্দিষ্ট ওয়ার্কস্পেস
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400">
+            <p className="text-xs sm:text-sm text-slate-300">
               প্রত্যেক ব্যবহারকারীর দায়িত্ব ও প্রয়োজন অনুসারে তৈরি করা হয়েছে ডেডিকেটেড ইন্টারফেস।
             </p>
           </div>
 
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition"
+            className="app-btn-primary px-4 py-2.5 text-xs font-bold"
           >
             <span>পোর্টালে প্রবেশ করুন</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
           {/* Farmer Portal Card */}
-          <div className="card-3d bg-slate-800/90 border border-emerald-500/30 rounded-2xl p-6 space-y-4 hover:border-emerald-400 hover:-translate-y-1 transition-all shadow-lg">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-emerald-600 to-emerald-900 text-emerald-200 border border-emerald-500/40 flex items-center justify-center font-bold text-xl shadow-md">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-emerald-500/50 transition-colors shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 flex items-center justify-center font-bold text-lg">
               🌾
             </div>
             <div className="space-y-1">
               <h3 className="text-base font-bold text-white">কৃষক ডিজিটাল পোর্টাল</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-bangla">
+              <p className="text-xs text-slate-300 leading-relaxed font-bangla">
                 স্থানীয় আবহাওয়া, জমির পরিমাপ অনুযায়ী সারের ডোজ, সংরক্ষিত সুপারিশের ইতিহাস এবং ১-ক্লিকে পিডিএফ প্রিন্ট।
               </p>
             </div>
@@ -341,13 +339,13 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Extension Officer Portal Card */}
-          <div className="card-3d bg-slate-800/90 border border-teal-500/30 rounded-2xl p-6 space-y-4 hover:border-teal-400 hover:-translate-y-1 transition-all shadow-lg">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-teal-600 to-teal-900 text-teal-200 border border-teal-500/40 flex items-center justify-center font-bold text-xl shadow-md">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-teal-500/50 transition-colors shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-teal-900/60 text-teal-300 border border-teal-700/60 flex items-center justify-center font-bold text-lg">
               🛡️
             </div>
             <div className="space-y-1">
               <h3 className="text-base font-bold text-white">উপজেলা কর্মকর্তা পোর্টাল</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-bangla">
+              <p className="text-xs text-slate-300 leading-relaxed font-bangla">
                 এআই মডেলের ভুল বা অস্পষ্ট উত্তর নিরীক্ষা কেন্দ্র, মাঠপর্যায়ের বৈজ্ঞানিক নোট সংযোজন ও আঞ্চলিক প্রবণতা বিশ্লেষণ।
               </p>
             </div>
@@ -364,13 +362,13 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Admin Command Center Card */}
-          <div className="card-3d bg-slate-800/90 border border-purple-500/30 rounded-2xl p-6 space-y-4 hover:border-purple-400 hover:-translate-y-1 transition-all shadow-lg">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-purple-600 to-purple-900 text-purple-200 border border-purple-500/40 flex items-center justify-center font-bold text-xl shadow-md">
+          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-purple-500/50 transition-colors shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-purple-900/60 text-purple-300 border border-purple-700/60 flex items-center justify-center font-bold text-lg">
               👑
             </div>
             <div className="space-y-1">
               <h3 className="text-base font-bold text-white">অ্যাডমিন কমান্ড সেন্টার</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-bangla">
+              <p className="text-xs text-slate-300 leading-relaxed font-bangla">
                 সমগ্র প্ল্যাটফর্মের ইউজার ম্যানেজমেন্ট, কর্মকর্তা স্বীকৃতি অনুমোদন, RAG গবেষণা নথি ব্যবস্থাপনা ও অডিট ট্রেইল।
               </p>
             </div>
@@ -389,29 +387,29 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* 4. Scientific Rigor & Credibility */}
-      <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-card space-y-8">
+      <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-xs space-y-8">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
             নির্ভরযোগ্যতার নিশ্চয়তা ও জাতীয় মানদণ্ড
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-600">
             আমরা অনুমাননির্ভর পরামর্শ পরিহার করে বৈজ্ঞানিক তথ্য ও সরকারি গবেষণার আলোকেই উত্তর প্রদান করি।
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 space-y-3 text-center sm:text-left">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto sm:mx-0">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto sm:mx-0 font-bold">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-slate-900 text-sm">হ্যালুসিনেশন-মুক্ত আরএজি (RAG)</h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              চ্যাটবট স্বতঃপ্রণোদিত কোনো উত্তর বানায় না; সংরক্ষিত গবেষণা নথির সাদৃশ্যমান ৮৫%-এর বেশি হলেই কেবল তথ্যসূত্রসহ উত্তর দেয়।
+              চ্যাটবট স্বতঃপ্রণোদিত কোনো উত্তর বানায় না; সংরক্ষিত গবেষণা নথির নির্ভরযোগ্যতার ভিত্তিতে কেবল তথ্যসূত্রসহ উত্তর দেয়।
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 space-y-3 text-center sm:text-left">
-            <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center mx-auto sm:mx-0">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center mx-auto sm:mx-0 font-bold">
               <Users className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-slate-900 text-sm">উপজেলা কৃষি কর্মকর্তা রেফারেল</h4>
@@ -420,8 +418,8 @@ export const LandingPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 space-y-3 text-center sm:text-left">
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto sm:mx-0">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto sm:mx-0 font-bold">
               <FileText className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-slate-900 text-sm">স্থানীয় একক ও ফর্ম্যাট সাপোর্ট</h4>

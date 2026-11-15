@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
               {i18n.language === "bn" ? "গবেষণা সহযোগী" : "Research Citations"}
             </h4>
-            <ul className="space-y-2 text-xs text-slate-500">
+            <ul className="space-y-2 text-xs font-semibold text-slate-600">
               <li>BARC — সার নির্দেশিকা ২০২৪</li>
               <li>BRRI — ব্রি আধুনিক ধানের চাষ</li>
               <li>BARI — সবজি ও ডালফসল গাইড</li>
@@ -123,12 +123,12 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-600 font-bangla">
           <p>
             © {new Date().getFullYear()} Mrittika AI (মৃত্তিকা এআই) • সর্বস্বত্ব সংরক্ষিত।
           </p>
 
-          <p className="flex items-center gap-1">
+          <p className="flex items-center gap-1.5">
             <span>তৈরি করা হয়েছে</span>
             <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" />
             <span>দিয়ে বাংলাদেশের কৃষকদের সমৃদ্ধির লক্ষ্যে</span>

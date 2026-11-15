@@ -69,13 +69,13 @@ export const VoiceInputButton: React.FC<VoiceInputProps> = ({ onTranscript, disa
       disabled={disabled}
       className={`p-2.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 ${
         isListening
-          ? "bg-red-600 text-white animate-pulse focus:ring-red-500"
-          : "bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-mrittika-500"
+          ? "bg-rose-600 text-white animate-pulse focus:ring-rose-500 shadow-md"
+          : "bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 border border-slate-200 focus:ring-emerald-600"
       }`}
       title={isListening ? "ভয়েস রেকর্ড বন্ধ করুন (Stop)" : "বাংলায় মুখে বলুন (Speak in Bangla)"}
       aria-label="Voice input"
     >
-      {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5 text-mrittika-800" />}
+      {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5 text-emerald-800" />}
     </button>
   );
 };
