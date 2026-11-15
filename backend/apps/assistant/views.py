@@ -198,14 +198,88 @@ class ChatView(APIView):
         _, ctx_hash, _ = canonicalize_context(client_context)
         _, fingerprint = generate_cache_fingerprint(normalized_q, ctx_hash)
 
-        with acquire_single_flight(fingerprint):
-            # Double check if concurrent request populated the cache while waiting
-            double_check = lookup_cache(question=message, context=client_context)
-            if double_check:
-                answer = double_check["answer"]
-                clean_sources = double_check.get("sources", [])
-                cache_id = double_check.get("cache_id")
-                match_type = double_check.get("match_type", "EXACT")
+        try:
+            with acquire_single_flight(fingerprint):
+                # Double check if concurrent request populated the cache while waiting
+                double_check = lookup_cache(question=message, context=client_context)
+                if double_check:
+                    answer = double_check["answer"]
+                    clean_sources = double_check.get("sources", [])
+                    cache_id = double_check.get("cache_id")
+                    match_type = double_check.get("match_type", "EXACT")
+                    if session:
+                        try:
+                            AssistantMessage.objects.create(session=session, role="user", content=message)
+                            AssistantMessage.objects.create(
+                                session=session,
+                                role="assistant",
+                                content=answer,
+                                sources=clean_sources,
+                                fallback=False,
+                                provider_used="cache",
+                                is_cached=True,
+                                cache_entry_id=cache_id,
+                                cache_match_type=match_type,
+                            )
+                            session.save(update_fields=["updated_at"])
+                        except Exception as e:
+                            logger.warning("Failed to persist cached assistant message: %s", e)
+                    resp_data = {
+                        "answer": answer,
+                        "sources": clean_sources,
+                        "fallback": False,
+                        "session_id": session_id,
+                        "client_context": client_context,
+                        "is_cached": True,
+                        "cache_id": cache_id,
+                        "match_type": match_type,
+                        "is_verified": double_check.get("is_verified", False),
+                    }
+                    if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
+                        resp_data["provider_used"] = "cache"
+                    return Response(resp_data, status=status.HTTP_200_OK)
+
+                # 2. Enrich query for retrieval if crop context is active
+                query_enrichment = message
+                if client_context.get("crop"):
+                    query_enrichment = f"{client_context['crop']} - {message}"
+
+                # 3. Retrieve chunks with relevance threshold check
+                chunks, is_low_confidence = query_knowledge_base(query_enrichment, top_k=4)
+                clean_sources = format_sources_for_client(chunks)
+
+                # 4. Generate answer using LLM Router (Grounded in RAG context or general agronomy)
+                messages = build_assistant_messages(
+                    user_message=message,
+                    context_chunks=chunks,
+                    client_context=client_context,
+                    conversation_history=conversation_history,
+                    max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
+                    is_low_confidence=is_low_confidence,
+                )
+                router = get_llm_router()
+                result = router.generate(messages, stream=False, context_chunks=chunks)
+                answer = result["answer"]
+                provider_used = result.get("provider_used", "unknown")
+                fallback = result.get("fallback", False) or is_low_confidence
+
+                # Save to shared AI cache if eligible
+                new_cache_entry = None
+                if not fallback:
+                    try:
+                        new_cache_entry = save_response_to_cache(
+                            original_question=message,
+                            response_text=answer,
+                            context=client_context,
+                            sources=clean_sources,
+                            metadata={"provider_used": provider_used},
+                            fallback=fallback,
+                            model_name=provider_used,
+                        )
+                    except Exception as ce:
+                        logger.warning("Could not save to cache: %s", ce)
+
+                # 5. Persist messages for authenticated users
                 if session:
                     try:
                         AssistantMessage.objects.create(session=session, role="user", content=message)
@@ -214,100 +288,48 @@ class ChatView(APIView):
                             role="assistant",
                             content=answer,
                             sources=clean_sources,
-                            fallback=False,
-                            provider_used="cache",
-                            is_cached=True,
-                            cache_entry_id=cache_id,
-                            cache_match_type=match_type,
+                            fallback=fallback,
+                            provider_used=provider_used,
+                            is_cached=False,
+                            cache_entry=new_cache_entry,
+                            cache_match_type="",
                         )
                         session.save(update_fields=["updated_at"])
                     except Exception as e:
-                        logger.warning("Failed to persist cached assistant message: %s", e)
+                        logger.warning("Failed to persist assistant messages: %s", e)
+
                 resp_data = {
                     "answer": answer,
                     "sources": clean_sources,
-                    "fallback": False,
+                    "fallback": fallback,
                     "session_id": session_id,
                     "client_context": client_context,
-                    "is_cached": True,
-                    "cache_id": cache_id,
-                    "match_type": match_type,
-                    "is_verified": double_check.get("is_verified", False),
+                    "is_cached": False,
+                    "cache_id": str(new_cache_entry.id) if new_cache_entry else None,
                 }
+                # Only expose provider_used to admins or in DEBUG mode
                 if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
-                    resp_data["provider_used"] = "cache"
+                    resp_data["provider_used"] = provider_used
+
                 return Response(resp_data, status=status.HTTP_200_OK)
 
-            # 2. Enrich query for retrieval if crop context is active
-            query_enrichment = message
-            if client_context.get("crop"):
-                query_enrichment = f"{client_context['crop']} - {message}"
-
-            # 3. Retrieve chunks with relevance threshold check
-            chunks, is_low_confidence = query_knowledge_base(query_enrichment, top_k=4)
-            clean_sources = format_sources_for_client(chunks)
-
-            # 4. Generate answer using LLM Router (Grounded in RAG context or general agronomy)
-            messages = build_assistant_messages(
-                user_message=message,
-                context_chunks=chunks,
-                client_context=client_context,
-                conversation_history=conversation_history,
-                max_prompt_tokens=getattr(settings, "MAX_PROMPT_TOKENS", 3000),
-                is_low_confidence=is_low_confidence,
+        except Exception as unhandled_err:
+            logger.error("ChatView unhandled exception: %s", unhandled_err, exc_info=True)
+            fallback_answer = (
+                "দুঃখিত, সার্ভার সাময়িক ব্যস্ততার কারণে পূর্ণাঙ্গ উত্তর দিতে পারছে না। "
+                "নির্ভুল তথ্যের জন্য নিকটস্থ উপজেলা কৃষি কর্মকর্তা বা উপসহকারী কৃষি কর্মকর্তার (SAAO) সাথে যোগাযোগ করুন।"
             )
-            router = get_llm_router()
-            result = router.generate(messages, stream=False, context_chunks=chunks)
-            answer = result["answer"]
-            provider_used = result.get("provider_used", "unknown")
-            fallback = result.get("fallback", False) or is_low_confidence
-
-            # Save to shared AI cache if eligible
-            new_cache_entry = None
-            if not fallback:
-                new_cache_entry = save_response_to_cache(
-                    original_question=message,
-                    response_text=answer,
-                    context=client_context,
-                    sources=clean_sources,
-                    metadata={"provider_used": provider_used},
-                    fallback=fallback,
-                    model_name=provider_used,
-                )
-
-            # 5. Persist messages for authenticated users
-            if session:
-                try:
-                    AssistantMessage.objects.create(session=session, role="user", content=message)
-                    AssistantMessage.objects.create(
-                        session=session,
-                        role="assistant",
-                        content=answer,
-                        sources=clean_sources,
-                        fallback=fallback,
-                        provider_used=provider_used,
-                        is_cached=False,
-                        cache_entry=new_cache_entry,
-                        cache_match_type="",
-                    )
-                    session.save(update_fields=["updated_at"])
-                except Exception as e:
-                    logger.warning("Failed to persist assistant messages: %s", e)
-
-            resp_data = {
-                "answer": answer,
-                "sources": clean_sources,
-                "fallback": fallback,
-                "session_id": session_id,
-                "client_context": client_context,
-                "is_cached": False,
-                "cache_id": str(new_cache_entry.id) if new_cache_entry else None,
-            }
-            # Only expose provider_used to admins or in DEBUG mode
-            if settings.DEBUG or (request.user and getattr(request.user, "role", None) == "ADMIN"):
-                resp_data["provider_used"] = provider_used
-
-            return Response(resp_data, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "answer": fallback_answer,
+                    "sources": [],
+                    "fallback": True,
+                    "session_id": session_id,
+                    "client_context": client_context,
+                    "is_cached": False,
+                },
+                status=status.HTTP_200_OK,
+            )
 
 
 class ChatStreamView(APIView):

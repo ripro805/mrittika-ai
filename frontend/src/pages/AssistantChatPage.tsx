@@ -117,6 +117,26 @@ export const AssistantChatPage: React.FC = () => {
   }, [messages, isLoading]);
 
   // Load Sessions for authenticated users
+  const [isWarmingUp, setIsWarmingUp] = useState(false);
+
+  // Background ping to pre-warm sleeping backend on cloud (Render Free Tier)
+  useEffect(() => {
+    apiClient.get("/health/").catch(() => {});
+  }, []);
+
+  // Track slow loading (>5 seconds) to notify user about cloud cold start
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isLoading) {
+      timer = setTimeout(() => {
+        setIsWarmingUp(true);
+      }, 5000);
+    } else {
+      setIsWarmingUp(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
   useEffect(() => {
     if (isAuthenticated) {
       loadSessions();
@@ -381,6 +401,8 @@ export const AssistantChatPage: React.FC = () => {
       // If streaming encountered an error and no text was received yet, fall back seamlessly to standard JSON REST endpoint!
       if (!streamedAny) {
         try {
+          // Give waking-up cloud server a brief moment to finish booting
+          await new Promise((resolve) => setTimeout(resolve, 1200));
           const fallbackRes = await apiClient.post("/assistant/chat/", {
             message: textToSend,
             session_id: currentSessionId,
@@ -871,9 +893,16 @@ export const AssistantChatPage: React.FC = () => {
           })}
 
           {isLoading && (
-            <div className="flex items-center gap-2 text-xs text-gray-500 bg-white p-3 rounded-2xl border border-gray-200 w-fit animate-pulse">
-              <Loader2 className="w-4 h-4 animate-spin text-mrittika-700" />
-              <span>নথি বিশ্লেষণ ও উত্তর প্রস্তুত করা হচ্ছে...</span>
+            <div className="flex flex-col gap-1.5 bg-white p-3.5 rounded-2xl border border-gray-200 w-fit shadow-xs">
+              <div className="flex items-center gap-2 text-xs text-gray-700">
+                <Loader2 className="w-4 h-4 animate-spin text-emerald-700" />
+                <span className="font-semibold">নথি বিশ্লেষণ ও উত্তর প্রস্তুত করা হচ্ছে...</span>
+              </div>
+              {isWarmingUp && (
+                <p className="text-[11px] text-amber-700 bg-amber-50 px-2 py-1 rounded-md border border-amber-200 font-bangla animate-pulse">
+                  ⏳ সার্ভার ক্লাউড থেকে সক্রিয় হচ্ছে (Render Cold Start)... অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন।
+                </p>
+              )}
             </div>
           )}
 

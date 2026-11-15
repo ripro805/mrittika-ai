@@ -36,6 +36,8 @@ import { AdminCacheManagementPage } from "./pages/admin/AdminCacheManagementPage
 import { AdminModelRegistryPage } from "./pages/admin/AdminModelRegistryPage";
 import { AdminActivityLogsPage } from "./pages/admin/AdminActivityLogsPage";
 
+import apiClient from "./services/api";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -46,6 +48,11 @@ const queryClient = new QueryClient({
 });
 
 export const App: React.FC = () => {
+  React.useEffect(() => {
+    // Proactively ping backend to wake up cloud instance from cold start (Render spin-down)
+    apiClient.get("/health/").catch(() => {});
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
