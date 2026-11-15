@@ -319,14 +319,39 @@ class ChatStreamView(APIView):
     permission_classes = [AllowAny]
     throttle_classes = [AnonChatThrottle, UserChatThrottle]
 
+    def get(self, request):
+        """
+        Supports GET-based EventSource or diagnostic probe.
+        Example: /api/v1/assistant/chat/stream/?message=...&session_id=...
+        """
+        message = request.query_params.get("message")
+        if not message:
+            return Response(
+                {
+                    "status": "online",
+                    "service": "Bangla Agricultural Assistant SSE Streaming Endpoint",
+                    "usage": "Send POST with JSON {'message': '...'} or GET with query parameter ?message=...",
+                },
+                status=status.HTTP_200_OK,
+            )
+        data = {
+            "message": message,
+            "session_id": request.query_params.get("session_id"),
+            "context": {},
+        }
+        return self._handle_stream(request, data)
+
     def post(self, request):
+        return self._handle_stream(request, request.data)
+
+    def _handle_stream(self, request, input_data):
         if not check_global_rpd_limit():
             return Response(
                 {"error": "দৈনিক সেবার সীমা পূর্ণ হয়েছে। অনুগ্রহ করে আগামীকাল চেষ্টা করুন।"},
                 status=status.HTTP_429_TOO_MANY_REQUESTS,
             )
 
-        serializer = ChatInputSerializer(data=request.data)
+        serializer = ChatInputSerializer(data=input_data)
         serializer.is_valid(raise_exception=True)
         message = serializer.validated_data["message"]
         client_context = serializer.validated_data.get("context", {})

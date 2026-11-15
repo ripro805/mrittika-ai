@@ -31,6 +31,7 @@ urlpatterns = [
     # Chat endpoints
     path("chat", ChatView.as_view(), name="assistant-chat"),
     path("chat/", ChatView.as_view(), name="assistant-chat-slash"),
+    path("chat/stream", ChatStreamView.as_view(), name="assistant-chat-stream-noslash"),
     path("chat/stream/", ChatStreamView.as_view(), name="assistant-chat-stream"),
     path("health/", AssistantHealthView.as_view(), name="assistant-health"),
 
