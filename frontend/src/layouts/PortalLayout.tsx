@@ -144,7 +144,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
             </div>
             <div>
               <span className="font-extrabold text-slate-900 text-base leading-tight block">
-                মৃত্তিকা এআই
+                {t("app_name")}
               </span>
               <span className="text-[10px] text-slate-500 font-bold tracking-wider uppercase block">
                 Mrittika AI • BD

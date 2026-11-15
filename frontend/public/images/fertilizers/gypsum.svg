@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg_gyp" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <radialGradient id="granule_gyp" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </radialGradient>
+    <filter id="shadow_gyp" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="400" height="250" fill="url(#bg_gyp)"/>
+  <g opacity="0.95" filter="url(#shadow_gyp)">
+    <polygon points="130,120 155,105 165,135 135,145" fill="url(#granule_gyp)"/>
+    <polygon points="170,115 200,100 215,130 180,140" fill="url(#granule_gyp)"/>
+    <polygon points="210,125 240,110 250,140 220,150" fill="url(#granule_gyp)"/>
+    <polygon points="145,150 175,135 185,165 150,175" fill="url(#granule_gyp)"/>
+    <polygon points="185,145 220,130 230,168 190,180" fill="url(#granule_gyp)"/>
+    <polygon points="225,150 255,138 268,168 232,178" fill="url(#granule_gyp)"/>
+  </g>
+  <rect x="20" y="20" width="130" height="28" rx="14" fill="#64748b" fill-opacity="0.9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" font-family="sans-serif" text-anchor="middle">18% S + 22% Ca</text>
+  <rect x="260" y="20" width="120" height="28" rx="14" fill="#1e293b" fill-opacity="0.9" stroke="#475569" stroke-width="1"/>
+  <text x="320" y="38" fill="#e2e8f0" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle">CaSO₄·2H₂O</text>
+  <text x="200" y="228" fill="#ffffff" font-size="15" font-weight="bold" font-family="sans-serif" text-anchor="middle" letter-spacing="1">GYPSUM (CALCIUM SULPHATE)</text>
+</svg>

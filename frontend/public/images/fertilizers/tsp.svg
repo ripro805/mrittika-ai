@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg_tsp" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <radialGradient id="granule_tsp" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="70%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </radialGradient>
+    <filter id="shadow_tsp" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="400" height="250" fill="url(#bg_tsp)"/>
+  <g opacity="0.95" filter="url(#shadow_tsp)">
+    <circle cx="140" cy="130" r="16" fill="url(#granule_tsp)"/>
+    <circle cx="170" cy="120" r="18" fill="url(#granule_tsp)"/>
+    <circle cx="200" cy="135" r="17" fill="url(#granule_tsp)"/>
+    <circle cx="230" cy="125" r="15" fill="url(#granule_tsp)"/>
+    <circle cx="260" cy="138" r="16" fill="url(#granule_tsp)"/>
+    <circle cx="155" cy="155" r="17" fill="url(#granule_tsp)"/>
+    <circle cx="185" cy="150" r="20" fill="url(#granule_tsp)"/>
+    <circle cx="218" cy="158" r="19" fill="url(#granule_tsp)"/>
+    <circle cx="248" cy="152" r="17" fill="url(#granule_tsp)"/>
+    <circle cx="125" cy="150" r="14" fill="url(#granule_tsp)"/>
+    <circle cx="275" cy="148" r="15" fill="url(#granule_tsp)"/>
+    <circle cx="170" cy="180" r="16" fill="url(#granule_tsp)"/>
+    <circle cx="202" cy="185" r="18" fill="url(#granule_tsp)"/>
+    <circle cx="235" cy="178" r="15" fill="url(#granule_tsp)"/>
+  </g>
+  <rect x="20" y="20" width="130" height="28" rx="14" fill="#475569" fill-opacity="0.9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="85" y="38" fill="#ffffff" font-size="12" font-weight="bold" font-family="sans-serif" text-anchor="middle">46% PHOSPHATE</text>
+  <rect x="260" y="20" width="120" height="28" rx="14" fill="#1e293b" fill-opacity="0.9" stroke="#475569" stroke-width="1"/>
+  <text x="320" y="38" fill="#cbd5e1" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle">Ca(H₂PO₄)₂</text>
+  <text x="200" y="228" fill="#ffffff" font-size="15" font-weight="bold" font-family="sans-serif" text-anchor="middle" letter-spacing="1">TSP (DARK PHOSPHATE)</text>
+</svg>

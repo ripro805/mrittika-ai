@@ -77,22 +77,22 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs flex-shrink-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0 min-w-fit select-none">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0 select-none py-1">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shadow-xs border border-emerald-800 group-hover:bg-emerald-800 transition-colors flex-shrink-0">
               <Sprout className="w-5 h-5 text-emerald-100" />
             </div>
-            <div className="flex flex-col justify-center min-w-fit">
+            <div className="flex flex-col justify-center flex-shrink-0">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight leading-tight whitespace-nowrap">
+                <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight leading-snug whitespace-nowrap">
                   {t("app_name")}
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 leading-normal whitespace-nowrap">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 leading-none whitespace-nowrap">
                   v2.0
                 </span>
               </div>
-              <span className="text-[11px] font-medium text-slate-500 tracking-wide block mt-0.5 leading-normal whitespace-nowrap">
+              <span className="text-[11px] font-medium text-slate-500 tracking-wide block mt-0.5 leading-none whitespace-nowrap">
                 {i18n.language === "en" ? "Smart Agriculture Advisory" : "স্মার্ট কৃষি পরামর্শ প্ল্যাটফর্ম"}
               </span>
             </div>
