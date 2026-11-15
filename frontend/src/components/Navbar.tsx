@@ -76,7 +76,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 supports-[backdrop-filter]:bg-white/70 backdrop-blur-xl border-b border-black/[0.06] shadow-[0_1px_2px_rgba(0,0,0,0.03)] flex-shrink-0 transition-all">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1680px] 2xl:max-w-[1760px] w-full mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
         <div className="flex items-center justify-between min-h-[68px] py-2.5">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0 select-none overflow-visible">

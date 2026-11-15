@@ -136,7 +136,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-2 sm:py-6 px-2 sm:px-4">
+    <div className="max-w-6xl 2xl:max-w-7xl mx-auto py-2 sm:py-6 px-2 sm:px-4">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left Column: Agritech Showcase & Security Telemetry Panel */}
         <div className="lg:col-span-5 relative overflow-hidden p-6 sm:p-8 rounded-[28px] sm:rounded-[36px] bg-[#0c0c0e] text-white border border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] flex flex-col justify-between space-y-6">

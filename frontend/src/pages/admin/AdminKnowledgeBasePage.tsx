@@ -104,7 +104,7 @@ export const AdminKnowledgeBasePage: React.FC = () => {
   const totalChunks = documents.reduce((acc, d) => acc + (d.chunks_count || d.vector_count || 0), 0);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 w-full max-w-[1680px] 2xl:max-w-[1760px] mx-auto">
       {/* Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

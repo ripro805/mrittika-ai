@@ -50,7 +50,7 @@ export const AdminActivityLogsPage: React.FC = () => {
   }, [actionFilter, searchQuery]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 w-full max-w-[1680px] 2xl:max-w-[1760px] mx-auto">
       {/* Title & Action Filters */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>

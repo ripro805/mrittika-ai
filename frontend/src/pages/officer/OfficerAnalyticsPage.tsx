@@ -55,7 +55,7 @@ export const OfficerAnalyticsPage: React.FC = () => {
   const maxCropCount = Math.max(...top_crops.map((c: any) => c.query_count), 1);
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-8 w-full max-w-[1680px] 2xl:max-w-[1760px] mx-auto">
       {/* Title */}
       <div>
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">

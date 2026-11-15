@@ -58,7 +58,7 @@ export const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto py-8 space-y-6">
+    <div className="max-w-3xl mx-auto py-8 space-y-6">
       <div className="bg-white p-8 rounded-[28px] sm:rounded-[36px] border border-black/[0.06] shadow-apple space-y-6">
         <div className="flex items-center justify-between pb-6 border-b border-black/[0.05]">
           <div className="flex items-center gap-4">

@@ -278,7 +278,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
         </header>
 
         {/* Content Body */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 2xl:p-10 w-full max-w-[1680px] 2xl:max-w-[1760px] mx-auto">
           {children}
         </main>
       </div>

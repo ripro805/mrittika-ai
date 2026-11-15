@@ -60,7 +60,7 @@ export const OfficerDashboardPage: React.FC = () => {
   const { officer, stats, recent_pending, recent_resolved } = data;
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-8 w-full max-w-[1680px] 2xl:max-w-[1760px] mx-auto">
       {/* Officer Jurisdiction Banner */}
       <div
         className="banner-officer-hero relative overflow-hidden rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 text-white shadow-[0_20px_50px_-15px_rgba(4,47,46,0.4)] border border-teal-700/50"

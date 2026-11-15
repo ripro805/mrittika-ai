@@ -59,7 +59,7 @@ export const AdminOfficerVerificationPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 w-full max-w-[1680px] 2xl:max-w-[1760px] mx-auto">
       {/* Title */}
       <div>
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">

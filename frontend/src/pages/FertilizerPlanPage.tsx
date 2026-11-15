@@ -111,7 +111,7 @@ export const FertilizerPlanPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-6xl 2xl:max-w-7xl mx-auto space-y-8">
       {/* Title */}
       <div className="text-center space-y-2.5">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold border border-amber-200 shadow-2xs">

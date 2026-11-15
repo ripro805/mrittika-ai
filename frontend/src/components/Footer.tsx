@@ -18,13 +18,13 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#fbfbfd] border-t border-black/[0.06] mt-20 text-[#86868b]">
       {/* Prominent Agricultural Research Disclaimer Banner */}
       <div className="bg-amber-500/10 border-b border-amber-500/15 py-3 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2.5 text-xs text-amber-950 font-medium text-center">
+        <div className="max-w-[1680px] 2xl:max-w-[1760px] w-full mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 flex items-center justify-center gap-2.5 text-xs text-amber-950 font-medium text-center">
           <AlertTriangle className="w-4 h-4 text-amber-700 flex-shrink-0" />
           <span>{t("disclaimer")}</span>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="max-w-[1680px] 2xl:max-w-[1760px] w-full mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Col 1: Brand & National Initiative (2 cols wide on desktop) */}
           <div className="lg:col-span-2 space-y-4">

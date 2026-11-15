@@ -772,7 +772,7 @@ export const AssistantChatPage: React.FC = () => {
         >
           {messages.length <= 1 && messages[0]?.id === "welcome" ? (
             /* Agricultural AI Command Hub */
-            <div className="max-w-4xl mx-auto py-2 sm:py-4 space-y-6 animate-in fade-in duration-300">
+            <div className="max-w-6xl 2xl:max-w-7xl mx-auto py-2 sm:py-4 space-y-6 animate-in fade-in duration-300">
               {/* Hero Showcase Card (Apple Pro Keynote Aesthetic) */}
               <div
                 className="banner-assistant-hero relative overflow-hidden rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 text-white border border-white/10 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)]"
@@ -826,7 +826,7 @@ export const AssistantChatPage: React.FC = () => {
               </div>
 
               {/* 4 Interactive Apple Bento Action Cards with Rich Photography */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4 gap-4 sm:gap-5">
                 {/* Card 1 */}
                 <button
                   type="button"
@@ -994,7 +994,7 @@ export const AssistantChatPage: React.FC = () => {
             </div>
           ) : (
             /* Active Conversation Messages */
-            <div className="max-w-4xl mx-auto w-full space-y-4">
+            <div className="max-w-5xl 2xl:max-w-6xl mx-auto w-full space-y-4">
               {messages.map((msg) => {
                 const isUser = msg.sender === "user";
 
@@ -1278,7 +1278,7 @@ export const AssistantChatPage: React.FC = () => {
 
         {/* Floating Input Dock */}
         <div className="bg-white p-2.5 sm:p-3.5 border-t border-slate-200 flex-shrink-0">
-          <div className="flex items-end gap-2.5 bg-slate-50 rounded-2xl border border-slate-300 p-2.5 focus-within:border-emerald-600 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-600/15 shadow-inner transition-all">
+          <div className="max-w-5xl 2xl:max-w-6xl mx-auto flex items-end gap-2.5 bg-slate-50 rounded-2xl border border-slate-300 p-2.5 focus-within:border-emerald-600 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-600/15 shadow-inner transition-all">
             <VoiceInputButton
               onTranscript={(spoken) => {
                 setInputMessage((prev) => (prev ? `${prev} ${spoken}` : spoken));

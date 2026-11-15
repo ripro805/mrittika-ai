@@ -72,10 +72,10 @@ const PublicLayout: React.FC = () => {
       <main
         className={
           isAssistant
-            ? "flex-1 w-full max-w-7xl 2xl:max-w-[1440px] mx-auto px-2 sm:px-4 pt-1.5 pb-2 sm:pt-2 sm:pb-3 flex flex-col min-h-0 overflow-hidden"
+            ? "flex-1 w-full max-w-[1720px] 2xl:max-w-[1800px] mx-auto px-2 sm:px-4 lg:px-6 pt-1.5 pb-2 sm:pt-2 sm:pb-3 flex flex-col min-h-0 overflow-hidden"
             : isLanding
             ? "flex-1 w-full min-h-0"
-            : "flex-1 max-w-7xl 2xl:max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7"
+            : "flex-1 max-w-[1680px] 2xl:max-w-[1760px] w-full mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-5 sm:py-7"
         }
       >
         <Routes>
