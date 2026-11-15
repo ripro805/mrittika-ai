@@ -66,7 +66,7 @@ export const FarmerDashboardPage: React.FC = () => {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Farmer Greeting Banner */}
       <div
-        className="banner-farmer-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-emerald-800"
+        className="banner-farmer-hero relative overflow-hidden rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 text-white shadow-[0_20px_50px_-15px_rgba(5,46,22,0.4)] border border-emerald-700/50"
         style={{
           backgroundColor: "#052e16",
           backgroundImage: "linear-gradient(135deg, rgba(5, 46, 22, 0.94) 0%, rgba(6, 78, 59, 0.90) 50%, rgba(2, 44, 34, 0.96) 100%)",
@@ -82,7 +82,7 @@ export const FarmerDashboardPage: React.FC = () => {
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-emerald-200 border border-white/10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-emerald-200 border border-white/15">
               <MapPin className="w-3.5 h-3.5 text-emerald-300" />
               <span>
                 {farmer.district || (i18n.language === "en" ? "Bangladesh" : "বাংলাদেশ")} {farmer.upazila ? `• ${farmer.upazila}` : ""}
@@ -99,17 +99,17 @@ export const FarmerDashboardPage: React.FC = () => {
           </div>
 
           {/* Quick Action Badges */}
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/farmer/crop-recommend"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-emerald-900 text-xs font-bold hover:bg-emerald-50 transition shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-emerald-950 text-xs font-semibold hover:bg-emerald-50 transition shadow-xs cursor-pointer active:scale-98"
             >
               <Sprout className="w-4 h-4 text-emerald-700" />
               <span>{i18n.language === "en" ? "Find Best Crops" : "নতুন ফসল খুঁজুন"}</span>
             </Link>
             <Link
               to="/farmer/fertilizer-plan"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 text-white text-xs font-bold border border-white/20 transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-800/80 hover:bg-emerald-800 text-white text-xs font-semibold border border-white/20 transition cursor-pointer active:scale-98"
             >
               <FlaskConical className="w-4 h-4 text-emerald-300" />
               <span>{i18n.language === "en" ? "Calculate Fertilizer" : "সার হিসাব করুন"}</span>
@@ -123,27 +123,27 @@ export const FarmerDashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Regional Priority Crops Photographic Carousel Strip */}
-      <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 shadow-card space-y-3">
+      {/* Regional Priority Crops Photographic Carousel Strip (Apple Bento Showcase) */}
+      <div className="p-5 sm:p-6 rounded-[28px] bg-white border border-black/[0.06] shadow-apple space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
               <Sprout className="w-4 h-4" />
             </div>
-            <h2 className="text-xs sm:text-sm font-extrabold text-slate-900">
+            <h2 className="text-xs sm:text-sm font-extrabold text-[#1d1d1f]">
               {i18n.language === "en" ? "Recommended Regional Crops for Cultivation" : "আপনার অঞ্চলের জন্য উচ্চ ফলনশীল ফসল"}
             </h2>
           </div>
           <Link
             to="/farmer/crop-recommend"
-            className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
+            className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
           >
             <span>{i18n.language === "en" ? "All 24 Crops" : "২৪টি ফসল দেখুন"}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5">
           {[
             { slug: "rice_boro", nameBn: "বোরো ধান", nameEn: "Boro Rice", tag: "Cereals" },
             { slug: "potato", nameBn: "আলু", nameEn: "Potato", tag: "Vegetables" },
@@ -156,9 +156,9 @@ export const FarmerDashboardPage: React.FC = () => {
               <Link
                 key={item.slug}
                 to="/farmer/crop-recommend"
-                className="group p-2.5 rounded-2xl border border-slate-200 hover:border-emerald-300 bg-slate-50/60 hover:bg-emerald-50/40 transition flex items-center gap-3 cursor-pointer"
+                className="group p-3 rounded-2xl border border-black/[0.05] hover:border-emerald-300 bg-[#fbfbfd] hover:bg-white hover:shadow-apple transition-all flex items-center gap-3 cursor-pointer"
               >
-                <div className="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 shadow-2xs border border-slate-200">
+                <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-2xs border border-black/[0.05]">
                   <AgroImage
                     crop={cropData}
                     lang={i18n.language === "en" ? "en" : "bn"}
@@ -167,7 +167,7 @@ export const FarmerDashboardPage: React.FC = () => {
                   />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-bold text-slate-900 truncate group-hover:text-emerald-900">
+                  <p className="text-xs font-bold text-[#1d1d1f] truncate group-hover:text-emerald-900">
                     {i18n.language === "en" ? item.nameEn : item.nameBn}
                   </p>
                   <span className="text-[10px] text-emerald-700 font-semibold block truncate">

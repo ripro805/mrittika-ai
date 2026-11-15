@@ -773,16 +773,19 @@ export const AssistantChatPage: React.FC = () => {
           {messages.length <= 1 && messages[0]?.id === "welcome" ? (
             /* Agricultural AI Command Hub */
             <div className="max-w-4xl mx-auto py-2 sm:py-4 space-y-6 animate-in fade-in duration-300">
-              {/* Hero Showcase Card */}
+              {/* Hero Showcase Card (Apple Pro Keynote Aesthetic) */}
               <div
-                className="banner-assistant-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white border border-emerald-800 shadow-card"
+                className="banner-assistant-hero relative overflow-hidden rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 text-white border border-white/10 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)]"
                 style={{
-                  background: "linear-gradient(135deg, #020617 0%, #052e16 50%, #0f172a 100%)",
-                  backgroundColor: "#020617",
+                  background: "linear-gradient(135deg, #0c0c0e 0%, #062c19 50%, #0c0c0e 100%)",
+                  backgroundColor: "#0c0c0e",
                 }}
               >
+                {/* Specular Ambient Glow */}
+                <div className="absolute -top-24 right-1/4 w-80 h-40 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+
                 <div className="relative z-10 space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-emerald-300 text-xs font-semibold backdrop-blur-md">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                     <span>
                       {i18n.language === "en"
@@ -797,7 +800,7 @@ export const AssistantChatPage: React.FC = () => {
                         ? "Welcome to Mrittika AI Agriculture Assistant"
                         : "মৃত্তিকা এআই বাংলা কৃষি সহকারীতে স্বাগতম"}
                     </h2>
-                    <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed max-w-2xl font-bangla">
+                    <p className="text-xs sm:text-sm text-emerald-100/90 font-normal leading-relaxed max-w-2xl font-bangla">
                       {i18n.language === "en"
                         ? "Ask questions regarding crop diseases, balanced fertilizer split timings, pest control, or weather advisories. Click any popular topic below to begin:"
                         : "ফসলের যেকোনো রোগ, সুষম সার প্রয়োগের সঠিক কিস্তি, বালাই দমন কিংবা আবহাওয়া সংক্রান্ত প্রশ্ন বাংলায় লিখুন। নিচে দেওয়া জনপ্রিয় বিষয়গুলোতে চাপ দিয়েও সরাসরি আলোচনা শুরু করতে পারেন:"}
@@ -805,16 +808,16 @@ export const AssistantChatPage: React.FC = () => {
                   </div>
 
                   {/* Feature Badges */}
-                  <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-bold text-emerald-100 font-bangla">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
+                  <div className="pt-1 flex flex-wrap gap-2 text-[11px] font-semibold text-emerald-100 font-bangla">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-sm">
                       <Zap className="w-3.5 h-3.5 text-amber-400" />
                       {i18n.language === "en" ? "Sub-millisecond Fast Response" : "সাব-মিলি-সেকেন্ড দ্রুততম রেসপন্স"}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-sm">
                       <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
                       {i18n.language === "en" ? "Page-Referenced Government Sources" : "পৃষ্ঠা নম্বরযুক্ত সরকারি নির্দেশিকা সূত্র"}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-sm">
                       <ShieldCheck className="w-3.5 h-3.5 text-teal-300" />
                       {i18n.language === "en" ? "100% Verified & Credible" : "শতভাগ নিরাপদ ও নির্ভরযোগ্য"}
                     </span>
@@ -822,38 +825,38 @@ export const AssistantChatPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* 4 Interactive Workstation Cards with Photographic Previews */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+              {/* 4 Interactive Apple Bento Action Cards with Rich Photography */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {/* Card 1 */}
                 <button
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Urea application guidelines for Aman rice" : "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-emerald-500/60 shadow-xs"
+                  className="app-card-interactive p-5 sm:p-6 rounded-[24px] text-left border border-black/[0.06] bg-white flex items-start gap-4 sm:gap-5 group cursor-pointer hover:border-black/[0.12] hover:shadow-apple-hover shadow-apple transition-all duration-300"
                 >
-                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 border border-black/[0.06] shadow-2xs">
                     <img
                       src={FERTILIZER_IMAGES.application.url}
                       alt="Urea application"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                       loading="lazy"
                     />
                   </div>
-                  <div className="space-y-1 min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-sm sm:text-base font-bold text-[#1d1d1f] group-hover:text-emerald-800 transition-colors tracking-tight">
                         {i18n.language === "en" ? "Urea & Fertilizer Timing" : "ইউরিয়া ও সার ব্যবস্থাপনা"}
                       </h3>
-                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex-shrink-0">
                         {i18n.language === "en" ? "3 Splits" : "৩ কিস্তি"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
+                    <p className="text-xs text-[#86868b] leading-relaxed line-clamp-2 font-bangla">
                       {i18n.language === "en"
                         ? "Top dressing split timing and guidelines for Aman and Boro rice"
                         : "আমন ও বোরো ধানে ইউরিয়া উপরিপ্রয়োগের সঠিক সময়সূচী ও নিয়মাবলী"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 pt-0.5 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 pt-1 group-hover:translate-x-1 transition-all">
                       <span>{i18n.language === "en" ? "Ask Question" : "প্রশ্ন করুন"}</span>
                       <span>→</span>
                     </span>
@@ -865,31 +868,31 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Potato Late Blight symptoms and control" : "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-amber-500/60 shadow-xs"
+                  className="app-card-interactive p-5 sm:p-6 rounded-[24px] text-left border border-black/[0.06] bg-white flex items-start gap-4 sm:gap-5 group cursor-pointer hover:border-black/[0.12] hover:shadow-apple-hover shadow-apple transition-all duration-300"
                 >
-                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 border border-black/[0.06] shadow-2xs">
                     <img
                       src={SCENIC_IMAGES.pestInspection.url}
                       alt="Crop disease inspection"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                       loading="lazy"
                     />
                   </div>
-                  <div className="space-y-1 min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-amber-800 transition-colors">
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-sm sm:text-base font-bold text-[#1d1d1f] group-hover:text-amber-800 transition-colors tracking-tight">
                         {i18n.language === "en" ? "Crop Diseases & Pest Control" : "ফসলের রোগ ও পোকা দমন"}
                       </h3>
-                      <span className="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                      <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 flex-shrink-0">
                         {i18n.language === "en" ? "Remedy" : "প্রতিকার"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
+                    <p className="text-xs text-[#86868b] leading-relaxed line-clamp-2 font-bangla">
                       {i18n.language === "en"
                         ? "Effective management of Late Blight in potatoes and Rice Blast disease"
                         : "আলুর লেইট ব্লাইট (নাভিধসা) ও ধানের ব্লাস্ট রোগের স্থায়ী চিকিৎসা"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 pt-0.5 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-800 pt-1 group-hover:translate-x-1 transition-all">
                       <span>{i18n.language === "en" ? "Get Advice" : "পরামর্শ নিন"}</span>
                       <span>→</span>
                     </span>
@@ -901,31 +904,31 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Lime application dosage in acidic soil" : "অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-teal-500/60 shadow-xs"
+                  className="app-card-interactive p-5 sm:p-6 rounded-[24px] text-left border border-black/[0.06] bg-white flex items-start gap-4 sm:gap-5 group cursor-pointer hover:border-black/[0.12] hover:shadow-apple-hover shadow-apple transition-all duration-300"
                 >
-                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 border border-black/[0.06] shadow-2xs">
                     <img
                       src={SCENIC_IMAGES.soilTesting.url}
                       alt="Soil nutrient analysis"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                       loading="lazy"
                     />
                   </div>
-                  <div className="space-y-1 min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-teal-800 transition-colors">
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-sm sm:text-base font-bold text-[#1d1d1f] group-hover:text-teal-800 transition-colors tracking-tight">
                         {i18n.language === "en" ? "Soil Nutrients & pH Amendment" : "মাটির পুষ্টি ও অম্লত্ব সংস্কার"}
                       </h3>
-                      <span className="text-[10px] font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
+                      <span className="text-[10px] font-semibold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200 flex-shrink-0">
                         {i18n.language === "en" ? "pH Fix" : "পিএইচ"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
+                    <p className="text-xs text-[#86868b] leading-relaxed line-clamp-2 font-bangla">
                       {i18n.language === "en"
                         ? "Accurate dosage and timing of lime and organic matter in acidic soils"
                         : "অম্লীয় মাটিতে চুন ও জৈব সার প্রয়োগের সঠিক অনুপাত ও পদ্ধতি"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-800 pt-0.5 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-800 pt-1 group-hover:translate-x-1 transition-all">
                       <span>{i18n.language === "en" ? "View Dosages" : "মাত্রা জানুন"}</span>
                       <span>→</span>
                     </span>
@@ -937,31 +940,31 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend(i18n.language === "en" ? "Boro rice fertilizer management in sandy loam soil" : "বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
                   disabled={isLoading}
-                  className="app-card-interactive p-4 sm:p-4.5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer hover:border-blue-500/60 shadow-xs"
+                  className="app-card-interactive p-5 sm:p-6 rounded-[24px] text-left border border-black/[0.06] bg-white flex items-start gap-4 sm:gap-5 group cursor-pointer hover:border-black/[0.12] hover:shadow-apple-hover shadow-apple transition-all duration-300"
                 >
-                  <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 border border-black/[0.06] shadow-2xs">
                     <img
                       src={CROP_IMAGES.rice_boro.url}
                       alt="Boro rice field"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                       loading="lazy"
                     />
                   </div>
-                  <div className="space-y-1 min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-800 transition-colors">
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-sm sm:text-base font-bold text-[#1d1d1f] group-hover:text-blue-800 transition-colors tracking-tight">
                         {i18n.language === "en" ? "Climate & Variety Advisory" : "আবহাওয়া ও জাত নির্বাচন"}
                       </h3>
-                      <span className="text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                      <span className="text-[10px] font-semibold text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200 flex-shrink-0">
                         {i18n.language === "en" ? "Boro Rice" : "বোরো ধান"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
+                    <p className="text-xs text-[#86868b] leading-relaxed line-clamp-2 font-bangla">
                       {i18n.language === "en"
                         ? "Balanced fertilizer plans for Boro rice in loam and sandy-loam soils"
                         : "দোআঁশ ও বেলে মাটিতে বোরো ধান এবং রবি ফসলের সুষম সার পরিকল্পনা"}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-800 pt-0.5 group-hover:translate-x-0.5 transition-transform">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-800 pt-1 group-hover:translate-x-1 transition-all">
                       <span>{i18n.language === "en" ? "Explore Plan" : "পরিকল্পনা দেখুন"}</span>
                       <span>→</span>
                     </span>
@@ -969,9 +972,9 @@ export const AssistantChatPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* Regional Agro Tip Card */}
-              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80 shadow-2xs flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-emerald-300">
+              {/* Regional Agro Tip Card (Apple Squircle Pill) */}
+              <div className="p-4 sm:p-5 rounded-[22px] bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/90 border border-emerald-200/70 shadow-apple flex items-center gap-4">
+                <div className="w-13 h-13 rounded-2xl overflow-hidden flex-shrink-0 border border-emerald-300/60 shadow-2xs">
                   <img
                     src={CROP_IMAGES.rice_boro.url}
                     alt="Boro Rice"
@@ -979,7 +982,7 @@ export const AssistantChatPage: React.FC = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="text-xs leading-relaxed text-slate-700 font-bangla">
+                <div className="text-xs leading-relaxed text-[#1d1d1f] font-bangla">
                   <span className="font-bold text-emerald-950">
                     {i18n.language === "en" ? "Today's Field Advisory: " : "আজকের বিশেষ কৃষি বার্তা: "}
                   </span>

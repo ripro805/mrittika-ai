@@ -106,15 +106,15 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
   return (
     <div className="min-h-screen bg-agro-clean flex flex-col md:flex-row text-slate-900 font-sans relative selection:bg-emerald-100 selection:text-emerald-900">
       {/* Mobile Header Bar */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-slate-200 sticky top-0 z-40">
+      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white/90 backdrop-blur-xl border-b border-black/[0.06] sticky top-0 z-40">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none"
+            className="p-2 rounded-xl text-[#1d1d1f] hover:bg-black/[0.04] focus:outline-none"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
-          <Link to="/" className="font-extrabold text-lg text-emerald-800 flex items-center gap-1.5">
+          <Link to="/" className="font-bold text-lg text-[#1d1d1f] flex items-center gap-1.5">
             <Sprout className="w-5 h-5 text-emerald-600" />
             <span>মৃত্তিকা এআই</span>
           </Link>
@@ -123,7 +123,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
         <div className="flex items-center gap-2">
           <button
             onClick={toggleLanguage}
-            className="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition"
+            className="px-3 py-1 text-xs font-semibold rounded-full bg-black/[0.04] border border-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.08] transition"
           >
             {i18n.language === "bn" ? "English" : "বাংলা"}
           </button>
@@ -132,38 +132,38 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:inset-auto flex flex-col shadow-card md:shadow-none ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#fbfbfd]/95 backdrop-blur-2xl border-r border-black/[0.06] transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-auto flex flex-col shadow-2xl md:shadow-none ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Header */}
-        <div className="p-5 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-5 border-b border-black/[0.05] flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:bg-emerald-800 transition-colors">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center font-bold text-lg shadow-xs group-hover:scale-105 transition-all">
               <Sprout className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-extrabold text-slate-900 text-base leading-tight block">
+              <span className="font-bold text-[#1d1d1f] text-base leading-tight block tracking-tight">
                 {t("app_name")}
               </span>
-              <span className="text-[10px] text-slate-500 font-bold tracking-wider uppercase block">
-                Mrittika AI • BD
+              <span className="text-[10px] text-[#86868b] font-medium tracking-wider uppercase block mt-0.5">
+                Mrittika AI • Apple Edition
               </span>
             </div>
           </Link>
 
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="md:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+            className="md:hidden p-1.5 rounded-full text-[#86868b] hover:text-[#1d1d1f] hover:bg-black/[0.04]"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Portal Role Indicator */}
-        <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200">
-          <div className={`px-2.5 py-1 rounded-full text-xs font-bold border inline-flex items-center gap-1.5 ${roleConfig.badgeColor}`}>
-            <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
+        <div className="px-5 py-3.5 bg-black/[0.02] border-b border-black/[0.05]">
+          <div className={`px-3 py-1 rounded-full text-xs font-semibold border inline-flex items-center gap-1.5 ${roleConfig.badgeColor}`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
             <span>{i18n.language === "bn" ? roleConfig.portalNameBn : roleConfig.portalNameEn}</span>
           </div>
         </div>
@@ -178,13 +178,13 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? roleConfig.activeNav
-                    : `text-slate-700 hover:bg-slate-100 hover:text-slate-900`
+                    ? `${roleConfig.activeNav} shadow-xs`
+                    : `text-[#1d1d1f] hover:bg-black/[0.04]`
                 }`}
               >
-                <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${isActive ? "text-white" : "text-slate-600"}`} />
+                <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${isActive ? "text-white" : "text-[#86868b]"}`} />
                 <span className="truncate">
                   {i18n.language === "bn" ? item.labelBn : item.labelEn}
                 </span>
@@ -194,36 +194,36 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
         </nav>
 
         {/* Public Home Link */}
-        <div className="px-4 py-2 border-t border-slate-200">
+        <div className="px-4 py-2 border-t border-black/[0.05]">
           <Link
             to="/"
-            className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition"
+            className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#1d1d1f] hover:bg-black/[0.04] transition"
           >
             <span className="flex items-center gap-2">
-              <ExternalLink className="w-3.5 h-3.5 text-slate-600" />
+              <ExternalLink className="w-3.5 h-3.5 text-[#86868b]" />
               <span>{i18n.language === "bn" ? "পাবলিক হোমপেজ" : "Public Homepage"}</span>
             </span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+            <ChevronRight className="w-3.5 h-3.5 text-[#86868b]" />
           </Link>
         </div>
 
         {/* User Card & Logout in Sidebar Footer */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50">
+        <div className="p-4 border-t border-black/[0.05] bg-black/[0.02]">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 overflow-hidden">
               <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 font-bold text-xs flex items-center justify-center flex-shrink-0 border border-emerald-200">
                 {user?.name ? user.name.slice(0, 2) : "AI"}
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-bold text-slate-900 truncate">{user?.name || "ব্যবহারকারী"}</p>
-                <p className="text-[10px] text-slate-600 truncate font-mono font-medium">{user?.district ? `${user.district}, ${user.upazila}` : user?.phone}</p>
+                <p className="text-xs font-bold text-[#1d1d1f] truncate">{user?.name || "ব্যবহারকারী"}</p>
+                <p className="text-[10px] text-[#86868b] truncate font-mono font-medium">{user?.district ? `${user.district}, ${user.upazila}` : user?.phone}</p>
               </div>
             </div>
 
             <button
               onClick={handleLogout}
               title="লগআউট"
-              className="p-1.5 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition cursor-pointer"
+              className="p-2 rounded-full text-[#86868b] hover:text-red-600 hover:bg-red-50 transition cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -234,42 +234,42 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
       {/* Main Workspace Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Desktop Top Nav */}
-        <header className="hidden md:flex items-center justify-between px-8 py-4 bg-white border-b border-slate-200 sticky top-0 z-30 shadow-2xs">
+        <header className="hidden md:flex items-center justify-between px-8 py-3.5 bg-white/80 backdrop-blur-xl border-b border-black/[0.06] sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
+          <div className="flex items-center gap-2 text-xs font-medium text-[#86868b]">
             <Link to="/" className="hover:text-emerald-700 transition">
               {i18n.language === "bn" ? "হোম" : "Home"}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-slate-800 font-semibold">
+            <ChevronRight className="w-3.5 h-3.5 text-black/30" />
+            <span className="text-[#1d1d1f] font-semibold">
               {i18n.language === "bn" ? roleConfig.portalNameBn : roleConfig.portalNameEn}
             </span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronRight className="w-3.5 h-3.5 text-black/30" />
             <span className="text-emerald-800 font-bold">
               {i18n.language === "bn" ? pageTitleBn : pageTitleEn}
             </span>
           </div>
 
           {/* Right Tools: Language + Profile */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <button
               onClick={toggleLanguage}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl bg-slate-50 border border-slate-300 text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-black/[0.03] border border-black/[0.06] text-[#1d1d1f] hover:bg-black/[0.06] transition cursor-pointer"
             >
-              <Globe className="w-3.5 h-3.5 text-slate-500" />
+              <Globe className="w-3.5 h-3.5 text-[#86868b]" />
               <span>{i18n.language === "bn" ? "English" : "বাংলা"}</span>
             </button>
 
-            <div className="h-5 w-px bg-slate-200" />
+            <div className="h-4 w-px bg-black/[0.08]" />
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <div className="text-right">
-                <span className="text-xs font-bold text-slate-900 block leading-tight">{user?.name}</span>
-                <span className="text-[10px] text-slate-500 block leading-tight font-mono">{user?.role}</span>
+                <span className="text-xs font-bold text-[#1d1d1f] block leading-tight">{user?.name}</span>
+                <span className="text-[10px] text-[#86868b] block leading-tight font-mono">{user?.role}</span>
               </div>
               <button
                 onClick={handleLogout}
-                className="px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:text-red-600 hover:border-red-300 hover:bg-red-50 transition cursor-pointer"
+                className="px-3.5 py-1.5 rounded-full border border-black/[0.08] text-xs font-semibold text-[#1d1d1f] hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition cursor-pointer"
               >
                 {i18n.language === "bn" ? "লগআউট" : "Logout"}
               </button>

@@ -63,7 +63,7 @@ export const OfficerDashboardPage: React.FC = () => {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Officer Jurisdiction Banner */}
       <div
-        className="banner-officer-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-teal-800"
+        className="banner-officer-hero relative overflow-hidden rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 text-white shadow-[0_20px_50px_-15px_rgba(4,47,46,0.4)] border border-teal-700/50"
         style={{
           backgroundColor: "#042f2e",
           backgroundImage: "linear-gradient(135deg, rgba(4, 47, 46, 0.94) 0%, rgba(19, 78, 74, 0.90) 50%, rgba(2, 44, 34, 0.96) 100%)",
@@ -79,7 +79,7 @@ export const OfficerDashboardPage: React.FC = () => {
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-teal-200 border border-white/10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-teal-200 border border-white/15">
               <MapPin className="w-3.5 h-3.5 text-teal-300" />
               <span>
                 {i18n.language === "en"
@@ -87,7 +87,7 @@ export const OfficerDashboardPage: React.FC = () => {
                   : `উপজেলা: ${officer.upazila || "শেরপুর"} • জেলা: ${officer.district || "বগুড়া"}`}
               </span>
               {officer.is_verified && (
-                <span className="ml-1 px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-bold">
+                <span className="ml-1 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-bold">
                   {i18n.language === "en" ? "Verified Officer" : "যাচাইকৃত কর্মকর্তা"}
                 </span>
               )}
@@ -105,7 +105,7 @@ export const OfficerDashboardPage: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/officer/review"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-teal-950 text-xs font-bold hover:bg-teal-50 transition shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-teal-950 text-xs font-semibold hover:bg-teal-50 transition shadow-xs cursor-pointer active:scale-98"
             >
               <ShieldAlert className="w-4 h-4 text-amber-700" />
               <span>
@@ -116,64 +116,64 @@ export const OfficerDashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats Overview */}
+      {/* Stats Overview (Apple Bento Grid) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Total Flagged Q&A" : "মোট ফ্ল্যাগকৃত প্রশ্নোত্তর"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center border border-amber-200">
+            <div className="w-9 h-9 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center border border-amber-200/60 shadow-2xs">
               <ShieldAlert className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{stats.total_flagged}</p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono tracking-tight">{stats.total_flagged}</p>
+          <p className="text-[11px] text-[#86868b] font-medium">
             {i18n.language === "en" ? "Farmer-flagged or review requests" : "কৃষক কর্তৃক চিহ্নিত বা পর্যালোচনার দাবি"}
           </p>
         </div>
 
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Pending Reviews" : "অপেক্ষমাণ নিরীক্ষা (Pending)"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-red-50 text-red-700 flex items-center justify-center border border-red-200">
+            <div className="w-9 h-9 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center border border-red-200/60 shadow-2xs">
               <Clock className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-red-700 font-mono">{stats.pending_reviews}</p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-2xl sm:text-3xl font-extrabold text-red-600 font-mono tracking-tight">{stats.pending_reviews}</p>
+          <p className="text-[11px] text-[#86868b] font-medium">
             {i18n.language === "en" ? "Immediate agronomist review required" : "অবিলম্বে কৃষিতাত্ত্বিক পর্যবেক্ষণ প্রয়োজন"}
           </p>
         </div>
 
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Resolved Reviews" : "সমাধানকৃত (Resolved)"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center border border-emerald-200">
+            <div className="w-9 h-9 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
               <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-emerald-800 font-mono">{stats.resolved_reviews}</p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-2xl sm:text-3xl font-extrabold text-emerald-700 font-mono tracking-tight">{stats.resolved_reviews}</p>
+          <p className="text-[11px] text-[#86868b] font-medium">
             {i18n.language === "en" ? "Corrected and verified by officer" : "কর্মকর্তা কর্তৃক সংশোধিত ও অনুমোদিত"}
           </p>
         </div>
 
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Resolution Rate" : "সমাধানের হার (Resolution)"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-800 flex items-center justify-center border border-teal-200">
+            <div className="w-9 h-9 rounded-2xl bg-teal-50 text-teal-800 flex items-center justify-center border border-teal-200/60 shadow-2xs">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{stats.resolution_rate_percent}%</p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono tracking-tight">{stats.resolution_rate_percent}%</p>
+          <p className="text-[11px] text-[#86868b] font-medium">
             {i18n.language === "en" ? "Audited queries completion efficacy" : "মোট চিহ্নিত প্রশ্নের কার্যকারিতা"}
           </p>
         </div>

@@ -66,7 +66,7 @@ export const AdminDashboardPage: React.FC = () => {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Executive Command Banner */}
       <div
-        className="banner-admin-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-purple-800"
+        className="banner-admin-hero relative overflow-hidden rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 text-white shadow-[0_20px_50px_-15px_rgba(46,16,101,0.4)] border border-purple-800/60"
         style={{
           backgroundColor: "#2e1065",
           backgroundImage: "linear-gradient(135deg, rgba(46, 16, 101, 0.94) 0%, rgba(59, 7, 100, 0.90) 50%, rgba(15, 23, 42, 0.96) 100%)",
@@ -82,7 +82,7 @@ export const AdminDashboardPage: React.FC = () => {
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-purple-200 border border-white/10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-purple-200 border border-white/15">
               <ShieldCheck className="w-3.5 h-3.5 text-purple-300" />
               <span>
                 {i18n.language === "en"
@@ -105,7 +105,7 @@ export const AdminDashboardPage: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/admin-portal/users"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-purple-950 text-xs font-bold hover:bg-purple-50 transition shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-purple-950 text-xs font-semibold hover:bg-purple-50 transition shadow-xs cursor-pointer active:scale-98"
             >
               <Users className="w-4 h-4 text-purple-700" />
               <span>
@@ -114,7 +114,7 @@ export const AdminDashboardPage: React.FC = () => {
             </Link>
             <Link
               to="/admin-portal/knowledge"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-800/80 hover:bg-purple-800 text-white text-xs font-bold border border-white/20 transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-purple-800/80 hover:bg-purple-800 text-white text-xs font-semibold border border-white/20 transition cursor-pointer active:scale-98"
             >
               <Layers className="w-4 h-4 text-purple-300" />
               <span>
@@ -125,70 +125,70 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Cards: Platform Totals */}
+      {/* KPI Cards: Platform Totals (Apple Squircle Bento Grid) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Registered Users" : "নিবন্ধিত ব্যবহারকারী"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200">
+            <div className="w-9 h-9 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200/60 shadow-2xs">
               <Users className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{users.total}</p>
-          <p className="text-[11px] text-slate-500 font-medium font-bangla">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono tracking-tight">{users.total}</p>
+          <p className="text-[11px] text-[#86868b] font-medium font-bangla">
             {i18n.language === "en"
               ? `${users.farmers} Farmers • ${users.officers} Officers • ${users.admins} Admins`
               : `${users.farmers} কৃষক • ${users.officers} কর্মকর্তা • ${users.admins} অ্যাডমিন`}
           </p>
         </div>
 
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Total AI Recommendations" : "মোট এআই সুপারিশ"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
+            <div className="w-9 h-9 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
               <Sprout className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{recommendations.total}</p>
-          <p className="text-[11px] text-slate-500 font-medium font-bangla">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono tracking-tight">{recommendations.total}</p>
+          <p className="text-[11px] text-[#86868b] font-medium font-bangla">
             {i18n.language === "en"
               ? `${recommendations.crop} Crop • ${recommendations.fertilizer} Fertilizer Plans`
               : `${recommendations.crop} ফসল • ${recommendations.fertilizer} সার পরিকল্পনা`}
           </p>
         </div>
 
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Agri Assistant Messages" : "কৃষি সহকারী বার্তা বিনিময়"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center border border-blue-200">
+            <div className="w-9 h-9 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center border border-blue-200/60 shadow-2xs">
               <Bot className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{assistant.messages}</p>
-          <p className="text-[11px] text-slate-500 font-medium font-bangla">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono tracking-tight">{assistant.messages}</p>
+          <p className="text-[11px] text-[#86868b] font-medium font-bangla">
             {i18n.language === "en"
               ? `${assistant.sessions} active discussion sessions`
               : `${assistant.sessions} টি সক্রিয় আলোচনা সেশন`}
           </p>
         </div>
 
-        <div className="app-card-interactive p-5 rounded-2xl border border-slate-200 bg-white shadow-card space-y-1">
+        <div className="app-card app-card-interactive p-6 rounded-[24px] border border-black/[0.06] bg-white shadow-apple hover:shadow-apple-hover space-y-1.5 transition-all">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-semibold text-[#86868b]">
               {i18n.language === "en" ? "Audits & Corrections" : "পর্যালোচনা ও সংশোধন"}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200">
+            <div className="w-9 h-9 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200/60 shadow-2xs">
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">{audits.resolved} / {audits.flagged}</p>
-          <p className="text-[11px] text-slate-500 font-medium font-bangla">
+          <p className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] font-mono tracking-tight">{audits.resolved} / {audits.flagged}</p>
+          <p className="text-[11px] text-[#86868b] font-medium font-bangla">
             {i18n.language === "en"
               ? `${audits.pending} pending reviews`
               : `${audits.pending} টি অপেক্ষমাণ পর্যালোচনা`}
