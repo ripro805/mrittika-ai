@@ -8,15 +8,24 @@ const resources = {
   en: { translation: enTranslation },
 };
 
+const savedLang = typeof window !== "undefined" ? localStorage.getItem("mrittika_language") || "bn" : "bn";
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: "bn", // Bangla first by default
-    fallbackLng: "en",
+    lng: savedLang,
+    fallbackLng: "bn",
     interpolation: {
       escapeValue: false,
     },
   });
+
+i18n.on("languageChanged", (lng) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("mrittika_language", lng);
+    document.documentElement.lang = lng;
+  }
+});
 
 export default i18n;

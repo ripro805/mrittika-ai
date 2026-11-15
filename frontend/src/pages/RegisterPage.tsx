@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 export const RegisterPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -48,7 +48,9 @@ export const RegisterPage: React.FC = () => {
       navigate("/profile");
     } catch (err: any) {
       const fieldErrors = err.response?.data;
-      let msg = "নিবন্ধন সম্পন্ন করা যায়নি। অনুগ্রহ করে সঠিক তথ্য প্রদান করুন।";
+      let msg = i18n.language === "en"
+        ? "Registration could not be completed. Please enter valid information."
+        : "নিবন্ধন সম্পন্ন করা যায়নি। অনুগ্রহ করে সঠিক তথ্য প্রদান করুন।";
       if (fieldErrors?.phone) {
         msg = Array.isArray(fieldErrors.phone) ? fieldErrors.phone[0] : fieldErrors.phone;
       } else if (fieldErrors?.password) {
@@ -72,18 +74,25 @@ export const RegisterPage: React.FC = () => {
           <div className="space-y-5">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>বিনামূল্যে সদস্যপদ (Free Membership)</span>
+              <span>{i18n.language === "en" ? "Free Membership (Open Agritech)" : "বিনামূল্যে সদস্যপদ (Free Membership)"}</span>
             </div>
 
             <div className="space-y-2">
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
-                মৃত্তিকা এআই নেটওয়ার্কে{" "}
-                <span className="text-emerald-400">
-                  যুক্ত হোন
-                </span>
+                {i18n.language === "en" ? (
+                  <>
+                    Join the Mrittika AI <span className="text-emerald-400">Network</span>
+                  </>
+                ) : (
+                  <>
+                    মৃত্তিকা এআই নেটওয়ার্কে <span className="text-emerald-400">যুক্ত হোন</span>
+                  </>
+                )}
               </h2>
               <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-bangla">
-                একটি নিবন্ধিত অ্যাকাউন্টের মাধ্যমে আপনার জমির মাটির বিশ্লেষণ ও ফসলের ইতিহাস আজীবন নিরাপদ রাখুন।
+                {i18n.language === "en"
+                  ? "Safeguard your farm soil analysis, crop yield history, and balanced nutrient calculations for lifetime access."
+                  : "একটি নিবন্ধিত অ্যাকাউন্টের মাধ্যমে আপনার জমির মাটির বিশ্লেষণ ও ফসলের ইতিহাস আজীবন নিরাপদ রাখুন।"}
               </p>
             </div>
 
@@ -93,8 +102,14 @@ export const RegisterPage: React.FC = () => {
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white font-bangla">ব্যক্তিগত ফসল হিসাব সংরক্ষণ</h4>
-                  <p className="text-[11px] text-slate-200 font-medium font-bangla">প্রতিটি মৌসুমের সার প্রয়োগ ও খরচ বিবরণী সহজে পর্যবেক্ষণ</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">
+                    {i18n.language === "en" ? "Personalized Crop Advisory History" : "ব্যক্তিগত ফসল হিসাব সংরক্ষণ"}
+                  </h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">
+                    {i18n.language === "en"
+                      ? "Track seasonal fertilizer application and cost breakdown seamlessly"
+                      : "প্রতিটি মৌসুমের সার প্রয়োগ ও খরচ বিবরণী সহজে পর্যবেক্ষণ"}
+                  </p>
                 </div>
               </div>
 
@@ -103,8 +118,14 @@ export const RegisterPage: React.FC = () => {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white font-bangla">কর্মকর্তা দ্বারা দ্রুত সাড়া</h4>
-                  <p className="text-[11px] text-slate-200 font-medium font-bangla">স্থানীয় উপ-সহকারী কৃষি কর্মকর্তা (SAAO) সরাসরি পরামর্শ ও অডিট</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">
+                    {i18n.language === "en" ? "Direct Extension Officer Assistance" : "কর্মকর্তা দ্বারা দ্রুত সাড়া"}
+                  </h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">
+                    {i18n.language === "en"
+                      ? "Direct agronomic review by local Sub-Assistant Agriculture Officers (SAAO)"
+                      : "স্থানীয় উপ-সহকারী কৃষি কর্মকর্তা (SAAO) সরাসরি পরামর্শ ও অডিট"}
+                  </p>
                 </div>
               </div>
 
@@ -113,8 +134,14 @@ export const RegisterPage: React.FC = () => {
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white font-bangla">২৪/৭ স্মার্ট বাংলা এআই সহায়তা</h4>
-                  <p className="text-[11px] text-slate-200 font-medium font-bangla">সরকারি নলেজবেস থেকে নির্ভুল রোগ ও পোকা দমনের সমাধান</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">
+                    {i18n.language === "en" ? "24/7 Smart Agronomic AI Support" : "২৪/৭ স্মার্ট বাংলা এআই সহায়তা"}
+                  </h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">
+                    {i18n.language === "en"
+                      ? "Instant pest diagnosis and nutrient solutions grounded in BARC research"
+                      : "সরকারি নলেজবেস থেকে নির্ভুল রোগ ও পোকা দমনের সমাধান"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -123,9 +150,11 @@ export const RegisterPage: React.FC = () => {
           <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-200 font-medium font-bangla">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>কোনো গোপনীয় চার্জ নেই</span>
+              <span>{i18n.language === "en" ? "No hidden charges" : "কোনো গোপনীয় চার্জ নেই"}</span>
             </span>
-            <span className="text-emerald-400 font-bold">১০০% ফ্রি রেজিস্ট্রেশন</span>
+            <span className="text-emerald-400 font-bold">
+              {i18n.language === "en" ? "100% Free Registration" : "১০০% ফ্রি রেজিস্ট্রেশন"}
+            </span>
           </div>
         </div>
 
@@ -135,9 +164,13 @@ export const RegisterPage: React.FC = () => {
             <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center mx-auto shadow-xs border border-emerald-800">
               <UserPlus className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-extrabold text-slate-900">নতুন অ্যাকাউন্ট তৈরি করুন</h1>
+            <h1 className="text-2xl font-extrabold text-slate-900">
+              {i18n.language === "en" ? "Create an Account" : "নতুন অ্যাকাউন্ট তৈরি করুন"}
+            </h1>
             <p className="text-xs text-slate-500">
-              কৃষক বা কৃষি কর্মকর্তা হিসেবে বিনামূল্যে প্ল্যাটফর্মে যুক্ত হোন
+              {i18n.language === "en"
+                ? "Join the platform for free as a Farmer or Agricultural Extension Officer"
+                : "কৃষক বা কৃষি কর্মকর্তা হিসেবে বিনামূল্যে প্ল্যাটফর্মে যুক্ত হোন"}
             </p>
           </div>
 
@@ -151,14 +184,14 @@ export const RegisterPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                আপনার পূর্ণ নাম (Full Name)
+                {i18n.language === "en" ? "Full Name" : "আপনার পূর্ণ নাম (Full Name)"}
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   name="name"
-                  placeholder="যেমন: কৃষক আকমল হোসেন"
+                  placeholder={i18n.language === "en" ? "e.g. Akmol Hossain" : "যেমন: কৃষক আকমল হোসেন"}
                   value={formData.name}
                   onChange={handleInputChange}
                   required
@@ -169,7 +202,7 @@ export const RegisterPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                ১১ ডিজিটের মোবাইল নম্বর (Phone)
+                {i18n.language === "en" ? "11-digit Mobile Number (Phone)" : "১১ ডিজিটের মোবাইল নম্বর (Phone)"}
               </label>
               <div className="relative">
                 <Phone className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -187,7 +220,7 @@ export const RegisterPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                পাসওয়ার্ড (Password - অন্তত ৮ অক্ষর)
+                {i18n.language === "en" ? "Password (at least 8 characters)" : "পাসওয়ার্ড (Password - অন্তত ৮ অক্ষর)"}
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -207,7 +240,7 @@ export const RegisterPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                  জেলা (District)
+                  {i18n.language === "en" ? "District" : "জেলা (District)"}
                 </label>
                 <div className="relative">
                   <MapPin className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -223,7 +256,7 @@ export const RegisterPage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                  উপজেলা (Upazila)
+                  {i18n.language === "en" ? "Upazila" : "উপজেলা (Upazila)"}
                 </label>
                 <div className="relative">
                   <MapPin className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -241,7 +274,7 @@ export const RegisterPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                ব্যবহারকারীর ভূমিকা (Role Selection)
+                {i18n.language === "en" ? "Select Role" : "ব্যবহারকারীর ভূমিকা (Role Selection)"}
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
@@ -255,8 +288,10 @@ export const RegisterPage: React.FC = () => {
                 >
                   <Wheat className="w-5 h-5 text-emerald-700 shrink-0" />
                   <div>
-                    <p className="text-xs font-bold">কৃষক (Farmer)</p>
-                    <p className="text-[10px] text-slate-500">তাৎক্ষণিক এক্সেস</p>
+                    <p className="text-xs font-bold">{i18n.language === "en" ? "Farmer" : "কৃষক (Farmer)"}</p>
+                    <p className="text-[10px] text-slate-500">
+                      {i18n.language === "en" ? "Instant Access" : "তাৎক্ষণিক এক্সেস"}
+                    </p>
                   </div>
                 </button>
 
@@ -271,8 +306,10 @@ export const RegisterPage: React.FC = () => {
                 >
                   <ShieldCheck className="w-5 h-5 text-teal-700 shrink-0" />
                   <div>
-                    <p className="text-xs font-bold">কৃষি কর্মকর্তা</p>
-                    <p className="text-[10px] text-slate-500">অ্যাডমিন অডিট সাপেক্ষে</p>
+                    <p className="text-xs font-bold">{i18n.language === "en" ? "Extension Officer" : "কৃষি কর্মকর্তা"}</p>
+                    <p className="text-[10px] text-slate-500">
+                      {i18n.language === "en" ? "Requires Admin Audit" : "অ্যাডমিন অডিট সাপেক্ষে"}
+                    </p>
                   </div>
                 </button>
               </div>
@@ -284,15 +321,15 @@ export const RegisterPage: React.FC = () => {
               className="w-full py-3 px-4 rounded-xl app-btn-primary text-white font-bold text-sm shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
             >
               {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-              <span>নিবন্ধন সম্পন্ন করুন</span>
+              <span>{i18n.language === "en" ? "Complete Registration" : "নিবন্ধন সম্পন্ন করুন"}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
           <div className="text-center text-xs text-slate-600 pt-2 border-t border-slate-100">
-            ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
+            {i18n.language === "en" ? "Already have an account? " : "ইতিমধ্যে অ্যাকাউন্ট আছে? "}
             <Link to="/login" className="font-bold text-emerald-800 hover:text-emerald-950 underline">
-              লগইন করুন
+              {i18n.language === "en" ? "Sign In" : "লগইন করুন"}
             </Link>
           </div>
         </div>

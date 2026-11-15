@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import apiClient from "../services/api";
 import { User, Phone, MapPin, ShieldCheck, Trash2, Edit3, Check, Loader2 } from "lucide-react";
 
 export const ProfilePage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const { user, refreshProfile, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -26,18 +28,17 @@ export const ProfilePage: React.FC = () => {
       await refreshProfile();
       setIsEditing(false);
     } catch {
-      alert("প্রোফাইল আপডেট করা যায়নি।");
+      alert(i18n.language === "en" ? "Failed to update profile." : "প্রোফাইল আপডেট করা যায়নি।");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDeleteAccount = async () => {
-    if (
-      !window.confirm(
-        "সতর্কতা: আপনার অ্যাকাউন্ট এবং সমস্ত সংরক্ষিত তথ্য স্থায়ীভাবে মুছে যাবে। আপনি কি নিশ্চিত?"
-      )
-    ) {
+    const confirmMsg = i18n.language === "en"
+      ? "Warning: Your account and all saved recommendation records will be permanently deleted. Are you sure?"
+      : "সতর্কতা: আপনার অ্যাকাউন্ট এবং সমস্ত সংরক্ষিত তথ্য স্থায়ীভাবে মুছে যাবে। আপনি কি নিশ্চিত?";
+    if (!window.confirm(confirmMsg)) {
       return;
     }
 
@@ -46,8 +47,14 @@ export const ProfilePage: React.FC = () => {
       await logout();
       navigate("/");
     } catch {
-      alert("অ্যাকাউন্ট মোছা যায়নি।");
+      alert(i18n.language === "en" ? "Failed to delete account." : "অ্যাকাউন্ট মোছা যায়নি।");
     }
+  };
+
+  const roleBadge = () => {
+    if (user.role === "ADMIN") return i18n.language === "en" ? "System Admin" : "সিস্টেম অ্যাডমিন";
+    if (user.role === "OFFICER") return i18n.language === "en" ? "Extension Officer" : "কৃষি কর্মকর্তা";
+    return i18n.language === "en" ? "Farmer" : "কৃষক";
   };
 
   return (
@@ -62,11 +69,7 @@ export const ProfilePage: React.FC = () => {
               <h1 className="text-xl font-bold text-slate-900">{user.name}</h1>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
-                  {user.role === "ADMIN"
-                    ? "সিস্টেম অ্যাডমিন"
-                    : user.role === "OFFICER"
-                    ? "কৃষি কর্মকর্তা"
-                    : "কৃষক"}
+                  {roleBadge()}
                 </span>
                 {user.role === "OFFICER" && (
                   <span
@@ -77,7 +80,9 @@ export const ProfilePage: React.FC = () => {
                     }`}
                   >
                     <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                    {user.is_verified ? "যাচাইকৃত কর্মকর্তা" : "অপেক্ষমান যাচাইকরণ"}
+                    {user.is_verified
+                      ? (i18n.language === "en" ? "Verified Officer" : "যাচাইকৃত কর্মকর্তা")
+                      : (i18n.language === "en" ? "Pending Verification" : "অপেক্ষমান যাচাইকরণ")}
                   </span>
                 )}
               </div>
@@ -87,7 +92,7 @@ export const ProfilePage: React.FC = () => {
           <button
             onClick={() => setIsEditing(!isEditing)}
             className="p-2 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors cursor-pointer"
-            title="প্রোফাইল সম্পাদনা"
+            title={i18n.language === "en" ? "Edit Profile" : "প্রোফাইল সম্পাদনা"}
           >
             <Edit3 className="w-4 h-4" />
           </button>
@@ -96,7 +101,9 @@ export const ProfilePage: React.FC = () => {
         {isEditing ? (
           <form onSubmit={handleUpdate} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">পূর্ণ নাম</label>
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                {i18n.language === "en" ? "Full Name" : "পূর্ণ নাম"}
+              </label>
               <input
                 type="text"
                 value={name}
@@ -107,7 +114,9 @@ export const ProfilePage: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">জেলা</label>
+                <label className="block text-xs font-bold text-slate-800 mb-1">
+                  {i18n.language === "en" ? "District" : "জেলা"}
+                </label>
                 <input
                   type="text"
                   value={district}
@@ -116,7 +125,9 @@ export const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">উপজেলা</label>
+                <label className="block text-xs font-bold text-slate-800 mb-1">
+                  {i18n.language === "en" ? "Upazila" : "উপজেলা"}
+                </label>
                 <input
                   type="text"
                   value={upazila}
@@ -132,14 +143,14 @@ export const ProfilePage: React.FC = () => {
                 className="flex-1 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition cursor-pointer"
               >
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin text-white" /> : <Check className="w-4 h-4" />}
-                <span>সংরক্ষণ করুন</span>
+                <span>{i18n.language === "en" ? "Save Changes" : "সংরক্ষণ করুন"}</span>
               </button>
               <button
                 type="button"
                 onClick={() => setIsEditing(false)}
                 className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
               >
-                বাতিল
+                {i18n.language === "en" ? "Cancel" : "বাতিল"}
               </button>
             </div>
           </form>
@@ -148,7 +159,9 @@ export const ProfilePage: React.FC = () => {
             <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200">
               <Phone className="w-4 h-4 text-slate-500" />
               <div>
-                <span className="text-[11px] text-slate-500 block font-bold">মোবাইল নম্বর</span>
+                <span className="text-[11px] text-slate-500 block font-bold">
+                  {i18n.language === "en" ? "Mobile Number" : "মোবাইল নম্বর"}
+                </span>
                 <span className="font-semibold text-slate-900 font-mono">{user.phone}</span>
               </div>
             </div>
@@ -156,10 +169,12 @@ export const ProfilePage: React.FC = () => {
             <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200">
               <MapPin className="w-4 h-4 text-slate-500" />
               <div>
-                <span className="text-[11px] text-slate-500 block font-bold">এলাকা / ঠিকানা</span>
+                <span className="text-[11px] text-slate-500 block font-bold">
+                  {i18n.language === "en" ? "Region / Address" : "এলাকা / ঠিকানা"}
+                </span>
                 <span className="font-semibold text-slate-900 font-bangla">
                   {user.upazila ? `${user.upazila}, ` : ""}
-                  {user.district || "বাংলাদেশ"}
+                  {user.district || (i18n.language === "en" ? "Bangladesh" : "বাংলাদেশ")}
                 </span>
               </div>
             </div>
@@ -172,7 +187,7 @@ export const ProfilePage: React.FC = () => {
             className="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1.5 p-2 rounded-xl hover:bg-red-50 transition-colors cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
-            <span>অ্যাকাউন্ট মুছে ফেলুন</span>
+            <span>{i18n.language === "en" ? "Delete Account" : "অ্যাকাউন্ট মুছে ফেলুন"}</span>
           </button>
         </div>
       </div>

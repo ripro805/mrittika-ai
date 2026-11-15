@@ -69,9 +69,9 @@ export const Navbar: React.FC = () => {
   };
 
   const getPortalLabel = () => {
-    if (role === "ADMIN") return "অ্যাডমিন পোর্টাল";
-    if (role === "OFFICER") return "কর্মকর্তা পোর্টাল";
-    return "কৃষক পোর্টাল";
+    if (role === "ADMIN") return i18n.language === "en" ? "Admin Portal" : "অ্যাডমিন পোর্টাল";
+    if (role === "OFFICER") return i18n.language === "en" ? "Officer Portal" : "কর্মকর্তা পোর্টাল";
+    return i18n.language === "en" ? "Farmer Portal" : "কৃষক পোর্টাল";
   };
 
   return (
@@ -86,14 +86,14 @@ export const Navbar: React.FC = () => {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight leading-none">
-                  মৃত্তিকা এআই
+                  {t("app_name")}
                 </span>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
                   v2.0
                 </span>
               </div>
               <span className="text-[11px] font-medium text-slate-500 tracking-wide block mt-0.5">
-                স্মার্ট কৃষি পরামর্শ প্ল্যাটফর্ম
+                {i18n.language === "en" ? "Smart Agriculture Advisory" : "স্মার্ট কৃষি পরামর্শ প্ল্যাটফর্ম"}
               </span>
             </div>
           </Link>
@@ -129,10 +129,14 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-800 transition-colors shadow-2xs cursor-pointer"
-                title="১-ক্লিকে ভূমিকা পরীক্ষা করুন"
+                title={i18n.language === "en" ? "1-Click Role Switch" : "১-ক্লিকে ভূমিকা পরীক্ষা করুন"}
               >
                 <Zap className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
-                <span>{navLoggingRole ? "প্রবেশ হচ্ছে..." : "কুইক লগইন"}</span>
+                <span>
+                  {navLoggingRole
+                    ? (i18n.language === "en" ? "Entering..." : "প্রবেশ হচ্ছে...")
+                    : (i18n.language === "en" ? "Quick Login" : "কুইক লগইন")}
+                </span>
                 <ChevronDown className="w-3 h-3 text-slate-500 group-hover:rotate-180 transition-transform" />
               </button>
 
@@ -141,9 +145,11 @@ export const Navbar: React.FC = () => {
                 <div className="px-2.5 py-1.5 border-b border-slate-100 mb-1">
                   <p className="text-[10px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-amber-500" />
-                    ১-ক্লিক ভূমিকা নির্বাচন
+                    {i18n.language === "en" ? "1-Click Role Switch" : "১-ক্লিক ভূমিকা নির্বাচন"}
                   </p>
-                  <p className="text-[10px] text-slate-500">পাসওয়ার্ড টাইপ করার প্রয়োজন নেই</p>
+                  <p className="text-[10px] text-slate-500">
+                    {i18n.language === "en" ? "No password entry required" : "পাসওয়ার্ড টাইপ করার প্রয়োজন নেই"}
+                  </p>
                 </div>
 
                 <button
@@ -157,7 +163,9 @@ export const Navbar: React.FC = () => {
                       <Wheat className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-slate-900">🌾 কৃষক (Farmer)</p>
+                      <p className="text-xs font-bold text-slate-900">
+                        {i18n.language === "en" ? "🌾 Farmer" : "🌾 কৃষক (Farmer)"}
+                      </p>
                       <p className="text-[10px] text-slate-500 font-mono">01720000001</p>
                     </div>
                   </div>
@@ -179,7 +187,9 @@ export const Navbar: React.FC = () => {
                       <ShieldCheck className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-slate-900">🛡️ কর্মকর্তা (Officer)</p>
+                      <p className="text-xs font-bold text-slate-900">
+                        {i18n.language === "en" ? "🛡️ Extension Officer" : "🛡️ কর্মকর্তা (Officer)"}
+                      </p>
                       <p className="text-[10px] text-slate-500 font-mono">01710000001</p>
                     </div>
                   </div>
@@ -201,7 +211,9 @@ export const Navbar: React.FC = () => {
                       <UserCheck className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-slate-900">👑 অ্যাডমিন (Admin)</p>
+                      <p className="text-xs font-bold text-slate-900">
+                        {i18n.language === "en" ? "👑 System Admin" : "👑 অ্যাডমিন (Admin)"}
+                      </p>
                       <p className="text-[10px] text-slate-500 font-mono">01700000001</p>
                     </div>
                   </div>
@@ -316,7 +328,7 @@ export const Navbar: React.FC = () => {
           <div className="pt-2 pb-1 border-t border-slate-100">
             <p className="text-[11px] font-bold text-slate-700 uppercase px-1 mb-1.5 flex items-center gap-1 font-bangla">
               <Zap className="w-3 h-3 text-amber-500 fill-amber-400" />
-              ১-ক্লিক দ্রুত লগইন:
+              {i18n.language === "en" ? "1-Click Quick Login:" : "১-ক্লিক দ্রুত লগইন:"}
             </p>
             <div className="grid grid-cols-3 gap-1.5">
               <button
@@ -324,21 +336,21 @@ export const Navbar: React.FC = () => {
                 onClick={() => handleNavQuickLogin("01720000001", "Farmer@123456", "/farmer/overview", "farmer")}
                 className="py-1.5 px-1 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-900 text-center"
               >
-                🌾 কৃষক
+                {i18n.language === "en" ? "🌾 Farmer" : "🌾 কৃষক"}
               </button>
               <button
                 type="button"
                 onClick={() => handleNavQuickLogin("01710000001", "Officer@123456", "/officer/overview", "officer")}
                 className="py-1.5 px-1 rounded-xl bg-teal-50 border border-teal-200 text-[11px] font-bold text-teal-900 text-center"
               >
-                🛡️ কর্মকর্তা
+                {i18n.language === "en" ? "🛡️ Officer" : "🛡️ কর্মকর্তা"}
               </button>
               <button
                 type="button"
                 onClick={() => handleNavQuickLogin("01700000001", "Admin@123456", "/admin-portal/overview", "admin")}
                 className="py-1.5 px-1 rounded-xl bg-purple-50 border border-purple-200 text-[11px] font-bold text-purple-900 text-center"
               >
-                👑 অ্যাডমিন
+                {i18n.language === "en" ? "👑 Admin" : "👑 অ্যাডমিন"}
               </button>
             </div>
           </div>

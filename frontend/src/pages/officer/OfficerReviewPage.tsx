@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import apiClient from "../../services/api";
 import {
   ShieldAlert,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 
 export const OfficerReviewPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [items, setItems] = useState<any[]>([]);
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "resolved">("pending");
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +37,7 @@ export const OfficerReviewPage: React.FC = () => {
         }
       })
       .catch(() => {
-        setErrorMessage("ফ্ল্যাগকৃত ডাটা লোড করতে সমস্যা হয়েছে।");
+        setErrorMessage(i18n.language === "en" ? "Failed to load flagged review items." : "ফ্ল্যাগকৃত ডাটা লোড করতে সমস্যা হয়েছে।");
       })
       .finally(() => {
         setIsLoading(false);
@@ -44,7 +46,7 @@ export const OfficerReviewPage: React.FC = () => {
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [i18n.language]);
 
   const handleSelectItem = (item: any) => {
     setActiveItem(item);
@@ -65,14 +67,22 @@ export const OfficerReviewPage: React.FC = () => {
       const res = await apiClient.post(`/officer/feedback/${activeItem.id}/correction`, {
         officer_correction: correctionText.trim(),
       });
-      setSuccessMessage("সংশোধনী সফলভাবে সংরক্ষিত ও অনুমোদিত হয়েছে!");
+      setSuccessMessage(
+        i18n.language === "en"
+          ? "Agronomic correction successfully verified and saved!"
+          : "সংশোধনী সফলভাবে সংরক্ষিত ও অনুমোদিত হয়েছে!"
+      );
       // Update item in local list
       setItems((prev) =>
         prev.map((it) => (it.id === activeItem.id ? res.data.feedback : it))
       );
       setActiveItem(res.data.feedback);
     } catch {
-      setErrorMessage("সংশোধনী সংরক্ষণ ব্যর্থ হয়েছে। দয়া করে পুনরায় চেষ্টা করুন।");
+      setErrorMessage(
+        i18n.language === "en"
+          ? "Failed to save correction. Please try again."
+          : "সংশোধনী সংরক্ষণ ব্যর্থ হয়েছে। দয়া করে পুনরায় চেষ্টা করুন।"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -97,10 +107,16 @@ export const OfficerReviewPage: React.FC = () => {
         <div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
             <ShieldAlert className="w-6 h-6 text-amber-700" />
-            <span>ফ্ল্যাগকৃত প্রশ্নোত্তর নিরীক্ষা ও সংশোধন কেন্দ্র</span>
+            <span>
+              {i18n.language === "en"
+                ? "Flagged Q&A Audit & Scientific Correction Hub"
+                : "ফ্ল্যাগকৃত প্রশ্নোত্তর নিরীক্ষা ও সংশোধন কেন্দ্র"}
+            </span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 font-bangla">
-            কৃষকের চিহ্নিত ত্রুটিপূর্ণ উত্তরসমূহ বৈজ্ঞানিকভাবে যাচাই করুন এবং সঠিক দিকনির্দেশনা প্রদান করুন।
+            {i18n.language === "en"
+              ? "Scientifically verify flagged model queries and inject certified agronomist instructions for farmers."
+              : "কৃষকের চিহ্নিত ত্রুটিপূর্ণ উত্তরসমূহ বৈজ্ঞানিকভাবে যাচাই করুন এবং সঠিক দিকনির্দেশনা প্রদান করুন।"}
           </p>
         </div>
 
@@ -112,7 +128,9 @@ export const OfficerReviewPage: React.FC = () => {
               filterStatus === "pending" ? "bg-white text-red-700 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            অপেক্ষমাণ ({items.filter((i) => !i.is_resolved).length})
+            {i18n.language === "en"
+              ? `Pending (${items.filter((i) => !i.is_resolved).length})`
+              : `অপেক্ষমাণ (${items.filter((i) => !i.is_resolved).length})`}
           </button>
           <button
             onClick={() => setFilterStatus("resolved")}
@@ -120,7 +138,9 @@ export const OfficerReviewPage: React.FC = () => {
               filterStatus === "resolved" ? "bg-white text-emerald-800 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            সমাধানকৃত ({items.filter((i) => i.is_resolved).length})
+            {i18n.language === "en"
+              ? `Resolved (${items.filter((i) => i.is_resolved).length})`
+              : `সমাধানকৃত (${items.filter((i) => i.is_resolved).length})`}
           </button>
           <button
             onClick={() => setFilterStatus("all")}
@@ -128,7 +148,7 @@ export const OfficerReviewPage: React.FC = () => {
               filterStatus === "all" ? "bg-white text-slate-900 shadow-2xs font-bold" : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            সব ({items.length})
+            {i18n.language === "en" ? `All (${items.length})` : `সব (${items.length})`}
           </button>
         </div>
       </div>
@@ -143,7 +163,7 @@ export const OfficerReviewPage: React.FC = () => {
               <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
               <input
                 type="text"
-                placeholder="প্রশ্ন বা মন্তব্য খুঁজুন..."
+                placeholder={i18n.language === "en" ? "Search questions or notes..." : "প্রশ্ন বা মন্তব্য খুঁজুন..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none font-bangla"
@@ -154,9 +174,13 @@ export const OfficerReviewPage: React.FC = () => {
           {/* Items list */}
           <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
             {isLoading ? (
-              <div className="p-8 text-center text-xs font-bold text-slate-700 font-bangla">লোড হচ্ছে...</div>
+              <div className="p-8 text-center text-xs font-bold text-slate-700 font-bangla">
+                {i18n.language === "en" ? "Loading items..." : "লোড হচ্ছে..."}
+              </div>
             ) : filteredItems.length === 0 ? (
-              <div className="p-8 text-center text-xs font-semibold text-slate-600 font-bangla">কোনো প্রশ্নোত্তর মেলেনি।</div>
+              <div className="p-8 text-center text-xs font-semibold text-slate-600 font-bangla">
+                {i18n.language === "en" ? "No feedback items found." : "কোনো প্রশ্নোত্তর মেলেনি।"}
+              </div>
             ) : (
               filteredItems.map((item) => {
                 const isSelected = activeItem?.id === item.id;
@@ -178,17 +202,21 @@ export const OfficerReviewPage: React.FC = () => {
                             : "bg-red-50 text-red-900 border-red-200"
                         }`}
                       >
-                        {item.is_resolved ? "সমাধানকৃত" : "অপেক্ষমাণ"}
+                        {item.is_resolved
+                          ? (i18n.language === "en" ? "Resolved" : "সমাধানকৃত")
+                          : (i18n.language === "en" ? "Pending" : "অপেক্ষমাণ")}
                       </span>
                       <span className="text-[11px] text-slate-500 font-mono">
-                        {new Date(item.created_at).toLocaleDateString("bn-BD")}
+                        {new Date(item.created_at).toLocaleDateString(i18n.language === "en" ? "en-US" : "bn-BD")}
                       </span>
                     </div>
                     <p className="text-xs font-bold text-slate-900 line-clamp-2 font-bangla">
-                      {item.context_data?.question || item.comment || `ফিডব্যাক #${item.id}`}
+                      {item.context_data?.question || item.comment || (i18n.language === "en" ? `Feedback #${item.id}` : `ফিডব্যাক #${item.id}`)}
                     </p>
                     <p className="text-[11px] text-slate-500 truncate font-mono">
-                      মডিউল: {item.module_type} • রেটিং: {item.rating}★
+                      {i18n.language === "en"
+                        ? `Module: ${item.module_type} • Rating: ${item.rating}★`
+                        : `মডিউল: ${item.module_type} • রেটিং: ${item.rating}★`}
                     </p>
                   </button>
                 );
@@ -211,24 +239,27 @@ export const OfficerReviewPage: React.FC = () => {
                         : "bg-red-50 text-red-900 border-red-200"
                     }`}
                   >
-                    {activeItem.is_resolved ? "সমাধান সম্পন্ন হয়েছে" : "পর্যালোচনা অপেক্ষমাণ"}
+                    {activeItem.is_resolved
+                      ? (i18n.language === "en" ? "Resolution Complete" : "সমাধান সম্পন্ন হয়েছে")
+                      : (i18n.language === "en" ? "Awaiting Review" : "পর্যালোচনা অপেক্ষমাণ")}
                   </span>
                   <span className="text-xs font-semibold text-slate-600 font-mono">
-                    আইডি: #{activeItem.id}
+                    {i18n.language === "en" ? `ID: #${activeItem.id}` : `আইডি: #${activeItem.id}`}
                   </span>
                 </div>
                 <span className="text-xs text-slate-500 font-mono">
-                  তারিখ: {new Date(activeItem.created_at).toLocaleString("bn-BD")}
+                  {i18n.language === "en" ? "Date: " : "তারিখ: "}
+                  {new Date(activeItem.created_at).toLocaleString(i18n.language === "en" ? "en-US" : "bn-BD")}
                 </span>
               </div>
 
               {/* Farmer's Context */}
               <div className="space-y-2">
                 <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  ১. কৃষকের মূল প্রশ্ন / প্রেক্ষাপট
+                  {i18n.language === "en" ? "1. Farmer's Original Query / Context" : "১. কৃষকের মূল প্রশ্ন / প্রেক্ষাপট"}
                 </h3>
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-900 leading-relaxed font-bangla">
-                  {activeItem.context_data?.question || activeItem.comment || "বিবরণ উপলব্ধ নেই।"}
+                  {activeItem.context_data?.question || activeItem.comment || (i18n.language === "en" ? "No context details available." : "বিবরণ উপলব্ধ নেই।")}
                 </div>
               </div>
 
@@ -236,7 +267,9 @@ export const OfficerReviewPage: React.FC = () => {
               {activeItem.context_data?.assistant_response && (
                 <div className="space-y-2">
                   <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    ২. এআই মডেলের প্রাথমিক উত্তর (যা ফ্ল্যাগ করা হয়েছে)
+                    {i18n.language === "en"
+                      ? "2. AI Model Initial Response (Flagged)"
+                      : "২. এআই মডেলের প্রাথমিক উত্তর (যা ফ্ল্যাগ করা হয়েছে)"}
                   </h3>
                   <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm text-slate-800 leading-relaxed max-h-48 overflow-y-auto font-bangla">
                     {activeItem.context_data.assistant_response}
@@ -262,18 +295,26 @@ export const OfficerReviewPage: React.FC = () => {
               <form onSubmit={handleSubmitCorrection} className="space-y-4 pt-2 border-t border-slate-200">
                 <div className="space-y-2">
                   <label className="block text-xs font-bold text-teal-900 uppercase tracking-wider">
-                    ৩. কৃষি কর্মকর্তার অনুমোদিত সঠিক পরামর্শ (Authoritative Agronomic Note)
+                    {i18n.language === "en"
+                      ? "3. Officer Certified Agronomic Recommendation (BARC Standard)"
+                      : "৩. কৃষি কর্মকর্তার অনুমোদিত সঠিক পরামর্শ (Authoritative Agronomic Note)"}
                   </label>
                   <textarea
                     rows={4}
                     value={correctionText}
                     onChange={(e) => setCorrectionText(e.target.value)}
-                    placeholder="মাঠ পর্যায়ের বাস্তব অভিজ্ঞতা ও বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC) অনুসারে সঠিক ডোজ, পদ্ধতি ও সময়সূচী লিখুন..."
+                    placeholder={
+                      i18n.language === "en"
+                        ? "Enter certified fertilizer dosage, split schedule, and management practices aligned with BARC guidelines..."
+                        : "মাঠ পর্যায়ের বাস্তব অভিজ্ঞতা ও বাংলাদেশ কৃষি গবেষণা কাউন্সিল (BARC) অনুসারে সঠিক ডোজ, পদ্ধতি ও সময়সূচী লিখুন..."
+                    }
                     className="w-full p-4 rounded-2xl border border-slate-300 text-xs sm:text-sm text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 focus:outline-none font-bangla"
                     required
                   />
                   <p className="text-[11px] text-slate-500 font-bangla">
-                    এই সংশোধনীটি সংরক্ষিত হবে এবং স্থানীয় কৃষকদের সতর্কবার্তা প্রদানে ব্যবহৃত হবে।
+                    {i18n.language === "en"
+                      ? "This verified correction will be permanently logged and fed back into advisory guardrails."
+                      : "এই সংশোধনীটি সংরক্ষিত হবে এবং স্থানীয় কৃষকদের সতর্কবার্তা প্রদানে ব্যবহৃত হবে।"}
                   </p>
                 </div>
 
@@ -288,14 +329,18 @@ export const OfficerReviewPage: React.FC = () => {
                     ) : (
                       <Send className="w-4 h-4 text-white" />
                     )}
-                    <span>সংশোধনী অনুমোদন ও সংরক্ষণ করুন</span>
+                    <span>
+                      {i18n.language === "en" ? "Approve & Save Correction" : "সংশোধনী অনুমোদন ও সংরক্ষণ করুন"}
+                    </span>
                   </button>
                 </div>
               </form>
             </>
           ) : (
             <div className="p-12 text-center text-slate-500 text-xs">
-              বাম পাশের তালিকা থেকে একটি ফ্ল্যাগকৃত প্রশ্ন নির্বাচন করুন।
+              {i18n.language === "en"
+                ? "Select a flagged item from the left panel to review."
+                : "বাম পাশের তালিকা থেকে একটি ফ্ল্যাগকৃত প্রশ্ন নির্বাচন করুন।"}
             </div>
           )}
         </div>

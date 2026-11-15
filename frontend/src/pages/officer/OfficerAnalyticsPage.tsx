@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import apiClient from "../../services/api";
 import {
   BarChart3,
@@ -10,6 +11,7 @@ import {
 } from "lucide-react";
 
 export const OfficerAnalyticsPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,18 +24,20 @@ export const OfficerAnalyticsPage: React.FC = () => {
         setData(res.data);
       })
       .catch(() => {
-        setError("অ্যানালিটিক্স ডাটা লোড করতে ব্যর্থ হয়েছে।");
+        setError(i18n.language === "en" ? "Failed to load analytics data." : "অ্যানালিটিক্স ডাটা লোড করতে ব্যর্থ হয়েছে।");
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [i18n.language]);
 
   if (isLoading) {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-teal-700" />
-        <span className="text-sm text-slate-700 font-bold font-bangla">আঞ্চলিক কৃষিতাত্ত্বিক পরিসংখ্যান লোড হচ্ছে...</span>
+        <span className="text-sm text-slate-700 font-bold font-bangla">
+          {i18n.language === "en" ? "Loading regional agronomic telemetry..." : "আঞ্চলিক কৃষিতাত্ত্বিক পরিসংখ্যান লোড হচ্ছে..."}
+        </span>
       </div>
     );
   }
@@ -42,7 +46,7 @@ export const OfficerAnalyticsPage: React.FC = () => {
     return (
       <div className="p-6 bg-red-50 border border-red-200 rounded-2xl text-red-800 text-sm flex items-center gap-3">
         <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600" />
-        <span>{error || "উপাত্ত লোড ব্যর্থ হয়েছে।"}</span>
+        <span>{error || (i18n.language === "en" ? "Data loading failed." : "উপাত্ত লোড ব্যর্থ হয়েছে।")}</span>
       </div>
     );
   }
@@ -56,10 +60,16 @@ export const OfficerAnalyticsPage: React.FC = () => {
       <div>
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
           <BarChart3 className="w-6 h-6 text-teal-700" />
-          <span>আঞ্চলিক কৃষিতাত্ত্বিক উপাত্ত ও ফসলের প্রবণতা</span>
+          <span>
+            {i18n.language === "en"
+              ? "Regional Agronomic Telemetry & Crop Trends"
+              : "আঞ্চলিক কৃষিতাত্ত্বিক উপাত্ত ও ফসলের প্রবণতা"}
+          </span>
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 font-bangla">
-          কৃষকদের সুপারিশ ইতিহাস এবং মডেল মূল্যায়নের ভিত্তিতে পুষ্টি ও ফসলের চাহিদা বিশ্লেষণ
+          {i18n.language === "en"
+            ? "Nutrient and crop demand analysis based on farmer recommendation history and model evaluations"
+            : "কৃষকদের সুপারিশ ইতিহাস এবং মডেল মূল্যায়নের ভিত্তিতে পুষ্টি ও ফসলের চাহিদা বিশ্লেষণ"}
         </p>
       </div>
 
@@ -70,19 +80,28 @@ export const OfficerAnalyticsPage: React.FC = () => {
           <div className="flex items-center justify-between pb-3 border-b border-slate-200">
             <div className="flex items-center gap-2">
               <Sprout className="w-4 h-4 text-emerald-700" />
-              <h2 className="text-sm font-extrabold text-slate-900">সর্বাধিক অনুসন্ধানকৃত ফসলসমূহ</h2>
+              <h2 className="text-sm font-extrabold text-slate-900">
+                {i18n.language === "en" ? "Most Frequently Queried Crops" : "সর্বাধিক অনুসন্ধানকৃত ফসলসমূহ"}
+              </h2>
             </div>
-            <span className="text-xs text-slate-500 font-mono">সুপারিশ ফ্রিকোয়েন্সি</span>
+            <span className="text-xs text-slate-500 font-mono">
+              {i18n.language === "en" ? "Recommendation Volume" : "সুপারিশ ফ্রিকোয়েন্সি"}
+            </span>
           </div>
 
           <div className="space-y-3 pt-2">
             {top_crops.map((crop: any) => {
               const pct = Math.round((crop.query_count / maxCropCount) * 100);
+              const cropName = i18n.language === "en"
+                ? (crop.crop_name_en || crop.crop_slug)
+                : (crop.crop_name_bn || crop.crop_slug);
               return (
                 <div key={crop.crop_slug} className="space-y-1">
                   <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="text-slate-900 font-bold">{crop.crop_name_bn || crop.crop_slug}</span>
-                    <span className="text-teal-900 font-bold font-mono">{crop.query_count} টি সুপারিশ</span>
+                    <span className="text-slate-900 font-bold">{cropName}</span>
+                    <span className="text-teal-900 font-bold font-mono">
+                      {crop.query_count} {i18n.language === "en" ? "recommendations" : "টি সুপারিশ"}
+                    </span>
                   </div>
                   <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
                     <div
@@ -102,7 +121,9 @@ export const OfficerAnalyticsPage: React.FC = () => {
           <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-4">
             <div className="flex items-center gap-2 pb-3 border-b border-slate-200">
               <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-              <h2 className="text-sm font-extrabold text-slate-900">কৃষক সন্তুষ্টি রেটিং বণ্টন</h2>
+              <h2 className="text-sm font-extrabold text-slate-900">
+                {i18n.language === "en" ? "Farmer Satisfaction Rating Spread" : "কৃষক সন্তুষ্টি রেটিং বণ্টন"}
+              </h2>
             </div>
 
             <div className="space-y-2.5">
@@ -128,18 +149,29 @@ export const OfficerAnalyticsPage: React.FC = () => {
           <div className="app-card bg-white p-6 rounded-3xl border border-slate-200 shadow-card space-y-3">
             <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
               <TrendingUp className="w-4 h-4 text-teal-700" />
-              <h2 className="text-sm font-extrabold text-slate-900">মডিউলভিত্তিক প্রতিক্রিয়া</h2>
+              <h2 className="text-sm font-extrabold text-slate-900">
+                {i18n.language === "en" ? "Feedback Count by Module" : "মডিউলভিত্তিক প্রতিক্রিয়া"}
+              </h2>
             </div>
 
             <div className="grid grid-cols-3 gap-2.5 pt-2">
-              {module_feedback_counts.map((m: any) => (
-                <div key={m.module_type} className="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-                  <p className="text-[11px] text-slate-600 font-bold">
-                    {m.module_type === "CHAT" ? "কৃষি সহকারী" : m.module_type === "CROP" ? "ফসল নির্বাচন" : "সারের হিসাব"}
-                  </p>
-                  <p className="text-lg font-extrabold text-teal-950 font-mono mt-0.5">{m.count}</p>
-                </div>
-              ))}
+              {module_feedback_counts.map((m: any) => {
+                let modLabel = m.module_type;
+                if (m.module_type === "CHAT") {
+                  modLabel = i18n.language === "en" ? "Agri Assistant" : "কৃষি সহকারী";
+                } else if (m.module_type === "CROP") {
+                  modLabel = i18n.language === "en" ? "Crop Selection" : "ফসল নির্বাচন";
+                } else {
+                  modLabel = i18n.language === "en" ? "Fertilizer Calc" : "সারের হিসাব";
+                }
+
+                return (
+                  <div key={m.module_type} className="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                    <p className="text-[11px] text-slate-600 font-bold">{modLabel}</p>
+                    <p className="text-lg font-extrabold text-teal-950 font-mono mt-0.5">{m.count}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

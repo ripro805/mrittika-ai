@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 export const CropRecommendPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { prefillFertilizerFromCrop } = useUnifiedFlow();
 
@@ -124,13 +124,15 @@ export const CropRecommendPage: React.FC = () => {
       <div className="text-center space-y-2.5">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-850 text-xs font-bold border border-emerald-200 shadow-2xs">
           <Sprout className="w-3.5 h-3.5 text-emerald-700" />
-          <span>মডিউল ১: ফসল নির্বাচন</span>
+          <span>{i18n.language === "en" ? "Module 1: Crop Suitability Advisory" : "মডিউল ১: ফসল নির্বাচন"}</span>
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          মাটি ও আবহাওয়ার ভিত্তিতে সেরা ফসল
+          {i18n.language === "en" ? "Best Crops for Soil & Climate" : "মাটি ও আবহাওয়ার ভিত্তিতে সেরা ফসল"}
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-bangla">
-          আপনার জমির পুষ্টির মাত্রা এবং স্থানীয় আবহাওয়া প্রদান করুন; এআই মডেল বিশ্লেষণ করে সেরা ৩টি ফসল সুপারিশ করবে।
+          {i18n.language === "en"
+            ? "Enter your soil test nutrients and local climate; AI will analyze and recommend the top 3 highest-yielding crops."
+            : "আপনার জমির পুষ্টির মাত্রা এবং স্থানীয় আবহাওয়া প্রদান করুন; এআই মডেল বিশ্লেষণ করে সেরা ৩টি ফসল সুপারিশ করবে।"}
         </p>
       </div>
 
@@ -147,7 +149,7 @@ export const CropRecommendPage: React.FC = () => {
         <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="w-full sm:w-1/2">
             <label className="block text-xs font-bold text-slate-800 mb-1">
-              আপনার জেলা নির্বাচন করুন
+              {i18n.language === "en" ? "Select Your District" : "আপনার জেলা নির্বাচন করুন"}
             </label>
             <select
               name="district"
@@ -157,7 +159,7 @@ export const CropRecommendPage: React.FC = () => {
             >
               {districts.map((d) => (
                 <option key={d.name_en} value={d.name_en}>
-                  {d.name_bn} ({d.name_en})
+                  {i18n.language === "en" ? `${d.name_en} (${d.name_bn})` : `${d.name_bn} (${d.name_en})`}
                 </option>
               ))}
             </select>
@@ -165,7 +167,11 @@ export const CropRecommendPage: React.FC = () => {
               <p className="mt-1.5 text-[11px] text-slate-600 flex items-center gap-1 font-semibold font-bangla">
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
                 <span>
-                  {weatherMeta.district_bn || formData.district}: {weatherMeta.fallback ? "আঞ্চলিক জলবায়ু উপাত্ত" : "Open-Meteo লাইভ আবহাওয়া"}
+                  {i18n.language === "en" ? formData.district : (weatherMeta.district_bn || formData.district)}: {
+                    weatherMeta.fallback
+                      ? (i18n.language === "en" ? "Regional Historical Average" : "আঞ্চলিক জলবায়ু উপাত্ত")
+                      : (i18n.language === "en" ? "Open-Meteo Live Telemetry" : "Open-Meteo লাইভ আবহাওয়া")
+                  }
                 </span>
               </p>
             )}
@@ -189,12 +195,12 @@ export const CropRecommendPage: React.FC = () => {
         {/* Soil Nutrients Grid */}
         <div>
           <h3 className="text-sm font-extrabold text-slate-900 border-b border-slate-200 pb-2 mb-4">
-            ১. মাটির উপাদান (Soil Nutrients)
+            {i18n.language === "en" ? "1. Soil Nutrients (NPK & pH)" : "১. মাটির উপাদান (Soil Nutrients)"}
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                নাইট্রোজেন (N) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Nitrogen (N)" : "নাইট্রোজেন (N)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -211,7 +217,7 @@ export const CropRecommendPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                ফসফরাস (P) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Phosphorus (P)" : "ফসফরাস (P)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -228,7 +234,7 @@ export const CropRecommendPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                পটাশিয়াম (K) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Potassium (K)" : "পটাশিয়াম (K)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -245,7 +251,7 @@ export const CropRecommendPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                মাটির পিএইচ (pH) <span className="text-slate-500 font-mono text-[10px] font-normal">3.5-9.5</span>
+                {i18n.language === "en" ? "Soil pH" : "মাটির পিএইচ (pH)"} <span className="text-slate-500 font-mono text-[10px] font-normal">3.5-9.5</span>
               </label>
               <input
                 type="number"
@@ -266,19 +272,21 @@ export const CropRecommendPage: React.FC = () => {
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-2 mb-4 gap-2">
             <h3 className="text-sm font-extrabold text-slate-900">
-              ২. পরিবেশ ও আবহাওয়া (Climate & Environment)
+              {i18n.language === "en" ? "2. Weather & Environment" : "২. পরিবেশ ও আবহাওয়া (Climate & Environment)"}
             </h3>
             {weatherMeta && (
               <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-blue-50 text-blue-900 border border-blue-200 font-bold w-fit">
                 <CloudSun className="w-3.5 h-3.5 text-blue-700" />
-                <span>{weatherMeta.district_bn || formData.district} ({weatherMeta.fallback ? "আঞ্চলিক গড়" : "লাইভ"})</span>
+                <span>
+                  {i18n.language === "en" ? formData.district : (weatherMeta.district_bn || formData.district)} ({weatherMeta.fallback ? (i18n.language === "en" ? "Regional Avg" : "আঞ্চলিক গড়") : (i18n.language === "en" ? "Live" : "লাইভ")})
+                </span>
               </span>
             )}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                তাপমাত্রা (°C)
+                {i18n.language === "en" ? "Temperature (°C)" : "তাপমাত্রা (°C)"}
               </label>
               <input
                 type="number"
@@ -295,7 +303,7 @@ export const CropRecommendPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                বায়ুর আর্দ্রতা (%)
+                {i18n.language === "en" ? "Humidity (%)" : "বায়ুর আর্দ্রতা (%)"}
               </label>
               <input
                 type="number"
@@ -312,7 +320,7 @@ export const CropRecommendPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                বৃষ্টিপাত (মিলিমিটার)
+                {i18n.language === "en" ? "Rainfall (mm)" : "বৃষ্টিপাত (মিলিমিটার)"}
               </label>
               <input
                 type="number"
@@ -333,7 +341,7 @@ export const CropRecommendPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-bold text-slate-800 mb-1">
-              মৌসুম (Season)
+              {i18n.language === "en" ? "Season" : "মৌসুম (Season)"}
             </label>
             <select
               name="season"
@@ -343,7 +351,7 @@ export const CropRecommendPage: React.FC = () => {
             >
               {seasons.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.name_bn}
+                  {i18n.language === "en" ? (s.name_en || s.id) : (s.name_bn || s.id)}
                 </option>
               ))}
             </select>
@@ -351,7 +359,7 @@ export const CropRecommendPage: React.FC = () => {
 
           <div>
             <label className="block text-xs font-bold text-slate-800 mb-1">
-              মাটির ধরন (Soil Type)
+              {i18n.language === "en" ? "Soil Type" : "মাটির ধরন (Soil Type)"}
             </label>
             <select
               name="soil_type"
@@ -361,7 +369,7 @@ export const CropRecommendPage: React.FC = () => {
             >
               {soilTypes.map((st) => (
                 <option key={st.id} value={st.id}>
-                  {st.name_bn}
+                  {i18n.language === "en" ? (st.name_en || st.id) : (st.name_bn || st.id)}
                 </option>
               ))}
             </select>
@@ -390,10 +398,12 @@ export const CropRecommendPage: React.FC = () => {
           <div className="text-center space-y-1">
             <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center justify-center gap-2">
               <CheckCircle className="w-6 h-6 text-emerald-600" />
-              <span>প্রস্তাবিত শীর্ষ ৩টি ফসল</span>
+              <span>{i18n.language === "en" ? "Top 3 Recommended Crops" : "প্রস্তাবিত শীর্ষ ৩টি ফসল"}</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-bangla">
-              আপনার জমির পুষ্টি ও আবহাওয়া অনুসারে সম্ভাব্য উৎপাদনশীলতার ভিত্তিতে সাজানো।
+              {i18n.language === "en"
+                ? "Ranked based on your soil nutrients and local climate compatibility score."
+                : "আপনার জমির পুষ্টি ও আবহাওয়া অনুসারে সম্ভাব্য উৎপাদনশীলতার ভিত্তিতে সাজানো।"}
             </p>
           </div>
 
@@ -410,19 +420,19 @@ export const CropRecommendPage: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200">
-                      অগ্রাধিকার #{item.rank}
+                      {i18n.language === "en" ? `Rank #${item.rank}` : `অগ্রাধিকার #${item.rank}`}
                     </span>
                     <span className="text-sm font-extrabold text-emerald-800 font-mono">
-                      {item.confidence_percentage}% সামঞ্জস্য
+                      {item.confidence_percentage}% {i18n.language === "en" ? "Match" : "সামঞ্জস্য"}
                     </span>
                   </div>
 
                   <div>
                     <h3 className="text-xl font-bold text-slate-900">
-                      {item.crop_name_bn}
+                      {i18n.language === "en" ? (item.crop_name_en || item.crop_name_bn) : item.crop_name_bn}
                     </h3>
                     <p className="text-xs text-slate-500 font-medium font-mono">
-                      {item.crop_name_en}
+                      {i18n.language === "en" ? item.crop_name_bn : item.crop_name_en}
                     </p>
                   </div>
 
@@ -435,7 +445,7 @@ export const CropRecommendPage: React.FC = () => {
                   </div>
 
                   <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200 font-bangla">
-                    {item.reason_bn}
+                    {i18n.language === "en" ? (item.reason_en || item.reason_bn) : item.reason_bn}
                   </p>
                 </div>
 
@@ -446,12 +456,12 @@ export const CropRecommendPage: React.FC = () => {
                       onClick={() => handleSelectCropForFertilizer(item)}
                       className="w-full py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
                     >
-                      <span>সারের হিসাব দেখুন</span>
+                      <span>{i18n.language === "en" ? "Calculate Fertilizer" : "সারের হিসাব দেখুন"}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   ) : (
                     <div className="text-center py-2.5 px-3 rounded-xl bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200">
-                      এই ফসলের সারের মডেল যুক্ত হয়নি
+                      {i18n.language === "en" ? "Fertilizer model not available for this crop" : "এই ফসলের সারের মডেল যুক্ত হয়নি"}
                     </div>
                   )}
                 </div>
@@ -461,7 +471,7 @@ export const CropRecommendPage: React.FC = () => {
 
           {/* Disclaimer Banner */}
           <div className="bg-amber-50 border border-amber-300 p-4 rounded-2xl text-xs text-amber-950 leading-relaxed font-bangla">
-            {result.disclaimer_bn}
+            {i18n.language === "en" ? (result.disclaimer_en || result.disclaimer_bn) : result.disclaimer_bn}
           </div>
         </div>
       )}

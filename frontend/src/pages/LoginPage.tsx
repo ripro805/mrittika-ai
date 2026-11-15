@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 export const LoginPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -31,42 +31,42 @@ export const LoginPage: React.FC = () => {
   const DEMO_ACCOUNTS = [
     {
       id: "farmer",
-      title: "কৃষক পোর্টাল",
+      title: i18n.language === "en" ? "Farmer Portal" : "কৃষক পোর্টাল",
       roleLabel: "Farmer",
-      name: "কৃষক মোকাদ্দেম বিশ্বাস",
+      name: i18n.language === "en" ? "Mokaddem Biswas (Farmer)" : "কৃষক মোকাদ্দেম বিশ্বাস",
       phone: "01720000001",
       pass: "Farmer@123456",
       icon: Wheat,
       color: "emerald",
-      badgeText: "কৃষক",
+      badgeText: i18n.language === "en" ? "Farmer" : "কৃষক",
       bgLight: "bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-950",
       btnBg: "bg-emerald-700 hover:bg-emerald-800 text-white",
       targetPath: "/farmer/overview",
     },
     {
       id: "officer",
-      title: "কর্মকর্তা পোর্টাল",
+      title: i18n.language === "en" ? "Officer Portal" : "কর্মকর্তা পোর্টাল",
       roleLabel: "Extension Officer",
-      name: "মোস্তাফিজুর রহমান (SAAO)",
+      name: i18n.language === "en" ? "Dr. Md. Rafiqul Islam (SAAO)" : "মোস্তাফিজুর রহমান (SAAO)",
       phone: "01710000001",
       pass: "Officer@123456",
       icon: ShieldCheck,
       color: "teal",
-      badgeText: "কর্মকর্তা",
+      badgeText: i18n.language === "en" ? "Officer" : "কর্মকর্তা",
       bgLight: "bg-teal-50 hover:bg-teal-100 border-teal-200 text-teal-950",
       btnBg: "bg-teal-700 hover:bg-teal-800 text-white",
       targetPath: "/officer/overview",
     },
     {
       id: "admin",
-      title: "অ্যাডমিন পোর্টাল",
+      title: i18n.language === "en" ? "Admin Portal" : "অ্যাডমিন পোর্টাল",
       roleLabel: "System Admin",
-      name: "সিস্টেম অ্যাডমিনিস্ট্রেটর",
+      name: i18n.language === "en" ? "System Administrator" : "সিস্টেম অ্যাডমিনিস্ট্রেটর",
       phone: "01700000001",
       pass: "Admin@123456",
       icon: UserCheck,
       color: "purple",
-      badgeText: "অ্যাডমিন",
+      badgeText: i18n.language === "en" ? "Admin" : "অ্যাডমিন",
       bgLight: "bg-purple-50 hover:bg-purple-100 border-purple-200 text-purple-950",
       btnBg: "bg-purple-700 hover:bg-purple-800 text-white",
       targetPath: "/admin-portal/overview",
@@ -89,24 +89,28 @@ export const LoginPage: React.FC = () => {
         navigate("/farmer/overview");
       }
     } catch (err: any) {
+      const isEn = i18n.language === "en";
       const rawMsg =
         err.response?.data?.non_field_errors?.[0] ||
         err.response?.data?.detail ||
         err.response?.data?.error ||
         err.response?.data?.message ||
         (err.response
-          ? "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।"
-          : "সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (Network Error)। ব্যাকএন্ড চালু আছে কি না পরীক্ষা করুন।");
+          ? (isEn ? "Invalid phone number or password." : "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।")
+          : (isEn ? "Cannot connect to server. Please verify backend is running." : "সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (Network Error)।"));
 
-      let msg = "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে। দয়া করে পুনরায় সঠিক তথ্য দিন।";
+      let msg = isEn
+        ? "Invalid mobile number or password. Please try again."
+        : "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে। দয়া করে পুনরায় সঠিক তথ্য দিন।";
+
       if (typeof rawMsg === "string") {
         const lower = rawMsg.toLowerCase();
         if (lower.includes("token")) {
-          msg = "আপনার পূর্ববর্তী সেশনের মেয়াদ শেষ হয়েছে। অনুগ্রহ করে পুনরায় লগইন করুন।";
+          msg = isEn ? "Session expired. Please log in again." : "আপনার পূর্ববর্তী সেশনের মেয়াদ শেষ হয়েছে। অনুগ্রহ করে পুনরায় লগইন করুন।";
         } else if (lower.includes("network error") || lower.includes("err_failed") || !err.response) {
-          msg = "সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করুন।";
+          msg = isEn ? "Network error. Please check your internet connection." : "সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করুন।";
         } else if (lower.includes("invalid") || lower.includes("incorrect") || lower.includes("ভুল")) {
-          msg = "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।";
+          msg = isEn ? "Invalid phone number or password." : "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।";
         } else {
           msg = rawMsg;
         }
@@ -139,18 +143,29 @@ export const LoginPage: React.FC = () => {
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>নিরাপদ কৃষি প্ল্যাটফর্ম (Verified Auth)</span>
+              <span>
+                {i18n.language === "en" ? "Verified Agritech Security (Verified Auth)" : "নিরাপদ কৃষি প্ল্যাটফর্ম (Verified Auth)"}
+              </span>
             </div>
 
             <div className="space-y-2">
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
-                বাংলাদেশের আধুনিক কৃষি বিপ্লবে{" "}
-                <span className="text-emerald-400">
-                  স্মার্ট এআই প্রযুক্তি
-                </span>
+                {i18n.language === "en" ? (
+                  <>
+                    Smart AI Technology in Bangladesh's{" "}
+                    <span className="text-emerald-400">Agritech Revolution</span>
+                  </>
+                ) : (
+                  <>
+                    বাংলাদেশের আধুনিক কৃষি বিপ্লবে{" "}
+                    <span className="text-emerald-400">স্মার্ট এআই প্রযুক্তি</span>
+                  </>
+                )}
               </h2>
               <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed font-bangla">
-                একটি অ্যাকাউন্টের মাধ্যমে সংরক্ষিত ফসলের হিসাব, সার প্রয়োগ পরিকল্পনা এবং এআই কৃষি সহকারীর সাথে পূর্ববর্তী আলোচনার ইতিহাস পর্যালোচনা করুন।
+                {i18n.language === "en"
+                  ? "Access your saved crop history, balanced fertilizer application schedules, and past advisory dialogs from a single authenticated account."
+                  : "একটি অ্যাকাউন্টের মাধ্যমে সংরক্ষিত ফসলের হিসাব, সার প্রয়োগ পরিকল্পনা এবং এআই কৃষি সহকারীর সাথে পূর্ববর্তী আলোচনার ইতিহাস পর্যালোচনা করুন।"}
               </p>
             </div>
 
@@ -161,8 +176,14 @@ export const LoginPage: React.FC = () => {
                   <Wheat className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white font-bangla">কৃষক পোর্টাল</h4>
-                  <p className="text-[11px] text-slate-200 font-medium font-bangla">মাটি বিশ্লেষণ, সারের সাশ্রয়ী হিসাব ও সংরক্ষিত পরামর্শ</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">
+                    {i18n.language === "en" ? "Farmer Portal" : "কৃষক পোর্টাল"}
+                  </h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">
+                    {i18n.language === "en"
+                      ? "Soil analysis, balanced fertilizer plans, and saved advisory history"
+                      : "মাটি বিশ্লেষণ, সারের সাশ্রয়ী হিসাব ও সংরক্ষিত পরামর্শ"}
+                  </p>
                 </div>
               </div>
 
@@ -171,8 +192,14 @@ export const LoginPage: React.FC = () => {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white font-bangla">কর্মকর্তা পোর্টাল (SAAO / UAO)</h4>
-                  <p className="text-[11px] text-slate-200 font-medium font-bangla">মাঠপর্যায়ের কৃষকের আবেদন ও এআই প্রতিক্রিয়া অডিট</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">
+                    {i18n.language === "en" ? "Extension Officer Portal (SAAO / UAO)" : "কর্মকর্তা পোর্টাল (SAAO / UAO)"}
+                  </h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">
+                    {i18n.language === "en"
+                      ? "Field-level farmer queries and AI responses scientific audit"
+                      : "মাঠপর্যায়ের কৃষকের আবেদন ও এআই প্রতিক্রিয়া অডিট"}
+                  </p>
                 </div>
               </div>
 
@@ -181,8 +208,14 @@ export const LoginPage: React.FC = () => {
                   <UserCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white font-bangla">অ্যাডমিন কনসোল</h4>
-                  <p className="text-[11px] text-slate-200 font-medium font-bangla">নলেজবেস পরিচালনা, ক্যাশ নিয়ন্ত্রণ ও নিরাপত্তা লগ</p>
+                  <h4 className="text-xs font-bold text-white font-bangla">
+                    {i18n.language === "en" ? "Admin Console" : "অ্যাডমিন কনসোল"}
+                  </h4>
+                  <p className="text-[11px] text-slate-200 font-medium font-bangla">
+                    {i18n.language === "en"
+                      ? "Knowledge base curation, cache management, and audit logs"
+                      : "নলেজবেস পরিচালনা, ক্যাশ নিয়ন্ত্রণ ও নিরাপত্তা লগ"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -192,11 +225,11 @@ export const LoginPage: React.FC = () => {
           <div className="pt-4 border-t border-slate-800 grid grid-cols-2 gap-3 text-[11px] text-slate-200 font-medium font-bangla">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>JWT নিরাপদ প্রমাণীকরণ</span>
+              <span>{i18n.language === "en" ? "JWT Secure Auth" : "JWT নিরাপদ প্রমাণীকরণ"}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>১০০% গোপনীয়তা নিশ্চিত</span>
+              <span>{i18n.language === "en" ? "100% Privacy Protected" : "১০০% গোপনীয়তা নিশ্চিত"}</span>
             </div>
           </div>
         </div>
@@ -208,9 +241,13 @@ export const LoginPage: React.FC = () => {
             <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center mx-auto shadow-xs border border-emerald-800">
               <LogIn className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-extrabold text-slate-900">লগইন করুন (Account Login)</h1>
+            <h1 className="text-2xl font-extrabold text-slate-900">
+              {i18n.language === "en" ? "Sign In (Account Login)" : "লগইন করুন (Account Login)"}
+            </h1>
             <p className="text-xs text-slate-500">
-              সংরক্ষিত ফসলের হিসাব ও ইতিহাস দেখতে আপনার অ্যাকাউন্টে প্রবেশ করুন
+              {i18n.language === "en"
+                ? "Enter your credentials to access your personalized agricultural dashboard"
+                : "সংরক্ষিত ফসলের হিসাব ও ইতিহাস দেখতে আপনার অ্যাকাউন্টে প্রবেশ করুন"}
             </p>
           </div>
 
@@ -227,15 +264,17 @@ export const LoginPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-xs font-bold text-slate-900 uppercase tracking-wider">
                 <Zap className="w-4 h-4 text-amber-500 fill-amber-400" />
-                ১-ক্লিক ডেমো লগইন (Quick Access)
+                {i18n.language === "en" ? "1-Click Demo Login (Quick Access)" : "১-ক্লিক ডেমো লগইন (Quick Access)"}
               </span>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                সরাসরি প্রবেশ
+                {i18n.language === "en" ? "Instant Access" : "সরাসরি প্রবেশ"}
               </span>
             </div>
 
             <p className="text-[11px] text-slate-600 leading-relaxed font-bangla">
-              যেকোনো ভূমিকায় তাৎক্ষণিক প্রবেশ করতে নিচের ৩টি বাটনের যেকোনো একটিতে চাপুন:
+              {i18n.language === "en"
+                ? "Click any of the 3 role presets below to immediately sign in as that user:"
+                : "যেকোনো ভূমিকায় তাৎক্ষণিক প্রবেশ করতে নিচের ৩টি বাটনের যেকোনো একটিতে চাপুন:"}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -270,11 +309,11 @@ export const LoginPage: React.FC = () => {
                       {isLoggingThis ? (
                         <>
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span>প্রবেশ হচ্ছে...</span>
+                          <span>{i18n.language === "en" ? "Entering..." : "প্রবেশ হচ্ছে..."}</span>
                         </>
                       ) : (
                         <>
-                          <span>প্রবেশ করুন</span>
+                          <span>{i18n.language === "en" ? "Sign In" : "প্রবেশ করুন"}</span>
                           <ArrowRight className="w-3 h-3" />
                         </>
                       )}
@@ -289,7 +328,7 @@ export const LoginPage: React.FC = () => {
           <div className="relative flex py-1 items-center">
             <div className="grow border-t border-slate-200"></div>
             <span className="shrink mx-4 text-slate-500 text-[11px] font-semibold">
-              বা মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে লগইন করুন
+              {i18n.language === "en" ? "Or sign in with phone number & password" : "বা মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে লগইন করুন"}
             </span>
             <div className="grow border-t border-slate-200"></div>
           </div>
@@ -298,7 +337,7 @@ export const LoginPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                ১১ ডিজিটের মোবাইল নম্বর (Phone)
+                {i18n.language === "en" ? "11-digit Mobile Number (Phone)" : "১১ ডিজিটের মোবাইল নম্বর (Phone)"}
               </label>
               <div className="relative">
                 <Phone className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -315,7 +354,7 @@ export const LoginPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1 font-bangla">
-                পাসওয়ার্ড (Password)
+                {i18n.language === "en" ? "Password (Password)" : "পাসওয়ার্ড (Password)"}
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -336,15 +375,17 @@ export const LoginPage: React.FC = () => {
               className="w-full py-3 px-4 rounded-xl app-btn-primary text-white font-bold text-sm shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
             >
               {isLoading && !activeRoleLoggingIn && <Loader2 className="w-4 h-4 animate-spin" />}
-              <span>লগইন করুন</span>
+              <span>{i18n.language === "en" ? "Sign In" : "লগইন করুন"}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
           <div className="text-center text-xs text-slate-600 pt-2 border-t border-slate-100">
-            অ্যাকাউন্ট নেই?{" "}
+            {i18n.language === "en" ? "Don't have an account? " : "অ্যাকাউন্ট নেই? "}
             <Link to="/register" className="font-bold text-emerald-800 hover:text-emerald-950 underline">
-              নতুন কৃষক বা কর্মকর্তা হিসেবে বিনামূল্যে নিবন্ধন করুন
+              {i18n.language === "en"
+                ? "Register for free as a Farmer or Extension Officer"
+                : "নতুন কৃষক বা কর্মকর্তা হিসেবে বিনামূল্যে নিবন্ধন করুন"}
             </Link>
           </div>
         </div>

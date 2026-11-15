@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 export const HistoryPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [historyList, setHistoryList] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
@@ -33,15 +33,18 @@ export const HistoryPage: React.FC = () => {
 
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [i18n.language]);
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("আপনি কি নিশ্চিতভাবে এই রেকর্ডটি মুছে ফেলতে চান?")) return;
+    const confirmMsg = i18n.language === "en"
+      ? "Are you sure you want to permanently delete this recommendation record?"
+      : "আপনি কি নিশ্চিতভাবে এই রেকর্ডটি মুছে ফেলতে চান?";
+    if (!window.confirm(confirmMsg)) return;
     try {
       await apiClient.delete(`/history/${id}`);
       setHistoryList((prev) => prev.filter((item) => item.id !== id));
     } catch {
-      alert("রেকর্ডটি মোছা যায়নি।");
+      alert(i18n.language === "en" ? "Failed to delete record." : "রেকর্ডটি মোছা যায়নি।");
     }
   };
 
@@ -59,7 +62,7 @@ export const HistoryPage: React.FC = () => {
       link.remove();
       window.URL.revokeObjectURL(url);
     } catch {
-      alert("পিডিএফ ডাউনলোড ব্যর্থ হয়েছে।");
+      alert(i18n.language === "en" ? "PDF download failed." : "পিডিএফ ডাউনলোড ব্যর্থ হয়েছে।");
     } finally {
       setDownloadingId(null);
     }
@@ -79,10 +82,14 @@ export const HistoryPage: React.FC = () => {
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
             <HistoryIcon className="w-6 h-6 text-emerald-700" />
-            <span>সংরক্ষিত কৃষি পরামর্শ ইতিহাস</span>
+            <span>
+              {i18n.language === "en" ? "Saved Agricultural Advisory History" : "সংরক্ষিত কৃষি পরামর্শ ইতিহাস"}
+            </span>
           </h1>
           <p className="text-xs text-slate-600 mt-1 font-bangla">
-            আপনার অ্যাকাউন্টে পূর্বের ফসল ও সারের সুপারিশসমূহ।
+            {i18n.language === "en"
+              ? "All past crop selections and balanced fertilizer plans associated with your account."
+              : "আপনার অ্যাকাউন্টে পূর্বের ফসল ও সারের সুপারিশসমূহ।"}
           </p>
         </div>
       </div>
@@ -90,16 +97,20 @@ export const HistoryPage: React.FC = () => {
       {historyList.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 space-y-4 shadow-card">
           <AlertCircle className="w-12 h-12 text-slate-400 mx-auto" />
-          <h3 className="text-base font-bold text-slate-800">কোনো সংরক্ষিত পরামর্শ নেই</h3>
+          <h3 className="text-base font-bold text-slate-800">
+            {i18n.language === "en" ? "No Saved Advisories Yet" : "কোনো সংরক্ষিত পরামর্শ নেই"}
+          </h3>
           <p className="text-xs text-slate-600 max-w-sm mx-auto font-bangla">
-            আপনি এখনও কোনো ফসল বা সারের হিসাব সংরক্ষণ করেননি। এখনই পরামর্শ গ্রহণ করুন।
+            {i18n.language === "en"
+              ? "You have not saved any crop or fertilizer calculations yet. Run a recommendation now."
+              : "আপনি এখনও কোনো ফসল বা সারের হিসাব সংরক্ষণ করেননি। এখনই পরামর্শ গ্রহণ করুন।"}
           </p>
           <div className="pt-2">
             <Link
               to="/crop"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm transition"
             >
-              <span>নতুন ফসল পরামর্শ নিন</span>
+              <span>{i18n.language === "en" ? "Get Crop Recommendation" : "নতুন ফসল পরামর্শ নিন"}</span>
             </Link>
           </div>
         </div>
@@ -107,13 +118,20 @@ export const HistoryPage: React.FC = () => {
         <div className="space-y-4">
           {historyList.map((item) => {
             const isCrop = item.rec_type === "CROP";
-            const dateStr = new Date(item.created_at).toLocaleDateString("bn-BD", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            });
+            const dateStr = new Date(item.created_at).toLocaleDateString(
+              i18n.language === "en" ? "en-US" : "bn-BD",
+              {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              }
+            );
+
+            const cropName = i18n.language === "en"
+              ? (item.crop_name_en || item.crop_slug || "Agricultural Advisory")
+              : (item.crop_name_bn || item.crop_slug || "সার্বিক পরামর্শ");
 
             return (
               <div
@@ -130,7 +148,9 @@ export const HistoryPage: React.FC = () => {
                       }`}
                     >
                       {isCrop ? <Sprout className="w-3.5 h-3.5 text-emerald-700" /> : <FlaskConical className="w-3.5 h-3.5 text-amber-700" />}
-                      {isCrop ? "ফসলের সুপারিশ" : "সারের সুপারিশ"}
+                      {isCrop
+                        ? (i18n.language === "en" ? "Crop Recommendation" : "ফসলের সুপারিশ")
+                        : (i18n.language === "en" ? "Fertilizer Plan" : "সারের সুপারিশ")}
                     </span>
                     <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
                       <Calendar className="w-3.5 h-3.5" />
@@ -139,7 +159,7 @@ export const HistoryPage: React.FC = () => {
                   </div>
 
                   <h3 className="text-lg font-bold text-slate-900">
-                    {item.crop_name_bn || item.crop_slug || "সার্বিক পরামর্শ"}
+                    {cropName}
                     {item.fertilizer_plan && (
                       <span className="text-sm font-normal text-slate-500 ml-2">
                         ({item.fertilizer_plan})
@@ -148,13 +168,25 @@ export const HistoryPage: React.FC = () => {
                   </h3>
 
                   <div className="text-xs text-slate-600 space-x-3 font-medium">
-                    <span>মৌসুম: {item.inputs?.season || "রবি"}</span>
+                    <span>
+                      {i18n.language === "en" ? "Season: " : "মৌসুম: "}
+                      {item.inputs?.season || (i18n.language === "en" ? "Rabi" : "রবি")}
+                    </span>
                     <span>•</span>
-                    <span>মাটি: {item.inputs?.soil_type || "দোআঁশ"}</span>
+                    <span>
+                      {i18n.language === "en" ? "Soil: " : "মাটি: "}
+                      {item.inputs?.soil_type || (i18n.language === "en" ? "Loam" : "দোআঁশ")}
+                    </span>
                     {item.inputs?.land_area && (
                       <>
                         <span>•</span>
-                        <span>জমি: {item.inputs.land_area} {item.inputs.land_unit === "bigha" ? "বিঘা" : "শতক"}</span>
+                        <span>
+                          {i18n.language === "en" ? "Area: " : "জমি: "}
+                          {item.inputs.land_area}{" "}
+                          {item.inputs.land_unit === "bigha"
+                            ? (i18n.language === "en" ? "Bigha" : "বিঘা")
+                            : (i18n.language === "en" ? "Decimal" : "শতক")}
+                        </span>
                       </>
                     )}
                   </div>
@@ -171,13 +203,13 @@ export const HistoryPage: React.FC = () => {
                     ) : (
                       <Download className="w-4 h-4 text-emerald-700" />
                     )}
-                    <span>পিডিএফ রিপোর্ট</span>
+                    <span>{i18n.language === "en" ? "PDF Report" : "পিডিএফ রিপোর্ট"}</span>
                   </button>
 
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                    title="মুছে ফেলুন"
+                    title={i18n.language === "en" ? "Delete Record" : "মুছে ফেলুন"}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

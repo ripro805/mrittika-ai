@@ -65,7 +65,7 @@ interface ChatSessionItem {
 }
 
 export const AssistantChatPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, isAuthenticated } = useAuth();
   const { assistantContext, carryContextToAssistant } = useUnifiedFlow();
 
@@ -74,7 +74,10 @@ export const AssistantChatPage: React.FC = () => {
     {
       id: "welcome",
       sender: "bot",
-      text: "নমস্কার / আসসালামু আলাইকুম! আমি মৃত্তিকা এআই কৃষি সহকারী। আপনার ফসলের পুষ্টি, রোগবালাই, সুষম সার ও জমি ব্যবস্থাপনা সংক্রান্ত যেকোনো প্রশ্ন বাংলায় করতে পারেন।",
+      text:
+        i18n.language === "en"
+          ? "Greetings! I am Mrittika AI Agriculture Assistant. Feel free to ask any questions regarding crop nutrients, pest remedies, balanced fertilizers, and field management."
+          : "নমস্কার / আসসালামু আলাইকুম! আমি মৃত্তিকা এআই কৃষি সহকারী। আপনার ফসলের পুষ্টি, রোগবালাই, সুষম সার ও জমি ব্যবস্থাপনা সংক্রান্ত যেকোনো প্রশ্ন বাংলায় করতে পারেন।",
     },
   ]);
   const [inputMessage, setInputMessage] = useState("");
@@ -597,7 +600,7 @@ export const AssistantChatPage: React.FC = () => {
         <div className="flex-1 overflow-y-auto p-2.5 space-y-1.5">
           <div className="px-3 py-1 flex items-center justify-between">
             <p className="text-[11px] font-extrabold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
-              <span>পূর্বের আলোচনা সমূহ</span>
+              <span>{i18n.language === "en" ? "Discussion History" : "পূর্বের আলোচনা সমূহ"}</span>
             </p>
             {sessions.length > 0 && (
               <span className="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded-full border border-emerald-200">
@@ -609,17 +612,23 @@ export const AssistantChatPage: React.FC = () => {
             <div className="p-4 text-xs text-emerald-950 bg-emerald-50/70 rounded-2xl border border-emerald-200 space-y-2 m-1 shadow-2xs">
               <div className="flex items-center gap-2 font-bold text-emerald-900">
                 <Sparkles className="w-4 h-4 text-amber-600" />
-                <span>ক্লাউড সেশন হিস্ট্রি</span>
+                <span>{i18n.language === "en" ? "Cloud Session History" : "ক্লাউড সেশন হিস্ট্রি"}</span>
               </div>
               <p className="text-[11px] text-emerald-800 leading-relaxed font-bangla">
-                লগইন করলে আপনার অতীতের সকল পরামর্শ, প্রশ্নোত্তর ও সারের ডোজ এই মেন্যুতে আজীবনের জন্য সংরক্ষিত থাকবে।
+                {i18n.language === "en"
+                  ? "Sign in to save all your past advisories, QA discussions, and fertilizer doses permanently."
+                  : "লগইন করলে আপনার অতীতের সকল পরামর্শ, প্রশ্নোত্তর ও সারের ডোজ এই মেন্যুতে আজীবনের জন্য সংরক্ষিত থাকবে।"}
               </p>
             </div>
           ) : sessions.length === 0 ? (
             <div className="text-center py-8 px-4 text-slate-700 space-y-2 font-bangla">
               <MessageSquare className="w-8 h-8 mx-auto text-slate-400" />
-              <p className="text-xs font-bold text-slate-800">কোনো পূর্বের আলোচনা নেই।</p>
-              <p className="text-[11px] text-slate-500 font-medium">নতুন প্রশ্ন জিজ্ঞাসা করলে এখানে যুক্ত হবে।</p>
+              <p className="text-xs font-bold text-slate-800">
+                {i18n.language === "en" ? "No previous discussions." : "কোনো পূর্বের আলোচনা নেই।"}
+              </p>
+              <p className="text-[11px] text-slate-500 font-medium">
+                {i18n.language === "en" ? "New questions will appear here." : "নতুন প্রশ্ন জিজ্ঞাসা করলে এখানে যুক্ত হবে।"}
+              </p>
             </div>
           ) : (
             sessions.map((s) => {
@@ -635,12 +644,14 @@ export const AssistantChatPage: React.FC = () => {
                   }`}
                 >
                   <div className="truncate flex-1 pr-2">
-                    <div className="truncate font-semibold text-slate-900">{s.title || "নতুন আলোচনা"}</div>
+                    <div className="truncate font-semibold text-slate-900">
+                      {s.title || (i18n.language === "en" ? "New Discussion" : "নতুন আলোচনা")}
+                    </div>
                     <div className="text-[10px] text-slate-500 mt-1 flex items-center gap-2">
-                      <span>{new Date(s.updated_at || s.created_at).toLocaleDateString("bn-BD")}</span>
+                      <span>{new Date(s.updated_at || s.created_at).toLocaleDateString(i18n.language === "en" ? "en-US" : "bn-BD")}</span>
                       {s.message_count !== undefined && (
                         <span className="px-1.5 py-0.2 rounded-full bg-slate-200/80 font-mono text-[9px] text-slate-700 font-semibold">
-                          {s.message_count} বার্তা
+                          {s.message_count} {i18n.language === "en" ? "messages" : "বার্তা"}
                         </span>
                       )}
                     </div>
@@ -648,7 +659,7 @@ export const AssistantChatPage: React.FC = () => {
                   <button
                     onClick={(e) => deleteSession(s.id, e)}
                     className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-opacity cursor-pointer"
-                    title="মুছে ফেলুন"
+                    title={i18n.language === "en" ? "Delete discussion" : "মুছে ফেলুন"}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -689,15 +700,17 @@ export const AssistantChatPage: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">
-                  মৃত্তিকা এআই বাংলা কৃষি সহকারী
+                  {i18n.language === "en" ? "Mrittika AI Agriculture Assistant" : "মৃত্তিকা এআই বাংলা কৃষি সহকারী"}
                 </h1>
                 <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold font-mono">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                  অনলাইন
+                  {i18n.language === "en" ? "Online" : "অনলাইন"}
                 </span>
               </div>
               <p className="text-[11px] text-slate-600 hidden sm:block font-bangla">
-                BRRI ও BARC সরকারি গবেষণা নথিভিত্তিক নির্ভরযোগ্য এআই পরামর্শক
+                {i18n.language === "en"
+                  ? "BRRI & BARC research-backed authoritative AI agricultural advisory"
+                  : "BRRI ও BARC সরকারি গবেষণা নথিভিত্তিক নির্ভরযোগ্য এআই পরামর্শক"}
               </p>
             </div>
           </div>
@@ -707,11 +720,11 @@ export const AssistantChatPage: React.FC = () => {
             {assistantContext?.crop && (
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 text-xs font-bold border border-emerald-300 shadow-2xs">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-                <span>প্রসঙ্গ: {assistantContext.crop}</span>
+                <span>{i18n.language === "en" ? `Context: ${assistantContext.crop}` : `প্রসঙ্গ: ${assistantContext.crop}`}</span>
                 <button
                   onClick={() => carryContextToAssistant("", "")}
                   className="hover:text-red-600 ml-1 p-0.5 rounded-full hover:bg-emerald-200/50 cursor-pointer"
-                  title="প্রসঙ্গ মুছে ফেলুন"
+                  title={i18n.language === "en" ? "Clear context" : "প্রসঙ্গ মুছে ফেলুন"}
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -733,7 +746,7 @@ export const AssistantChatPage: React.FC = () => {
                 className="flex items-center gap-1.5 font-bold text-red-700 hover:text-red-900 underline ml-3 px-2 py-1 rounded-lg hover:bg-red-100 transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>পুনরায় চেষ্টা করুন</span>
+                <span>{i18n.language === "en" ? "Retry" : "পুনরায় চেষ্টা করুন"}</span>
               </button>
             )}
           </div>
@@ -752,15 +765,23 @@ export const AssistantChatPage: React.FC = () => {
                 <div className="relative z-10 space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>v2.0 রিয়েলটাইম BRRI ও BARC এআই নলেজবেস সক্রিয়</span>
+                    <span>
+                      {i18n.language === "en"
+                        ? "v2.0 Realtime BRRI & BARC AI Knowledge Base Active"
+                        : "v2.0 রিয়েলটাইম BRRI ও BARC এআই নলেজবেস সক্রিয়"}
+                    </span>
                   </div>
 
                   <div className="space-y-1.5">
                     <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white font-bangla">
-                      মৃত্তিকা এআই বাংলা কৃষি সহকারীতে স্বাগতম
+                      {i18n.language === "en"
+                        ? "Welcome to Mrittika AI Agriculture Assistant"
+                        : "মৃত্তিকা এআই বাংলা কৃষি সহকারীতে স্বাগতম"}
                     </h2>
                     <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed max-w-2xl font-bangla">
-                      ফসলের যেকোনো রোগ, সুষম সার প্রয়োগের সঠিক কিস্তি, বালাই দমন কিংবা আবহাওয়া সংক্রান্ত প্রশ্ন বাংলায় লিখুন। নিচে দেওয়া জনপ্রিয় বিষয়গুলোতে চাপ দিয়েও সরাসরি আলোচনা শুরু করতে পারেন:
+                      {i18n.language === "en"
+                        ? "Ask questions regarding crop diseases, balanced fertilizer split timings, pest control, or weather advisories. Click any popular topic below to begin:"
+                        : "ফসলের যেকোনো রোগ, সুষম সার প্রয়োগের সঠিক কিস্তি, বালাই দমন কিংবা আবহাওয়া সংক্রান্ত প্রশ্ন বাংলায় লিখুন। নিচে দেওয়া জনপ্রিয় বিষয়গুলোতে চাপ দিয়েও সরাসরি আলোচনা শুরু করতে পারেন:"}
                     </p>
                   </div>
 
@@ -768,15 +789,15 @@ export const AssistantChatPage: React.FC = () => {
                   <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-bold text-emerald-100 font-bangla">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
                       <Zap className="w-3.5 h-3.5 text-amber-400" />
-                      সাব-মিলি-সেকেন্ড দ্রুততম রেসপন্স
+                      {i18n.language === "en" ? "Sub-millisecond Fast Response" : "সাব-মিলি-সেকেন্ড দ্রুততম রেসপন্স"}
                     </span>
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
                       <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
-                      পৃষ্ঠা নম্বরযুক্ত সরকারি নির্দেশিকা সূত্র
+                      {i18n.language === "en" ? "Page-Referenced Government Sources" : "পৃষ্ঠা নম্বরযুক্ত সরকারি নির্দেশিকা সূত্র"}
                     </span>
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/10">
                       <ShieldCheck className="w-3.5 h-3.5 text-teal-300" />
-                      শতভাগ নিরাপদ ও নির্ভরযোগ্য
+                      {i18n.language === "en" ? "100% Verified & Credible" : "শতভাগ নিরাপদ ও নির্ভরযোগ্য"}
                     </span>
                   </div>
                 </div>
@@ -787,7 +808,7 @@ export const AssistantChatPage: React.FC = () => {
                 {/* Card 1 */}
                 <button
                   type="button"
-                  onClick={() => handleSend("আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম")}
+                  onClick={() => handleSend(i18n.language === "en" ? "Urea application guidelines for Aman rice" : "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম")}
                   disabled={isLoading}
                   className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
                 >
@@ -797,17 +818,19 @@ export const AssistantChatPage: React.FC = () => {
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                        ইউরিয়া ও সার ব্যবস্থাপনা
+                        {i18n.language === "en" ? "Urea & Fertilizer Timing" : "ইউরিয়া ও সার ব্যবস্থাপনা"}
                       </h3>
                       <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                        ৩ কিস্তি
+                        {i18n.language === "en" ? "3 Splits" : "৩ কিস্তি"}
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
-                      আমন ও বোরো ধানে ইউরিয়া উপরিপ্রয়োগের সঠিক সময়সূচী ও নিয়মাবলী
+                      {i18n.language === "en"
+                        ? "Top dressing split timing and guidelines for Aman and Boro rice"
+                        : "আমন ও বোরো ধানে ইউরিয়া উপরিপ্রয়োগের সঠিক সময়সূচী ও নিয়মাবলী"}
                     </p>
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 pt-1 group-hover:translate-x-0.5 transition-transform">
-                      <span>প্রশ্ন করুন</span>
+                      <span>{i18n.language === "en" ? "Ask Question" : "প্রশ্ন করুন"}</span>
                       <span>→</span>
                     </span>
                   </div>
@@ -816,7 +839,7 @@ export const AssistantChatPage: React.FC = () => {
                 {/* Card 2 */}
                 <button
                   type="button"
-                  onClick={() => handleSend("আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার")}
+                  onClick={() => handleSend(i18n.language === "en" ? "Potato Late Blight symptoms and control" : "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার")}
                   disabled={isLoading}
                   className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
                 >
@@ -826,17 +849,19 @@ export const AssistantChatPage: React.FC = () => {
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-amber-800 transition-colors">
-                        ফসলের রোগ ও পোকা দমন
+                        {i18n.language === "en" ? "Crop Diseases & Pest Control" : "ফসলের রোগ ও পোকা দমন"}
                       </h3>
                       <span className="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                        প্রতিকার
+                        {i18n.language === "en" ? "Remedy" : "প্রতিকার"}
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
-                      আলুর লেইট ব্লাইট (নাভিধসা) ও ধানের ব্লাস্ট রোগের স্থায়ী চিকিৎসা
+                      {i18n.language === "en"
+                        ? "Effective management of Late Blight in potatoes and Rice Blast disease"
+                        : "আলুর লেইট ব্লাইট (নাভিধসা) ও ধানের ব্লাস্ট রোগের স্থায়ী চিকিৎসা"}
                     </p>
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 pt-1 group-hover:translate-x-0.5 transition-transform">
-                      <span>পরামর্শ নিন</span>
+                      <span>{i18n.language === "en" ? "Get Advice" : "পরামর্শ নিন"}</span>
                       <span>→</span>
                     </span>
                   </div>
@@ -845,7 +870,7 @@ export const AssistantChatPage: React.FC = () => {
                 {/* Card 3 */}
                 <button
                   type="button"
-                  onClick={() => handleSend("অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
+                  onClick={() => handleSend(i18n.language === "en" ? "Lime application dosage in acidic soil" : "অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
                   disabled={isLoading}
                   className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
                 >
@@ -855,17 +880,19 @@ export const AssistantChatPage: React.FC = () => {
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-teal-800 transition-colors">
-                        মাটির পুষ্টি ও অম্লত্ব সংস্কার
+                        {i18n.language === "en" ? "Soil Nutrients & pH Amendment" : "মাটির পুষ্টি ও অম্লত্ব সংস্কার"}
                       </h3>
                       <span className="text-[10px] font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
-                        পিএইচ
+                        {i18n.language === "en" ? "pH Fix" : "পিএইচ"}
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
-                      অম্লীয় মাটিতে চুন ও জৈব সার প্রয়োগের সঠিক অনুপাত ও পদ্ধতি
+                      {i18n.language === "en"
+                        ? "Accurate dosage and timing of lime and organic matter in acidic soils"
+                        : "অম্লীয় মাটিতে চুন ও জৈব সার প্রয়োগের সঠিক অনুপাত ও পদ্ধতি"}
                     </p>
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-800 pt-1 group-hover:translate-x-0.5 transition-transform">
-                      <span>মাত্রা জানুন</span>
+                      <span>{i18n.language === "en" ? "View Dosages" : "মাত্রা জানুন"}</span>
                       <span>→</span>
                     </span>
                   </div>
@@ -874,7 +901,7 @@ export const AssistantChatPage: React.FC = () => {
                 {/* Card 4 */}
                 <button
                   type="button"
-                  onClick={() => handleSend("বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
+                  onClick={() => handleSend(i18n.language === "en" ? "Boro rice fertilizer management in sandy loam soil" : "বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
                   disabled={isLoading}
                   className="app-card-interactive p-4 sm:p-5 rounded-2xl text-left border border-slate-200/90 bg-white flex items-start gap-3.5 group cursor-pointer"
                 >
@@ -884,17 +911,19 @@ export const AssistantChatPage: React.FC = () => {
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-800 transition-colors">
-                        আবহাওয়া ও জাত নির্বাচন
+                        {i18n.language === "en" ? "Climate & Variety Advisory" : "আবহাওয়া ও জাত নির্বাচন"}
                       </h3>
                       <span className="text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
-                        বোরো ধান
+                        {i18n.language === "en" ? "Boro Rice" : "বোরো ধান"}
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-600 leading-snug line-clamp-2 font-bangla">
-                      দোআঁশ ও বেলে মাটিতে বোরো ধান এবং রবি ফসলের সুষম সার পরিকল্পনা
+                      {i18n.language === "en"
+                        ? "Balanced fertilizer plans for Boro rice in loam and sandy-loam soils"
+                        : "দোআঁশ ও বেলে মাটিতে বোরো ধান এবং রবি ফসলের সুষম সার পরিকল্পনা"}
                     </p>
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-800 pt-1 group-hover:translate-x-0.5 transition-transform">
-                      <span>পরিকল্পনা দেখুন</span>
+                      <span>{i18n.language === "en" ? "Explore Plan" : "পরিকল্পনা দেখুন"}</span>
                       <span>→</span>
                     </span>
                   </div>
@@ -907,8 +936,12 @@ export const AssistantChatPage: React.FC = () => {
                   🌾
                 </div>
                 <div className="text-xs leading-relaxed text-slate-700 font-bangla">
-                  <span className="font-bold text-emerald-950">আজকের বিশেষ কৃষি বার্তা: </span>
-                  বোরো মৌসুমের চারা রোপণের পূর্বে বীজতলায় অতিরিক্ত ঠান্ডার প্রভাব রোধে রাতের বেলায় পলিথিন দিয়ে ঢেকে রাখুন এবং সকালে সূর্যের আলোতে উন্মুক্ত করুন।
+                  <span className="font-bold text-emerald-950">
+                    {i18n.language === "en" ? "Today's Field Advisory: " : "আজকের বিশেষ কৃষি বার্তা: "}
+                  </span>
+                  {i18n.language === "en"
+                    ? "Before transplanting Boro rice seedlings, cover seedbeds with polythene overnight to shield them from intense cold, and uncover in morning sunlight."
+                    : "বোরো মৌসুমের চারা রোপণের পূর্বে বীজতলায় অতিরিক্ত ঠান্ডার প্রভাব রোধে রাতের বেলায় পলিথিন দিয়ে ঢেকে রাখুন এবং সকালে সূর্যের আলোতে উন্মুক্ত করুন।"}
                 </div>
               </div>
             </div>
@@ -937,7 +970,7 @@ export const AssistantChatPage: React.FC = () => {
                       {isUser ? (
                         <div className="flex items-center justify-between w-full text-emerald-100">
                           <span className="flex items-center gap-1.5 font-bold">
-                            <span>👤 আপনি</span>
+                            <span>👤 {i18n.language === "en" ? "You" : "আপনি"}</span>
                           </span>
                           {msg.timestamp && (
                             <span className="text-[10px] text-emerald-200/90 font-normal ml-2 font-mono">
@@ -949,9 +982,9 @@ export const AssistantChatPage: React.FC = () => {
                         <div className="flex items-center justify-between w-full">
                           <span className="text-emerald-900 flex items-center gap-1.5 font-bold">
                             <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-                            <span>মৃত্তিকা এআই</span>
+                            <span>{i18n.language === "en" ? "Mrittika AI" : "মৃত্তিকা এআই"}</span>
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                              BRRI নির্দেশিকা
+                              {i18n.language === "en" ? "BRRI & BARC Guidelines" : "BRRI নির্দেশিকা"}
                             </span>
                           </span>
                           {msg.timestamp && (
@@ -975,7 +1008,9 @@ export const AssistantChatPage: React.FC = () => {
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.3s]" />
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.15s]" />
                             <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-bounce" />
-                            <span className="text-xs text-slate-600 font-medium ml-1 font-bangla">মৃত্তিকা এআই নির্ভুল উত্তর প্রস্তুত করছে...</span>
+                            <span className="text-xs text-slate-600 font-medium ml-1 font-bangla">
+                              {i18n.language === "en" ? "Mrittika AI is compiling verified answer..." : "মৃত্তিকা এআই নির্ভুল উত্তর প্রস্তুত করছে..."}
+                            </span>
                           </div>
                         ) : (
                           <div className="font-bangla leading-relaxed text-slate-900">
@@ -990,10 +1025,12 @@ export const AssistantChatPage: React.FC = () => {
                       <div className="mt-4 p-3.5 bg-amber-100/80 rounded-xl border border-amber-300 text-xs text-amber-950 space-y-1.5 shadow-2xs font-bangla">
                         <div className="flex items-center gap-2 font-bold text-amber-900">
                           <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0" />
-                          <span>উপজেলা কৃষি কর্মকর্তার সাথে যোগাযোগ করুন</span>
+                          <span>{i18n.language === "en" ? "Consult Upazila Agriculture Officer" : "উপজেলা কৃষি কর্মকর্তার সাথে যোগাযোগ করুন"}</span>
                         </div>
                         <p className="text-[11px] text-amber-950 leading-relaxed font-bangla">
-                          উচ্চ-ঝুঁকি বা বিষাক্ত রাসায়নিক প্রয়োগের ক্ষেত্রে শুধুমাত্র সরকারি লাইসেন্সধারী কর্মকর্তা বা আপনার নিকটস্থ উপজেলা কৃষি অফিসে গিয়ে সরাসরি পরামর্শ নিন।
+                          {i18n.language === "en"
+                            ? "For high-risk or hazardous agro-chemicals, always seek direct counsel from licensed government officers or your local Upazila Agriculture Office."
+                            : "উচ্চ-ঝুঁকি বা বিষাক্ত রাসায়নিক প্রয়োগের ক্ষেত্রে শুধুমাত্র সরকারি লাইসেন্সধারী কর্মকর্তা বা আপনার নিকটস্থ উপজেলা কৃষি অফিসে গিয়ে সরাসরি পরামর্শ নিন।"}
                         </p>
                       </div>
                     )}
@@ -1003,7 +1040,11 @@ export const AssistantChatPage: React.FC = () => {
                       <div className="mt-4 pt-3 border-t border-slate-200 space-y-2">
                         <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
                           <BookOpen className="w-3.5 h-3.5 text-emerald-700" />
-                          <span>যাচাইকৃত তথ্যসূত্র ({msg.sources.length}টি নথি):</span>
+                          <span>
+                            {i18n.language === "en"
+                              ? `Verified Research Sources (${msg.sources.length} docs):`
+                              : `যাচাইকৃত তথ্যসূত্র (${msg.sources.length}টি নথি):`}
+                          </span>
                         </div>
                         <div className="space-y-1.5">
                           {msg.sources.map((s, idx) => {
@@ -1021,12 +1062,12 @@ export const AssistantChatPage: React.FC = () => {
                                   className="flex items-center justify-between cursor-pointer font-medium"
                                 >
                                   <span className="truncate flex-1 font-bangla font-semibold text-slate-900">
-                                    📄 {s.source} {s.page ? `(পৃষ্ঠা: ${s.page})` : ""}
+                                    📄 {s.source} {s.page ? `(${i18n.language === "en" ? "Page" : "পৃষ্ঠা"}: ${s.page})` : ""}
                                   </span>
                                   <div className="flex items-center gap-1.5 ml-2">
                                     {s.is_sample && (
                                       <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 text-amber-900 border border-amber-300 font-bangla">
-                                        নমুনা নথি
+                                        {i18n.language === "en" ? "Sample Doc" : "নমুনা নথি"}
                                       </span>
                                     )}
                                     {isExpanded ? (
@@ -1054,17 +1095,19 @@ export const AssistantChatPage: React.FC = () => {
                         <button
                           onClick={() => handleCopyText(msg.id, msg.text)}
                           className="hover:text-emerald-700 p-1.5 flex items-center gap-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
-                          title="অনুলিপি (Copy)"
+                          title={i18n.language === "en" ? "Copy Text" : "অনুলিপি (Copy)"}
                         >
                           {copiedId === msg.id ? (
                             <>
                               <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              <span className="text-[11px] text-emerald-700 font-semibold">কপি হয়েছে</span>
+                              <span className="text-[11px] text-emerald-700 font-semibold">
+                                {i18n.language === "en" ? "Copied" : "কপি হয়েছে"}
+                              </span>
                             </>
                           ) : (
                             <>
                               <Copy className="w-3.5 h-3.5" />
-                              <span className="text-[11px] font-medium">কপি</span>
+                              <span className="text-[11px] font-medium">{i18n.language === "en" ? "Copy" : "কপি"}</span>
                             </>
                           )}
                         </button>
@@ -1074,18 +1117,18 @@ export const AssistantChatPage: React.FC = () => {
                             submitFeedback(true);
                           }}
                           className="hover:text-emerald-700 p-1.5 flex items-center gap-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
-                          title="সহায়ক উত্তর (Helpful)"
+                          title={i18n.language === "en" ? "Helpful Answer" : "সহায়ক উত্তর (Helpful)"}
                         >
                           <ThumbsUp className="w-3.5 h-3.5" />
-                          <span className="text-[11px] font-medium">পছন্দ</span>
+                          <span className="text-[11px] font-medium">{i18n.language === "en" ? "Helpful" : "পছন্দ"}</span>
                         </button>
                         <button
                           onClick={() => openFeedbackModal(msg)}
                           className="hover:text-red-600 p-1.5 flex items-center gap-1 rounded-lg hover:bg-slate-100 transition-colors ml-auto cursor-pointer"
-                          title="রিপোর্ট করুন"
+                          title={i18n.language === "en" ? "Report Issue" : "রিপোর্ট করুন"}
                         >
                           <Flag className="w-3.5 h-3.5" />
-                          <span className="text-[11px] font-medium">রিপোর্ট</span>
+                          <span className="text-[11px] font-medium">{i18n.language === "en" ? "Report" : "রিপোর্ট"}</span>
                         </button>
                       </div>
                     )}
@@ -1100,34 +1143,42 @@ export const AssistantChatPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-                    সম্পর্কিত প্রস্তাবিত বিষয় (Related Queries)
+                    {i18n.language === "en" ? "Related Recommended Queries" : "সম্পর্কিত প্রস্তাবিত বিষয় (Related Queries)"}
                   </span>
-                  <span className="text-[10px] text-slate-500 font-medium">পরামর্শ পেতে যেকোনো বিষয়ে চাপুন</span>
+                  <span className="text-[10px] text-slate-500 font-medium">
+                    {i18n.language === "en" ? "Click any query to ask directly" : "পরামর্শ পেতে যেকোনো বিষয়ে চাপুন"}
+                  </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <button
                     type="button"
-                    onClick={() => handleSend("আলুর নাবিধসা রোগ লক্ষণ ও প্রতিকার")}
+                    onClick={() => handleSend(i18n.language === "en" ? "Potato Late Blight symptoms and control" : "আলুর নাবিধসা রোগ লক্ষণ ও প্রতিকার")}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-left text-xs font-semibold text-slate-800 hover:text-emerald-950 transition-all flex items-center gap-2 group cursor-pointer shadow-2xs"
                   >
                     <span className="text-base group-hover:scale-110 transition-transform">🥔</span>
-                    <span className="truncate">আলুর নাবিধসা রোগ ও প্রতিকার</span>
+                    <span className="truncate">
+                      {i18n.language === "en" ? "Potato Late Blight Control" : "আলুর নাবিধসা রোগ ও প্রতিকার"}
+                    </span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleSend("অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
+                    onClick={() => handleSend(i18n.language === "en" ? "Lime application dosage in acidic soil" : "অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 text-left text-xs font-semibold text-slate-800 hover:text-teal-950 transition-all flex items-center gap-2 group cursor-pointer shadow-2xs"
                   >
                     <span className="text-base group-hover:scale-110 transition-transform">🧪</span>
-                    <span className="truncate">অম্লীয় মাটিতে চুন প্রয়োগের মাত্রা</span>
+                    <span className="truncate">
+                      {i18n.language === "en" ? "Lime Dosage in Acidic Soil" : "অম্লীয় মাটিতে চুন প্রয়োগের মাত্রা"}
+                    </span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleSend("বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
+                    onClick={() => handleSend(i18n.language === "en" ? "Boro rice fertilizer management in sandy loam soil" : "বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-left text-xs font-semibold text-slate-800 hover:text-blue-950 transition-all flex items-center gap-2 group cursor-pointer shadow-2xs"
                   >
                     <span className="text-base group-hover:scale-110 transition-transform">🌾</span>
-                    <span className="truncate">বোরো ধানের সুষম সার ব্যবস্থাপনা</span>
+                    <span className="truncate">
+                      {i18n.language === "en" ? "Boro Rice Fertilizer Plan" : "বোরো ধানের সুষম সার ব্যবস্থাপনা"}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -1139,11 +1190,15 @@ export const AssistantChatPage: React.FC = () => {
             <div className="flex flex-col gap-1.5 bg-white p-3.5 rounded-2xl border border-slate-200/90 w-fit shadow-md">
               <div className="flex items-center gap-2 text-xs text-slate-800">
                 <Loader2 className="w-4 h-4 animate-spin text-emerald-700" />
-                <span className="font-semibold">নথি বিশ্লেষণ ও উত্তর প্রস্তুত করা হচ্ছে...</span>
+                <span className="font-semibold">
+                  {i18n.language === "en" ? "Analyzing docs and generating guidance..." : "নথি বিশ্লেষণ ও উত্তর প্রস্তুত করা হচ্ছে..."}
+                </span>
               </div>
               {isWarmingUp && (
                 <p className="text-[11px] text-amber-900 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-300 font-bangla animate-pulse">
-                  ⏳ সার্ভার ক্লাউড থেকে সক্রিয় হচ্ছে (Render Cold Start)... অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন।
+                  {i18n.language === "en"
+                    ? "⏳ Server waking up from cloud idle (Cold Start)... please hold a moment."
+                    : "⏳ সার্ভার ক্লাউড থেকে সক্রিয় হচ্ছে (Render Cold Start)... অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন।"}
                 </p>
               )}
             </div>
@@ -1155,21 +1210,21 @@ export const AssistantChatPage: React.FC = () => {
         {/* 6 Suggested Starter Prompts Bar */}
         <div className="bg-white px-4 py-2.5 border-t border-slate-200 overflow-x-auto whitespace-nowrap flex gap-2 no-scrollbar">
           {[
-            "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম",
-            "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার",
-            "অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা",
-            "বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা",
-            "পাট ফসলের সঠিক বীজ বপন সময়",
-            "মাটির জৈব পদার্থ বাড়ানোর উপায়",
-          ].map((prompt, idx) => (
+            { en: "Urea application guidelines for Aman rice", bn: "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম" },
+            { en: "Potato Late Blight symptoms and control", bn: "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার" },
+            { en: "Lime application dosage in acidic soil", bn: "অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা" },
+            { en: "Boro rice fertilizer plan for sandy loam soil", bn: "বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা" },
+            { en: "Optimal sowing time for jute crops", bn: "পাট ফসলের সঠিক বীজ বপন সময়" },
+            { en: "Methods to increase soil organic matter", bn: "মাটির জৈব পদার্থ বাড়ানোর উপায়" },
+          ].map((item, idx) => (
             <button
               key={idx}
-              onClick={() => handleSend(prompt)}
+              onClick={() => handleSend(i18n.language === "en" ? item.en : item.bn)}
               disabled={isLoading}
               className="text-xs px-3.5 py-1.5 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-950 border border-slate-200 hover:border-emerald-400 transition-all font-semibold shadow-2xs cursor-pointer flex items-center gap-1.5 shrink-0"
             >
               <Sparkles className="w-3 h-3 text-amber-600" />
-              <span>{prompt}</span>
+              <span>{i18n.language === "en" ? item.en : item.bn}</span>
             </button>
           ))}
         </div>
@@ -1197,7 +1252,11 @@ export const AssistantChatPage: React.FC = () => {
                   handleSend();
                 }
               }}
-              placeholder="আপনার প্রশ্নটি বাংলায় লিখুন... (Enter চাপলে সেন্ড হবে)"
+              placeholder={
+                i18n.language === "en"
+                  ? "Write your agricultural question in English or Bangla... (Press Enter to send)"
+                  : "আপনার প্রশ্নটি বাংলায় লিখুন... (Enter চাপলে সেন্ড হবে)"
+              }
               disabled={isLoading}
               className="flex-1 bg-transparent border-0 text-sm focus:outline-none resize-none max-h-32 min-h-[2.25rem] py-1 text-slate-900 placeholder:text-slate-500 font-bangla"
             />
@@ -1216,7 +1275,7 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={handleStopGeneration}
                   className="p-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white transition-colors shadow-sm cursor-pointer"
-                  title="উত্তর থামান (Stop)"
+                  title={i18n.language === "en" ? "Stop Generating" : "উত্তর থামান (Stop)"}
                 >
                   <Square className="w-4 h-4 fill-white" />
                 </button>
@@ -1242,7 +1301,7 @@ export const AssistantChatPage: React.FC = () => {
           <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-elevated border border-slate-200">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-slate-900">
-                ভুল বা অনুপযুক্ত উত্তর রিপোর্ট করুন
+                {i18n.language === "en" ? "Report Inaccurate or Incomplete Answer" : "ভুল বা অনুপযুক্ত উত্তর রিপোর্ট করুন"}
               </h3>
               <button
                 onClick={() => setFeedbackModalOpen(false)}
@@ -1254,38 +1313,42 @@ export const AssistantChatPage: React.FC = () => {
 
             {feedbackSubmitted ? (
               <div className="p-4 bg-emerald-50 rounded-xl text-emerald-900 text-xs text-center font-bold border border-emerald-200">
-                ✓ আপনার রিপোর্ট সফলভাবে গৃহীত হয়েছে। কৃষি কর্মকর্তা এটি পর্যালোচনা করবেন।
+                {i18n.language === "en"
+                  ? "✓ Your report has been submitted. An agricultural officer will review it."
+                  : "✓ আপনার রিপোর্ট সফলভাবে গৃহীত হয়েছে। কৃষি কর্মকর্তা এটি পর্যালোচনা করবেন।"}
               </div>
             ) : (
               <>
                 <p className="text-xs text-slate-600 font-bangla">
-                  উত্তরটিতে কী ধরণের ত্রুটি লক্ষ্য করেছেন তা জানালে আমরা আমাদের সিস্টেম আরও সমৃদ্ধ করতে পারব।
+                  {i18n.language === "en"
+                    ? "Let us know the details of the inaccuracy to help improve model reliability."
+                    : "উত্তরটিতে কী ধরণের ত্রুটি লক্ষ্য করেছেন তা জানালে আমরা আমাদের সিস্টেম আরও সমৃদ্ধ করতে পারব।"}
                 </p>
 
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-slate-800">
-                    রেটিং (১-৫):
+                    {i18n.language === "en" ? "Rating (1-5):" : "রেটিং (১-৫):"}
                   </label>
                   <select
                     value={feedbackRating}
                     onChange={(e) => setFeedbackRating(Number(e.target.value))}
                     className="w-full text-xs p-2.5 rounded-xl border border-slate-300 text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
                   >
-                    <option value={1}>১ - অত্যন্ত অসন্তোষজনক / ক্ষতিকর তথ্য</option>
-                    <option value={2}>২ - ভুল তথ্য রয়েছে</option>
-                    <option value={3}>৩ - অসম্পূর্ণ উত্তর</option>
+                    <option value={1}>{i18n.language === "en" ? "1 - Highly inaccurate / hazardous advice" : "১ - অত্যন্ত অসন্তোষজনক / ক্ষতিকর তথ্য"}</option>
+                    <option value={2}>{i18n.language === "en" ? "2 - Contains inaccurate data" : "২ - ভুল তথ্য রয়েছে"}</option>
+                    <option value={3}>{i18n.language === "en" ? "3 - Incomplete answer" : "৩ - অসম্পূর্ণ উত্তর"}</option>
                   </select>
                 </div>
 
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-slate-800">
-                    মন্তব্য / সঠিক তথ্য জানা থাকলে লিখুন:
+                    {i18n.language === "en" ? "Comments / Correction Details:" : "মন্তব্য / সঠিক তথ্য জানা থাকলে লিখুন:"}
                   </label>
                   <textarea
                     rows={3}
                     value={feedbackComment}
                     onChange={(e) => setFeedbackComment(e.target.value)}
-                    placeholder="উত্তরের ত্রুটি বিস্তারিত লিখুন..."
+                    placeholder={i18n.language === "en" ? "Describe corrections or suggestions..." : "উত্তরের ত্রুটি বিস্তারিত লিখুন..."}
                     className="w-full text-xs p-2.5 rounded-xl border border-slate-300 text-slate-900 bg-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 font-bangla"
                   />
                 </div>
@@ -1295,13 +1358,13 @@ export const AssistantChatPage: React.FC = () => {
                     onClick={() => setFeedbackModalOpen(false)}
                     className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 cursor-pointer"
                   >
-                    বাতিল
+                    {i18n.language === "en" ? "Cancel" : "বাতিল"}
                   </button>
                   <button
                     onClick={() => submitFeedback(false)}
                     className="px-4 py-1.5 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-700 text-white shadow-sm cursor-pointer"
                   >
-                    রিপোর্ট জমা দিন
+                    {i18n.language === "en" ? "Submit Report" : "রিপোর্ট জমা দিন"}
                   </button>
                 </div>
               </>

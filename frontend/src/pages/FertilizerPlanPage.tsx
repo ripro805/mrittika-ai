@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 export const FertilizerPlanPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { selectedCrop, soilInputs, carryContextToAssistant } = useUnifiedFlow();
 
@@ -114,13 +114,15 @@ export const FertilizerPlanPage: React.FC = () => {
       <div className="text-center space-y-2.5">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold border border-amber-200 shadow-2xs">
           <FlaskConical className="w-3.5 h-3.5 text-amber-700" />
-          <span>মডিউল ২: সারের হিসাব ও প্রয়োগপদ্ধতি</span>
+          <span>{i18n.language === "en" ? "Module 2: Fertilizer Dosage & Timing" : "মডিউল ২: সারের হিসাব ও প্রয়োগপদ্ধতি"}</span>
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          সুষম সারের সঠিক মাত্রা নির্ধারণ
+          {i18n.language === "en" ? "Balanced Fertilizer Dosage Calculator" : "সুষম সারের সঠিক মাত্রা নির্ধারণ"}
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-bangla">
-          ফসলের পুষ্টির চাহিদা ও মাটির স্বাস্থ্য বিচার করে সুনির্দিষ্ট সারের পরিমাণ, প্রয়োগের সময়সূচী ও জমি অনুযায়ী মোট সারের হিসাব।
+          {i18n.language === "en"
+            ? "Exact chemical and organic fertilizer dosages tailored to your crop nutrient needs, land area, and split schedules."
+            : "ফসলের পুষ্টির চাহিদা ও মাটির স্বাস্থ্য বিচার করে সুনির্দিষ্ট সারের পরিমাণ, প্রয়োগের সময়সূচী ও জমি অনুযায়ী মোট সারের হিসাব।"}
         </p>
       </div>
 
@@ -137,7 +139,7 @@ export const FertilizerPlanPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-1">
             <label className="block text-xs font-bold text-slate-800 mb-1">
-              উদ্দিষ্ট ফসল (Target Crop)
+              {i18n.language === "en" ? "Target Crop" : "উদ্দিষ্ট ফসল (Target Crop)"}
             </label>
             <select
               name="crop"
@@ -147,7 +149,7 @@ export const FertilizerPlanPage: React.FC = () => {
             >
               {crops.map((c) => (
                 <option key={c.slug} value={c.slug}>
-                  {c.name_bn} {c.fertilizer_supported ? "" : " (সারের মডেল যুক্ত হয়নি)"}
+                  {i18n.language === "en" ? (c.name_en || c.name_bn) : c.name_bn} {c.fertilizer_supported ? "" : (i18n.language === "en" ? " (model unavailable)" : " (সারের মডেল যুক্ত হয়নি)")}
                 </option>
               ))}
             </select>
@@ -155,7 +157,7 @@ export const FertilizerPlanPage: React.FC = () => {
 
           <div>
             <label className="block text-xs font-bold text-slate-800 mb-1">
-              জমির পরিমাণ (Land Area)
+              {i18n.language === "en" ? "Land Area" : "জমির পরিমাণ (Land Area)"}
             </label>
             <input
               type="number"
@@ -171,7 +173,7 @@ export const FertilizerPlanPage: React.FC = () => {
 
           <div>
             <label className="block text-xs font-bold text-slate-800 mb-1">
-              জমির একক (Unit)
+              {i18n.language === "en" ? "Measurement Unit" : "জমির একক (Unit)"}
             </label>
             <select
               name="land_unit"
@@ -179,9 +181,9 @@ export const FertilizerPlanPage: React.FC = () => {
               onChange={handleInputChange}
               className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
             >
-              <option value="bigha">বিঘা (৩৩ শতক)</option>
-              <option value="decimal">শতক / ডেসিমাল</option>
-              <option value="hectare">হেক্টর</option>
+              <option value="bigha">{i18n.language === "en" ? "Bigha (33 Decimal)" : "বিঘা (৩৩ শতক)"}</option>
+              <option value="decimal">{i18n.language === "en" ? "Decimal / Shotok" : "শতক / ডেসিমাল"}</option>
+              <option value="hectare">{i18n.language === "en" ? "Hectare" : "হেক্টর"}</option>
             </select>
           </div>
         </div>
@@ -189,19 +191,23 @@ export const FertilizerPlanPage: React.FC = () => {
         {!isCropSupported && (
           <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs sm:text-sm font-semibold flex items-center gap-2 font-bangla">
             <Info className="w-5 h-5 flex-shrink-0 text-amber-700" />
-            <span>এই ফসলের জন্য সারের পরামর্শ এখনো যুক্ত হয়নি (ধান, গম, ভুট্টা, আলু, পাট, সরিষা, মসুর, টমেটো, বেগুন, মরিচ ও পেঁয়াজ নির্বাচন করুন)।</span>
+            <span>
+              {i18n.language === "en"
+                ? "Fertilizer dosage is not yet mapped for this crop (Supported: Rice, Wheat, Maize, Potato, Jute, Mustard, Lentil, Tomato, Eggplant, Chili, Onion)."
+                : "এই ফসলের জন্য সারের পরামর্শ এখনো যুক্ত হয়নি (ধান, গম, ভুট্টা, আলু, পাট, সরিষা, মসুর, টমেটো, বেগুন, মরিচ ও পেঁয়াজ নির্বাচন করুন)।"}
+            </span>
           </div>
         )}
 
         {/* Primary Nutrients */}
         <div>
           <h3 className="text-sm font-extrabold text-slate-900 border-b border-slate-200 pb-2 mb-4">
-            ১. প্রাথমিক পুষ্টি ও মাটির মান (Primary Nutrients & pH)
+            {i18n.language === "en" ? "1. Primary Nutrients & pH" : "১. প্রাথমিক পুষ্টি ও মাটির মান (Primary Nutrients & pH)"}
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                নাইট্রোজেন (N) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Nitrogen (N)" : "নাইট্রোজেন (N)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -217,7 +223,7 @@ export const FertilizerPlanPage: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                ফসফরাস (P) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Phosphorus (P)" : "ফসফরাস (P)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -233,7 +239,7 @@ export const FertilizerPlanPage: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                পটাশিয়াম (K) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Potassium (K)" : "পটাশিয়াম (K)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -249,7 +255,7 @@ export const FertilizerPlanPage: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                মাটির pH <span className="text-slate-500 font-mono text-[10px] font-normal">3.5-9.5</span>
+                {i18n.language === "en" ? "Soil pH" : "মাটির pH"} <span className="text-slate-500 font-mono text-[10px] font-normal">3.5-9.5</span>
               </label>
               <input
                 type="number"
@@ -269,12 +275,12 @@ export const FertilizerPlanPage: React.FC = () => {
         {/* Secondary Nutrients (Optional) */}
         <div>
           <h3 className="text-sm font-extrabold text-slate-900 border-b border-slate-200 pb-2 mb-4">
-            ২. গৌণ উপাদান ও জৈব পদার্থ (ঐচ্ছিক / Optional)
+            {i18n.language === "en" ? "2. Secondary Nutrients & OM% (Optional)" : "২. গৌণ উপাদান ও জৈব পদার্থ (ঐচ্ছিক / Optional)"}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                সালফার / গন্ধক (S) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Sulfur (S)" : "সালফার / গন্ধক (S)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -282,7 +288,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 min="0"
                 max="100"
                 step="0.1"
-                placeholder="না জানা থাকলে খালি রাখুন"
+                placeholder={i18n.language === "en" ? "Leave blank if unknown" : "না জানা থাকলে খালি রাখুন"}
                 value={formData.S}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
@@ -290,7 +296,7 @@ export const FertilizerPlanPage: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                জিংক / দস্তা (Zn) <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
+                {i18n.language === "en" ? "Zinc (Zn)" : "জিংক / দস্তা (Zn)"} <span className="text-slate-500 font-mono text-[10px] font-normal">kg/ha</span>
               </label>
               <input
                 type="number"
@@ -298,7 +304,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 min="0"
                 max="20"
                 step="0.1"
-                placeholder="না জানা থাকলে খালি রাখুন"
+                placeholder={i18n.language === "en" ? "Leave blank if unknown" : "না জানা থাকলে খালি রাখুন"}
                 value={formData.Zn}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
@@ -306,7 +312,7 @@ export const FertilizerPlanPage: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                জৈব পদার্থ (OM %)
+                {i18n.language === "en" ? "Organic Matter (OM %)" : "জৈব পদার্থ (OM %)"}
               </label>
               <input
                 type="number"
@@ -314,7 +320,7 @@ export const FertilizerPlanPage: React.FC = () => {
                 min="0"
                 max="10"
                 step="0.01"
-                placeholder="না জানা থাকলে খালি রাখুন"
+                placeholder={i18n.language === "en" ? "Leave blank if unknown" : "না জানা থাকলে খালি রাখুন"}
                 value={formData.organic_matter}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-amber-500/15 focus:border-amber-600 focus:outline-none"
@@ -351,13 +357,19 @@ export const FertilizerPlanPage: React.FC = () => {
           <div className="bg-amber-950 bg-gradient-to-r from-amber-950 via-amber-900 to-orange-950 text-white p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
-                সুপারিশকৃত সারের প্যাকেজ
+                {i18n.language === "en" ? "Recommended Fertilizer Package" : "সুপারিশকৃত সারের প্যাকেজ"}
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                {result.crop_name_bn} - {result.fertilizer_plan}
+                {i18n.language === "en" ? (result.crop_name_en || result.crop_name_bn) : result.crop_name_bn} - {result.fertilizer_plan}
               </h2>
               <p className="text-xs text-amber-200 mt-1 font-bangla">
-                জমির পরিমাপ: {formData.land_area} {formData.land_unit === "bigha" ? "বিঘা" : formData.land_unit === "decimal" ? "শতক" : "হেক্টর"}
+                {i18n.language === "en" ? "Land Area: " : "জমির পরিমাপ: "}
+                {formData.land_area}{" "}
+                {formData.land_unit === "bigha"
+                  ? (i18n.language === "en" ? "Bigha" : "বিঘা")
+                  : formData.land_unit === "decimal"
+                  ? (i18n.language === "en" ? "Decimal" : "শতক")
+                  : (i18n.language === "en" ? "Hectare" : "হেক্টর")}
               </p>
             </div>
 
@@ -366,7 +378,7 @@ export const FertilizerPlanPage: React.FC = () => {
               className="inline-flex items-center gap-2 bg-white text-amber-950 hover:bg-amber-50 px-4 py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all hover:-translate-y-0.5 cursor-pointer"
             >
               <MessageSquare className="w-4 h-4 text-amber-800" />
-              <span>সহকারীকে প্রশ্ন করুন</span>
+              <span>{i18n.language === "en" ? "Ask AI Assistant" : "সহকারীকে প্রশ্ন করুন"}</span>
             </button>
           </div>
 
@@ -374,7 +386,7 @@ export const FertilizerPlanPage: React.FC = () => {
           <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs">
             <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
               <TableIcon className="w-4 h-4 text-amber-700" />
-              <span>সারের হার প্রদর্শন একক:</span>
+              <span>{i18n.language === "en" ? "Display Unit Rate:" : "সারের হার প্রদর্শন একক:"}</span>
             </span>
             <div className="inline-flex rounded-xl p-1 bg-slate-100">
               <button
@@ -384,7 +396,7 @@ export const FertilizerPlanPage: React.FC = () => {
                   activeUnit === "bigha" ? "bg-white text-amber-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                বিঘা (৩৩ শতক)
+                {i18n.language === "en" ? "Bigha (33 Decimal)" : "বিঘা (৩৩ শতক)"}
               </button>
               <button
                 type="button"
@@ -393,7 +405,7 @@ export const FertilizerPlanPage: React.FC = () => {
                   activeUnit === "decimal" ? "bg-white text-amber-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                শতক (ডেসিমাল)
+                {i18n.language === "en" ? "Decimal / Shotok" : "শতক (ডেসিমাল)"}
               </button>
               <button
                 type="button"
@@ -402,7 +414,7 @@ export const FertilizerPlanPage: React.FC = () => {
                   activeUnit === "ha" ? "bg-white text-amber-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                হেক্টর
+                {i18n.language === "en" ? "Hectare" : "হেক্টর"}
               </button>
             </div>
           </div>
@@ -413,32 +425,41 @@ export const FertilizerPlanPage: React.FC = () => {
               <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
                 <thead className="bg-slate-50">
                   <tr>
-                    <th className="px-6 py-4 font-extrabold text-slate-800">সারের নাম</th>
-                    <th className="px-6 py-4 font-extrabold text-slate-800">প্রধান পুষ্টি</th>
                     <th className="px-6 py-4 font-extrabold text-slate-800">
-                      হার ({activeUnit === "bigha" ? "কেজি/বিঘা" : activeUnit === "decimal" ? "কেজি/শতক" : "কেজি/হেক্টর"})
+                      {i18n.language === "en" ? "Fertilizer Name" : "সারের নাম"}
+                    </th>
+                    <th className="px-6 py-4 font-extrabold text-slate-800">
+                      {i18n.language === "en" ? "Primary Nutrient" : "প্রধান পুষ্টি"}
+                    </th>
+                    <th className="px-6 py-4 font-extrabold text-slate-800">
+                      {i18n.language === "en"
+                        ? `Rate (${activeUnit === "bigha" ? "kg/bigha" : activeUnit === "decimal" ? "kg/decimal" : "kg/ha"})`
+                        : `হার (${activeUnit === "bigha" ? "কেজি/বিঘা" : activeUnit === "decimal" ? "কেজি/শতক" : "কেজি/হেক্টর"})`}
                     </th>
                     <th className="px-6 py-4 font-extrabold text-amber-950 bg-amber-50">
-                      আপনার জমির মোট সার
+                      {i18n.language === "en" ? "Total for Your Land" : "আপনার জমির মোট সার"}
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {result.fertilizer_items.map((item: any) => {
+                    const kgUnit = i18n.language === "en" ? "kg" : "কেজি";
                     const rateDisplay =
                       activeUnit === "bigha"
-                        ? `${item.rate_kg_bigha} কেজি`
+                        ? `${item.rate_kg_bigha} ${kgUnit}`
                         : activeUnit === "decimal"
-                        ? `${item.rate_kg_decimal} কেজি`
-                        : `${item.rate_kg_ha} কেজি`;
+                        ? `${item.rate_kg_decimal} ${kgUnit}`
+                        : `${item.rate_kg_ha} ${kgUnit}`;
 
                     return (
                       <tr key={item.key} className="hover:bg-slate-50/70 transition-colors">
-                        <td className="px-6 py-4 font-bold text-slate-900">{item.name_bn}</td>
+                        <td className="px-6 py-4 font-bold text-slate-900">
+                          {i18n.language === "en" ? (item.name_en || item.name_bn) : item.name_bn}
+                        </td>
                         <td className="px-6 py-4 text-slate-600 text-xs font-medium">{item.nutrient}</td>
                         <td className="px-6 py-4 font-semibold text-slate-800">{rateDisplay}</td>
                         <td className="px-6 py-4 font-extrabold text-amber-950 bg-amber-50/60 font-mono">
-                          {item.total_quantity_kg} কেজি
+                          {item.total_quantity_kg} {kgUnit}
                         </td>
                       </tr>
                     );
@@ -453,7 +474,7 @@ export const FertilizerPlanPage: React.FC = () => {
             <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-card space-y-4">
               <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-700" />
-                <span>সার প্রয়োগের নির্দেশনামূলক সময়সূচী</span>
+                <span>{i18n.language === "en" ? "Application Schedule & Split Timings" : "সার প্রয়োগের নির্দেশনামূলক সময়সূচী"}</span>
               </h3>
               <div className="space-y-4">
                 {result.application_schedule.map((step: any, idx: number) => (
@@ -462,7 +483,7 @@ export const FertilizerPlanPage: React.FC = () => {
                       {step.stage} • {step.timing}
                     </span>
                     <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-bangla">
-                      {step.instructions_bn}
+                      {i18n.language === "en" ? (step.instructions_en || step.instructions_bn) : step.instructions_bn}
                     </p>
                   </div>
                 ))}
@@ -475,7 +496,7 @@ export const FertilizerPlanPage: React.FC = () => {
             <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-card space-y-4">
               <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-blue-700" />
-                <span>মাটির স্বাস্থ্য সতর্কতা ও পরামর্শ</span>
+                <span>{i18n.language === "en" ? "Soil Health Alerts & Agronomic Tips" : "মাটির স্বাস্থ্য সতর্কতা ও পরামর্শ"}</span>
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {result.soil_health_notes.map((note: any, idx: number) => (
@@ -489,8 +510,12 @@ export const FertilizerPlanPage: React.FC = () => {
                         : "bg-emerald-50 border-emerald-200 text-emerald-950"
                     }`}
                   >
-                    <h4 className="font-bold text-xs sm:text-sm mb-1">{note.title_bn}</h4>
-                    <p className="text-xs leading-relaxed opacity-90 font-bangla">{note.message_bn}</p>
+                    <h4 className="font-bold text-xs sm:text-sm mb-1">
+                      {i18n.language === "en" ? (note.title_en || note.title_bn) : note.title_bn}
+                    </h4>
+                    <p className="text-xs leading-relaxed opacity-90 font-bangla">
+                      {i18n.language === "en" ? (note.message_en || note.message_bn) : note.message_bn}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -499,7 +524,7 @@ export const FertilizerPlanPage: React.FC = () => {
 
           {/* Disclaimer */}
           <div className="bg-amber-50 border border-amber-300 p-4 rounded-2xl text-xs text-amber-950 leading-relaxed font-bangla">
-            {result.disclaimer_bn}
+            {i18n.language === "en" ? (result.disclaimer_en || result.disclaimer_bn) : result.disclaimer_bn}
           </div>
         </div>
       )}

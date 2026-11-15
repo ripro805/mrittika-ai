@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import apiClient from "../../services/api";
 import {
   Database,
@@ -72,6 +73,7 @@ interface CacheItem {
 }
 
 export const AdminCacheManagementPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [stats, setStats] = useState<CacheStats | null>(null);
   const [items, setItems] = useState<CacheItem[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -240,13 +242,18 @@ export const AdminCacheManagementPage: React.FC = () => {
       <div className="app-card bg-white rounded-3xl p-6 border border-slate-200 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-900 border border-purple-200 mb-2">
-            <Database className="w-3.5 h-3.5 text-purple-700" /> এআই অবকাঠামো ও রেসপন্স ক্যাশিং
+            <Database className="w-3.5 h-3.5 text-purple-700" />{" "}
+            <span>{i18n.language === "en" ? "AI Infrastructure & Response Caching" : "এআই অবকাঠামো ও রেসপন্স ক্যাশিং"}</span>
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            শেয়ার্ড এআই রেসপন্স ক্যাশ ও এপিআই অপ্টিমাইজেশন
+            {i18n.language === "en"
+              ? "Shared AI Response Cache & Latency Optimization"
+              : "শেয়ার্ড এআই রেসপন্স ক্যাশ ও এপিআই অপ্টিমাইজেশন"}
           </h1>
           <p className="text-sm text-slate-600 mt-1 max-w-2xl font-bangla leading-relaxed">
-            একই প্রশ্নের বারবার এআই এপিআই কল প্রতিরোধ, দ্রুততম উত্তর প্রদান এবং কৃষিতাত্ত্বিক সঠিকতা নিশ্চিতে কেন্দ্রীয় ক্যাশ ব্যবস্থাপনা।
+            {i18n.language === "en"
+              ? "Prevent duplicate external LLM calls, maximize sub-second query latency, and verify authoritative agronomic knowledge."
+              : "একই প্রশ্নের বারবার এআই এপিআই কল প্রতিরোধ, দ্রুততম উত্তর প্রদান এবং কৃষিতাত্ত্বিক সঠিকতা নিশ্চিতে কেন্দ্রীয় ক্যাশ ব্যবস্থাপনা।"}
           </p>
         </div>
 
@@ -255,10 +262,10 @@ export const AdminCacheManagementPage: React.FC = () => {
             onClick={handleClearExpired}
             disabled={isActionLoading}
             className="inline-flex items-center gap-2 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-900 text-sm font-bold rounded-xl border border-red-200 transition-all cursor-pointer"
-            title="মেয়াদোত্তীর্ণ ক্যাশ মুছে ডাটাবেস হালকা করুন"
+            title={i18n.language === "en" ? "Purge expired cache entries" : "মেয়াদোত্তীর্ণ ক্যাশ মুছে ডাটাবেস হালকা করুন"}
           >
             <Trash2 className="w-4 h-4 text-red-700" />
-            মেয়াদোত্তীর্ণ মুছুন
+            {i18n.language === "en" ? "Purge Expired" : "মেয়াদোত্তীর্ণ মুছুন"}
           </button>
           <button
             onClick={() => {
@@ -269,7 +276,7 @@ export const AdminCacheManagementPage: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 py-2.5 bg-purple-700 hover:bg-purple-800 text-white text-sm font-bold rounded-xl shadow-sm transition-all cursor-pointer"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
-            রিফ্রেশ
+            {i18n.language === "en" ? "Refresh" : "রিফ্রেশ"}
           </button>
         </div>
       </div>
@@ -304,35 +311,46 @@ export const AdminCacheManagementPage: React.FC = () => {
         {/* Total Cached */}
         <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-700">মোট ক্যাশ প্রশ্ন</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              {i18n.language === "en" ? "Total Cached Q&A" : "মোট ক্যাশ প্রশ্ন"}
+            </span>
             <div className="p-2 bg-purple-50 text-purple-700 rounded-xl border border-purple-200">
               <Database className="w-4 h-4" />
             </div>
           </div>
           <div className="text-2xl font-extrabold text-slate-900 font-mono">{stats?.total_cached ?? 0}</div>
           <div className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 font-medium">
-            <span className="text-emerald-800 font-bold">{stats?.active_cached ?? 0}</span> সক্রিয় ক্যাশ
+            <span className="text-emerald-800 font-bold">{stats?.active_cached ?? 0}</span>{" "}
+            {i18n.language === "en" ? "active cache entries" : "সক্রিয় ক্যাশ"}
           </div>
         </div>
 
         {/* Total Cache Hits / API Calls Saved */}
         <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">এপিআই কল সাশ্রয়</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+              {i18n.language === "en" ? "API Calls Saved" : "এপিআই কল সাশ্রয়"}
+            </span>
             <div className="p-2 bg-emerald-50 text-emerald-700 rounded-xl border border-emerald-200">
               <Sparkles className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-emerald-900 font-mono">{stats?.total_cache_hits ?? 0} বার</div>
+          <div className="text-2xl font-extrabold text-emerald-900 font-mono">
+            {stats?.total_cache_hits ?? 0} {i18n.language === "en" ? "hits" : "বার"}
+          </div>
           <div className="text-xs text-emerald-800 mt-1 font-semibold">
-            {stats?.api_calls_saved ?? 0} টি বাহ্যিক এআই কল বাঁচানো হয়েছে
+            {i18n.language === "en"
+              ? `${stats?.api_calls_saved ?? 0} external LLM calls saved`
+              : `${stats?.api_calls_saved ?? 0} টি বাহ্যিক এআই কল বাঁচানো হয়েছে`}
           </div>
         </div>
 
         {/* Hit Rate */}
         <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-800">ক্যাশ হিট রেট</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-800">
+              {i18n.language === "en" ? "Cache Hit Rate" : "ক্যাশ হিট রেট"}
+            </span>
             <div className="p-2 bg-blue-50 text-blue-700 rounded-xl border border-blue-200">
               <TrendingUp className="w-4 h-4" />
             </div>
@@ -349,19 +367,25 @@ export const AdminCacheManagementPage: React.FC = () => {
         {/* Direct AI Calls */}
         <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-800">সরাসরি এআই কল</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-800">
+              {i18n.language === "en" ? "Direct LLM Calls" : "সরাসরি এআই কল"}
+            </span>
             <div className="p-2 bg-amber-50 text-amber-700 rounded-xl border border-amber-200">
               <Cpu className="w-4 h-4" />
             </div>
           </div>
           <div className="text-2xl font-extrabold text-amber-950 font-mono">{stats?.direct_api_calls ?? 0}</div>
-          <div className="text-xs text-slate-500 mt-1 font-medium">নতুন বা অনুলিপিহীন প্রশ্ন</div>
+          <div className="text-xs text-slate-500 mt-1 font-medium">
+            {i18n.language === "en" ? "Unique/novel queries" : "নতুন বা অনুলিপিহীন প্রশ্ন"}
+          </div>
         </div>
 
         {/* Verification Status */}
         <div className="app-card bg-white p-5 rounded-2xl border border-slate-200 shadow-card">
           <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-800">যাচাই ও নিরীক্ষা</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-purple-800">
+              {i18n.language === "en" ? "Audit & Verification" : "যাচাই ও নিরীক্ষা"}
+            </span>
             <div className="p-2 bg-purple-50 text-purple-700 rounded-xl border border-purple-200">
               <ShieldCheck className="w-4 h-4" />
             </div>
@@ -371,7 +395,9 @@ export const AdminCacheManagementPage: React.FC = () => {
             <span className="text-xs text-slate-400">/</span>
             <span className="text-amber-800 font-bold">{stats?.flagged_cached ?? 0}</span>
           </div>
-          <div className="text-xs text-slate-500 mt-1 font-medium">যাচাইকৃত / ফ্ল্যাগকৃত নিরীক্ষা</div>
+          <div className="text-xs text-slate-500 mt-1 font-medium">
+            {i18n.language === "en" ? "Verified / Flagged reviews" : "যাচাইকৃত / ফ্ল্যাগকৃত নিরীক্ষা"}
+          </div>
         </div>
       </div>
 
