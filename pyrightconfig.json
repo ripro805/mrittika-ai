@@ -3,6 +3,8 @@
     "backend"
   ],
   "extraPaths": [
-    "backend"
-  ]
+    "backend",
+    "backend/apps"
+  ],
+  "reportMissingTypeStubs": "none"
 }

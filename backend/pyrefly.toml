@@ -1,0 +1,25 @@
+# Pyrefly Configuration for Mrittika AI Backend
+python-version = "3.14"
+
+search-paths = [
+    ".",
+    "apps",
+]
+
+replace-untyped-imports-with-any = [
+    "django",
+    "django.*",
+    "rest_framework",
+    "rest_framework.*",
+    "drf_spectacular",
+    "drf_spectacular.*",
+    "sklearn",
+    "sklearn.*",
+    "joblib",
+    "joblib.*",
+    "reportlab",
+    "reportlab.*",
+]
+
+[errors]
+untyped-import = "ignore"
