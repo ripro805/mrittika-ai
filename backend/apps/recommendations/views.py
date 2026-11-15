@@ -137,6 +137,29 @@ class HistoryDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
+        summary="Retrieve History Record",
+        description="Retrieves a specific history record belonging to the authenticated user.",
+        responses={200: RecommendationHistorySerializer},
+    )
+    def get(self, request, pk):
+        try:
+            history = RecommendationHistory.objects.get(pk=pk)
+        except RecommendationHistory.DoesNotExist:
+            return Response(
+                {"error": "রেকর্ডটি পাওয়া যায়নি (Record not found)."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # IDOR protection: only owner or staff
+        if history.user != request.user and not request.user.is_staff:
+            return Response(
+                {"error": "এই রেকর্ডটি দেখার অনুমতি আপনার নেই (Access Denied)."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        return Response(RecommendationHistorySerializer(history).data, status=status.HTTP_200_OK)
+
+    @extend_schema(
         summary="Delete History Record",
         description="Deletes a specific history record belonging to the authenticated user.",
     )

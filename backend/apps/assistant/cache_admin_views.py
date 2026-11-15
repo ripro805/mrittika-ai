@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.accounts.permissions import IsAdminRole, IsVerifiedOfficer
+from ..accounts.permissions import IsAdminRole, IsVerifiedOfficer
 
 from .cache_service import (
     clear_expired_caches,

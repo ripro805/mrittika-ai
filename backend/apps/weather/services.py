@@ -13,7 +13,7 @@ import unicodedata
 import requests
 from django.core.cache import cache
 
-from apps.crops.registry import BANGLADESH_DISTRICTS
+from ..crops.registry import BANGLADESH_DISTRICTS
 
 logger = logging.getLogger(__name__)
 

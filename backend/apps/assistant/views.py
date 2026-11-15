@@ -24,8 +24,8 @@ from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from rest_framework.views import APIView
 
-from apps.accounts.permissions import IsAdminRole, IsVerifiedOfficer
-from apps.feedback.models import Feedback
+from ..accounts.permissions import IsAdminRole, IsVerifiedOfficer
+from ..feedback.models import Feedback
 
 from .cache_service import (
     acquire_single_flight,

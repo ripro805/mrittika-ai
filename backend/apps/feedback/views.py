@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.accounts.permissions import IsVerifiedOfficer
+from ..accounts.permissions import IsVerifiedOfficer
 
 from .models import Feedback
 from .serializers import (

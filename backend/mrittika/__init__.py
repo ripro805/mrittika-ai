@@ -1,0 +1,1 @@
+"""Mrittika Django project package."""

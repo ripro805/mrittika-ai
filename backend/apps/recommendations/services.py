@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from django.conf import settings
 
-from apps.crops.registry import (
+from ..crops.registry import (
     get_crop_by_identifier,
     normalize_season_for_crop,
     normalize_season_for_fertilizer,

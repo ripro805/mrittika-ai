@@ -13,15 +13,15 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.accounts.permissions import IsAdminRole, IsFarmer, IsVerifiedOfficer
-from apps.accounts.serializers import UserSerializer
-from apps.assistant.models import AssistantMessage, AssistantSession
-from apps.core.models import ActivityLog
-from apps.feedback.models import Feedback
-from apps.feedback.serializers import FeedbackDetailSerializer
-from apps.recommendations.models import RecommendationHistory
-from apps.recommendations.serializers import RecommendationHistorySerializer
-from apps.weather.services import fetch_weather_for_district
+from ..accounts.permissions import IsAdminRole, IsFarmer, IsVerifiedOfficer
+from ..accounts.serializers import UserSerializer
+from ..assistant.models import AssistantMessage, AssistantSession
+from ..core.models import ActivityLog
+from ..feedback.models import Feedback
+from ..feedback.serializers import FeedbackDetailSerializer
+from ..recommendations.models import RecommendationHistory
+from ..recommendations.serializers import RecommendationHistorySerializer
+from ..weather.services import fetch_weather_for_district
 
 User = get_user_model()
 
