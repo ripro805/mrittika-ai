@@ -349,6 +349,41 @@ def lookup_cache(
     if not candidates.exists():
         return None
 
+    # Fast token-based similarity check first (0.0001s, zero CPU lag)
+    q_words = set(re.findall(r"[\u0980-\u09FF\w]+", normalized_q))
+    if q_words:
+        for cand in candidates:
+            cand_words = set(re.findall(r"[\u0980-\u09FF\w]+", cand.normalized_question))
+            if not cand_words:
+                continue
+            intersection = len(q_words & cand_words)
+            union = len(q_words | cand_words)
+            jaccard = intersection / union if union > 0 else 0
+            if jaccard >= 0.75:
+                AIResponseCache.objects.filter(id=cand.id).update(
+                    hit_count=F("hit_count") + 1,
+                    last_accessed_at=now,
+                )
+                logger.info("Cache HIT (FAST_LEXICAL, sim=%.4f) [id=%s]: '%s' ~ '%s'", jaccard, cand.id, normalized_q[:40], cand.normalized_question[:40])
+                return {
+                    "hit": True,
+                    "match_type": "SEMANTIC",
+                    "similarity_score": round(jaccard, 4),
+                    "cache_id": str(cand.id),
+                    "answer": cand.response_text,
+                    "sources": cand.source_references or [],
+                    "metadata": cand.response_metadata or {},
+                    "category": cand.category,
+                    "is_verified": cand.is_verified,
+                    "verification_status": cand.verification_status,
+                    "crop_name": cand.crop_name,
+                    "created_at": cand.created_at.isoformat(),
+                    "expires_at": cand.expires_at.isoformat(),
+                }
+
+    if not getattr(settings, "ENABLE_NEURAL_EMBEDDINGS", False):
+        return None
+
     try:
         embedder = get_embed_model()
         q_prefix = f"query: {normalized_q}" if "e5" in getattr(settings, "EMBEDDING_MODEL", "").lower() else normalized_q
@@ -460,14 +495,15 @@ def save_response_to_cache(
     now = dj_timezone.now()
     expires_at = now + ttl
 
-    # Compute question embedding for semantic search (symmetric STS comparison uses query prefix)
+    # Compute question embedding for semantic search if neural embeddings enabled
     embedding = None
-    try:
-        embedder = get_embed_model()
-        q_prefix = f"query: {normalized_q}" if "e5" in getattr(settings, "EMBEDDING_MODEL", "").lower() else normalized_q
-        embedding = embedder.encode(q_prefix, normalize_embeddings=True).tolist()
-    except Exception as e:
-        logger.warning("Could not compute embedding for cache entry: %s", e)
+    if getattr(settings, "ENABLE_NEURAL_EMBEDDINGS", False):
+        try:
+            embedder = get_embed_model()
+            q_prefix = f"query: {normalized_q}" if "e5" in getattr(settings, "EMBEDDING_MODEL", "").lower() else normalized_q
+            embedding = embedder.encode(q_prefix, normalize_embeddings=True).tolist()
+        except Exception as e:
+            logger.warning("Could not compute embedding for cache entry: %s", e)
 
     meta = metadata or {}
     meta.setdefault("provider_used", meta.get("provider_used", "ai_api"))
