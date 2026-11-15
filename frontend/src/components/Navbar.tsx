@@ -79,27 +79,27 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shadow-xs border border-emerald-800 group-hover:bg-emerald-800 transition-colors">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shadow-xs border border-emerald-800 group-hover:bg-emerald-800 transition-colors flex-shrink-0">
               <Sprout className="w-5 h-5 text-emerald-100" />
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight leading-none">
+            <div className="flex flex-col justify-center min-w-0">
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
+                <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight leading-none whitespace-nowrap">
                   {t("app_name")}
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 leading-none whitespace-nowrap">
                   v2.0
                 </span>
               </div>
-              <span className="text-[11px] font-medium text-slate-500 tracking-wide block mt-0.5">
+              <span className="text-[11px] font-medium text-slate-500 tracking-wide block mt-1 leading-none whitespace-nowrap">
                 {i18n.language === "en" ? "Smart Agriculture Advisory" : "স্মার্ট কৃষি পরামর্শ প্ল্যাটফর্ম"}
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex md:items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1 flex-shrink-0">
             {navLinks.map((link) => {
               if (link.authOnly && !isAuthenticated) return null;
               const Icon = link.icon;
@@ -109,21 +109,21 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors ${
+                  className={`flex items-center gap-1.5 xl:gap-2 px-2.5 xl:px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold whitespace-nowrap transition-colors flex-shrink-0 ${
                     active
                       ? "bg-emerald-50 text-emerald-800 border border-emerald-200/90 shadow-2xs"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? "text-emerald-700" : "text-slate-500"}`} />
-                  <span>{link.label}</span>
+                  <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "text-emerald-700" : "text-slate-500"}`} />
+                  <span className="whitespace-nowrap">{link.label}</span>
                 </Link>
               );
             })}
           </div>
 
           {/* Right Actions: Quick Login, Language Switch & Auth */}
-          <div className="hidden md:flex md:items-center space-x-2.5">
+          <div className="hidden lg:flex items-center space-x-2 xl:space-x-2.5 flex-shrink-0">
             {/* Quick 1-Click Role Login Dropdown */}
             <div className="relative group">
               <button
@@ -282,17 +282,17 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile hamburger */}
-          <div className="flex items-center md:hidden gap-2">
+          {/* Mobile / Tablet hamburger */}
+          <div className="flex items-center lg:hidden gap-2">
             <button
               onClick={toggleLanguage}
-              className="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-slate-50"
+              className="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-slate-50 cursor-pointer"
             >
               {i18n.language === "bn" ? "EN" : "বাং"}
             </button>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none"
+              className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -301,9 +301,9 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile / Tablet Drawer */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-slate-200/80 bg-white px-4 pt-3 pb-5 space-y-2 shadow-lg">
+        <div className="lg:hidden border-t border-slate-200/80 bg-white px-4 pt-3 pb-5 space-y-2 shadow-lg">
           {navLinks.map((link) => {
             if (link.authOnly && !isAuthenticated) return null;
             const Icon = link.icon;
