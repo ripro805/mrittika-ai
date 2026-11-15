@@ -106,7 +106,7 @@ export const FarmerDashboardPage: React.FC = () => {
 
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-emerald-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">মোট সংরক্ষিত পরামর্শ</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
@@ -117,7 +117,7 @@ export const FarmerDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">ফসল ও সার সুপারিশ ইতিহাস</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-blue-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">সেরা ফসল নির্বাচন</span>
             <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
@@ -128,7 +128,7 @@ export const FarmerDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">মাটি ও আবহাওয়া ভিত্তিক পরীক্ষা</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-amber-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">সুষম সার পরিকল্পনা</span>
             <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
@@ -139,7 +139,7 @@ export const FarmerDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">ইউরিয়া, টিএসপি, এমওপি হিসাব</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-purple-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">কৃষি সহকারী আলোচনা</span>
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
@@ -154,7 +154,7 @@ export const FarmerDashboardPage: React.FC = () => {
       {/* Weather & Seasonal Advice Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Weather Card */}
-        <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-xs space-y-4">
+        <div className="card-3d p-6 rounded-3xl border border-emerald-100/90 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center">
@@ -221,7 +221,7 @@ export const FarmerDashboardPage: React.FC = () => {
       </div>
 
       {/* Recent Recommendations Table */}
-      <div className="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden">
+      <div className="card-3d rounded-3xl border border-emerald-100/90 shadow-md overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">

@@ -28,6 +28,14 @@ import {
   FileText,
   AlertCircle,
   Menu,
+  Sprout,
+  FlaskConical,
+  Bug,
+  CloudSun,
+  ShieldCheck,
+  Zap,
+  Wheat,
+  ExternalLink,
 } from "lucide-react";
 
 interface SourceItem {
@@ -562,116 +570,134 @@ export const AssistantChatPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto flex h-[calc(100vh-10rem)] min-h-[550px] bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden font-sans">
+    <div className="w-full max-w-7xl mx-auto flex flex-1 h-[calc(100vh-4.5rem)] min-h-[580px] glass-workspace rounded-3xl shadow-[0_20px_60px_-15px_rgba(15,23,42,0.12),0_0_1px_1px_rgba(255,255,255,0.9)_inset] overflow-hidden font-sans border border-emerald-100/90">
       {/* Sessions Sidebar */}
       <aside
         className={`${
-          isSidebarOpen ? "flex w-72" : "hidden"
-        } bg-gray-50 border-r border-gray-200 flex-col flex-shrink-0 z-20 transition-all duration-200`}
+          isSidebarOpen ? "flex w-72 sm:w-80" : "hidden"
+        } bg-slate-50/95 border-r border-emerald-100/90 flex-col flex-shrink-0 z-20 transition-all duration-200 backdrop-blur-md`}
         aria-label="আলোচনার ইতিহাস"
       >
-        <div className="p-3 border-b border-gray-200 flex items-center justify-between">
+        <div className="p-3.5 border-b border-emerald-100/80 flex items-center justify-between bg-white/70">
           <button
             onClick={startNewChat}
-            className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-2xl bg-mrittika-800 hover:bg-mrittika-900 text-white text-xs font-semibold shadow-sm transition-all"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-2xl btn-3d-emerald text-xs font-bold shadow-md cursor-pointer group"
           >
-            <Plus className="w-4 h-4" />
-            <span>নতুন আলোচনা (New)</span>
+            <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" />
+            <span>নতুন আলোচনা (New Chat)</span>
           </button>
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="md:hidden p-1.5 text-gray-500 hover:text-gray-700"
+            className="md:hidden p-2 text-gray-500 hover:text-gray-700 ml-1 rounded-xl hover:bg-gray-100 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          <div className="px-3 py-1.5 flex items-center justify-between">
-            <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-              পূর্বের আলোচনা সমূহ
+        <div className="flex-1 overflow-y-auto p-2.5 space-y-1.5">
+          <div className="px-3 py-1 flex items-center justify-between">
+            <p className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+              <span>পূর্বের আলোচনা সমূহ</span>
             </p>
             {sessions.length > 0 && (
-              <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded-full badge-3d">
                 {sessions.length}
               </span>
             )}
           </div>
           {!isAuthenticated ? (
-            <div className="p-3 text-xs text-gray-600 bg-emerald-50/60 rounded-xl border border-emerald-200 space-y-1.5 m-2">
-              <p className="font-semibold text-emerald-900">আলোচনার ইতিহাস সংরক্ষণ</p>
-              <p className="text-[11px] text-emerald-800">
-                লগইন করলে আপনার অতীতের সকল পরামর্শ ও বার্তা এখানে সংরক্ষিত থাকবে।
+            <div className="p-4 text-xs text-emerald-950 bg-linear-to-b from-emerald-50 to-teal-50/50 rounded-2xl border border-emerald-200/80 space-y-2 m-1 shadow-2xs">
+              <div className="flex items-center gap-2 font-bold text-emerald-900">
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                <span>ক্লাউড সেশন হিস্ট্রি</span>
+              </div>
+              <p className="text-[11px] text-emerald-800 leading-relaxed">
+                লগইন করলে আপনার অতীতের সকল পরামর্শ, প্রশ্নোত্তর ও সারের ডোজ এই মেন্যুতে আজীবনের জন্য সংরক্ষিত থাকবে।
               </p>
             </div>
           ) : sessions.length === 0 ? (
-            <p className="text-xs text-gray-400 px-3 py-2">কোনো আলোচনা নেই।</p>
+            <div className="text-center py-8 px-4 text-slate-400 space-y-2">
+              <MessageSquare className="w-8 h-8 mx-auto opacity-30 text-slate-400" />
+              <p className="text-xs">কোনো পূর্বের আলোচনা নেই।</p>
+              <p className="text-[10px] text-slate-400">নতুন প্রশ্ন জিজ্ঞাসা করলে এখানে যুক্ত হবে।</p>
+            </div>
           ) : (
-            sessions.map((s) => (
-              <div
-                key={s.id}
-                onClick={() => selectSession(s.id)}
-                className={`group flex items-center justify-between px-3 py-2.5 rounded-xl text-xs cursor-pointer transition-colors ${
-                  currentSessionId === s.id
-                    ? "bg-mrittika-100 text-mrittika-900 font-semibold shadow-xs"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                <div className="truncate flex-1 pr-2">
-                  <div className="truncate font-medium">{s.title || "নতুন আলোচনা"}</div>
-                  <div className="text-[10px] text-gray-400 mt-0.5 flex items-center gap-1.5">
-                    <span>{new Date(s.updated_at || s.created_at).toLocaleDateString("bn-BD")}</span>
-                    {s.message_count !== undefined && (
-                      <span>• {s.message_count} বার্তা</span>
-                    )}
-                  </div>
-                </div>
-                <button
-                  onClick={(e) => deleteSession(s.id, e)}
-                  className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-opacity"
-                  title="মুছে ফেলুন"
+            sessions.map((s) => {
+              const isActive = currentSessionId === s.id;
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => selectSession(s.id)}
+                  className={`group flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs cursor-pointer transition-all ${
+                    isActive
+                      ? "bg-linear-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/5 text-emerald-950 font-bold border border-emerald-300 shadow-xs badge-3d"
+                      : "text-slate-700 hover:bg-white hover:shadow-xs border border-transparent hover:border-slate-200"
+                  }`}
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ))
+                  <div className="truncate flex-1 pr-2">
+                    <div className="truncate font-semibold text-slate-900">{s.title || "নতুন আলোচনা"}</div>
+                    <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-2">
+                      <span>{new Date(s.updated_at || s.created_at).toLocaleDateString("bn-BD")}</span>
+                      {s.message_count !== undefined && (
+                        <span className="px-1.5 py-0.2 rounded-full bg-slate-200/60 font-mono text-[9px] text-slate-600">
+                          {s.message_count} বার্তা
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => deleteSession(s.id, e)}
+                    className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-opacity"
+                    title="মুছে ফেলুন"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              );
+            })
           )}
         </div>
 
         {user?.role === "ADMIN" && (
-          <div className="p-3 border-t border-gray-200 bg-white">
+          <div className="p-3 border-t border-emerald-100/80 bg-white/80">
             <button
               onClick={openAdminKnowledge}
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-mrittika-300 text-mrittika-900 hover:bg-mrittika-50 text-xs font-semibold"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-emerald-300 text-emerald-900 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold shadow-2xs transition-all cursor-pointer"
             >
-              <Database className="w-4 h-4 text-mrittika-700" />
-              <span>Admin: নলেজবেস</span>
+              <Database className="w-4 h-4 text-emerald-700" />
+              <span>Admin: নলেজবেস পরিচালনা</span>
             </button>
           </div>
         )}
       </aside>
 
       {/* Main Chat Area */}
-      <div className="flex-1 min-w-0 flex flex-col h-full bg-white relative overflow-hidden">
+      <div className="flex-1 min-w-0 flex flex-col h-full bg-white/70 relative overflow-hidden">
         {/* Header */}
-        <div className="p-3.5 border-b border-gray-200 flex items-center justify-between bg-white z-10">
+        <div className="p-3.5 sm:p-4 border-b border-emerald-100/90 flex items-center justify-between bg-white/90 backdrop-blur-md z-10 shadow-2xs">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-1.5 rounded-lg text-gray-600 hover:bg-gray-100"
+              className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200 shadow-2xs cursor-pointer"
               title="আলোচনার ইতিহাস (Toggle Sidebar)"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-4 h-4" />
             </button>
-            <div className="w-10 h-10 rounded-2xl bg-mrittika-800 text-white flex items-center justify-center shadow-md">
-              <MessageSquare className="w-5 h-5 text-mrittika-300" />
+            <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-emerald-600 to-teal-800 text-white flex items-center justify-center shadow-md shadow-emerald-700/25 border border-emerald-400/40">
+              <MessageSquare className="w-5 h-5 text-emerald-100" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-gray-900 leading-tight">
-                মৃত্তিকা এআই বাংলা কৃষি সহকারী
-              </h1>
-              <p className="text-[11px] text-gray-500">
-                যাচাইকৃত নথিভিত্তিক নির্ভরযোগ্য কৃষি পরামর্শ
+              <div className="flex items-center gap-2">
+                <h1 className="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">
+                  মৃত্তিকা এআই বাংলা কৃষি সহকারী
+                </h1>
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono badge-3d">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  অনলাইন
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 hidden sm:block">
+                BRRI ও BARC সরকারি গবেষণা নথিভিত্তিক নির্ভরযোগ্য এআই পরামর্শক
               </p>
             </div>
           </div>
@@ -679,12 +705,12 @@ export const AssistantChatPage: React.FC = () => {
           <div className="flex items-center gap-2">
             {/* Unified Flow Context Pill */}
             {assistantContext?.crop && (
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-linear-to-r from-emerald-50 to-teal-50 text-emerald-900 text-xs font-bold border border-emerald-300 shadow-2xs badge-3d">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                 <span>প্রসঙ্গ: {assistantContext.crop}</span>
                 <button
                   onClick={() => carryContextToAssistant("", "")}
-                  className="hover:text-red-600 ml-0.5"
+                  className="hover:text-red-600 ml-1 p-0.5 rounded-full hover:bg-emerald-200/50 cursor-pointer"
                   title="প্রসঙ্গ মুছে ফেলুন"
                 >
                   <X className="w-3 h-3" />
@@ -696,15 +722,15 @@ export const AssistantChatPage: React.FC = () => {
 
         {/* Error Banner with Retry */}
         {errorMessage && (
-          <div className="bg-red-50 border-b border-red-200 p-2.5 px-4 flex items-center justify-between text-xs text-red-800 animate-in fade-in">
+          <div className="bg-red-50/95 border-b border-red-200 p-3 px-4 flex items-center justify-between text-xs text-red-900 shadow-xs animate-in fade-in">
             <div className="flex items-center gap-2">
               <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-              <span>{errorMessage}</span>
+              <span className="font-medium">{errorMessage}</span>
             </div>
             {lastUserMessage && (
               <button
                 onClick={() => handleSend(lastUserMessage)}
-                className="flex items-center gap-1 font-bold text-red-700 hover:text-red-900 underline ml-3"
+                className="flex items-center gap-1.5 font-bold text-red-700 hover:text-red-900 underline ml-3 px-2 py-1 rounded-lg hover:bg-red-100/70 transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>পুনরায় চেষ্টা করুন</span>
@@ -713,193 +739,413 @@ export const AssistantChatPage: React.FC = () => {
           </div>
         )}
 
-        {/* Messages List */}
+        {/* Messages List / 3D Welcome Hub */}
         <div
-          className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 bg-gray-50/50"
+          className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 space-y-4 bg-slate-50/40"
           aria-live="polite"
         >
-          {messages.map((msg) => {
-            const isUser = msg.sender === "user";
+          {messages.length <= 1 && messages[0]?.id === "welcome" ? (
+            /* 3D Agricultural AI Command Hub (Zero Blank Space) */
+            <div className="max-w-4xl mx-auto py-2 sm:py-4 space-y-6 animate-in fade-in duration-300">
+              {/* 3D Hero Showcase Card */}
+              <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-900 via-slate-900 to-teal-950 p-6 sm:p-8 text-white border border-emerald-500/30 shadow-[0_20px_50px_rgba(6,78,59,0.3)]">
+                <div className="absolute -top-10 -right-10 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-teal-500/20 rounded-full blur-2xl pointer-events-none" />
 
-            return (
-              <div
-                key={msg.id}
-                className={`w-full flex ${isUser ? "justify-end" : "justify-start"} my-2`}
-              >
-                <div
-                  className={`rounded-2xl p-4 sm:p-5 text-sm leading-relaxed shadow-xs transition-all overflow-hidden break-words ${
-                    isUser
-                      ? "max-w-[85%] sm:max-w-[75%] bg-emerald-800 text-white rounded-tr-none shadow-md border border-emerald-900/30 ml-auto"
-                      : msg.fallback
-                      ? "w-full max-w-[92%] sm:max-w-[85%] bg-amber-50/50 text-gray-900 border border-amber-300/80 rounded-tl-none"
-                      : "w-full max-w-[92%] sm:max-w-[85%] bg-white text-gray-900 border border-gray-200/90 rounded-tl-none"
-                  }`}
+                <div className="relative z-10 space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold badge-3d">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                    <span>v2.0 রিয়েলটাইম BRRI ও BARC এআই নলেজবেস সক্রিয়</span>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight bg-linear-to-r from-white via-emerald-100 to-teal-200 bg-clip-text text-transparent">
+                      মৃত্তিকা এআই বাংলা কৃষি সহকারীতে স্বাগতম
+                    </h2>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-bangla">
+                      ফসলের যেকোনো রোগ, সুষম সার প্রয়োগের সঠিক কিস্তি, বালাই দমন কিংবা আবহাওয়া সংক্রান্ত প্রশ্ন বাংলায় লিখুন। নিচে দেওয়া জনপ্রিয় বিষয়গুলোতে চাপ দিয়েও সরাসরি আলোচনা শুরু করতে পারেন:
+                    </p>
+                  </div>
+
+                  {/* Feature Badges */}
+                  <div className="pt-2 flex flex-wrap gap-2 text-[11px] font-semibold text-emerald-200">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+                      <Zap className="w-3.5 h-3.5 text-amber-400" />
+                      সাব-মিলি-সেকেন্ড দ্রুততম রেসপন্স
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+                      <BookOpen className="w-3.5 h-3.5 text-emerald-300" />
+                      পৃষ্ঠা নম্বরযুক্ত সরকারি নির্দেশিকা সূত্র
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+                      <ShieldCheck className="w-3.5 h-3.5 text-teal-300" />
+                      শতভাগ নিরাপদ ও নির্ভরযোগ্য
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4 Interactive 3D Workstation Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+                {/* Card 1 */}
+                <button
+                  type="button"
+                  onClick={() => handleSend("আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম")}
+                  disabled={isLoading}
+                  className="card-3d card-3d-interactive p-4 sm:p-5 rounded-2xl text-left border border-emerald-100/90 bg-white/95 flex items-start gap-3.5 group shadow-sm hover:shadow-md transition-all cursor-pointer"
                 >
-                  {/* Sender Header */}
-                  <div className="flex items-center justify-between gap-3 mb-2.5 text-[11px] font-semibold border-b border-black/5 pb-2">
+                  <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-700 text-white flex items-center justify-center shadow-md flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <FlaskConical className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1 min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                        ইউরিয়া ও সার ব্যবস্থাপনা
+                      </h3>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        ৩ কিস্তি
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug line-clamp-2">
+                      আমন ও বোরো ধানে ইউরিয়া উপরিপ্রয়োগের সঠিক সময়সূচী ও নিয়মাবলী
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 pt-1 group-hover:translate-x-0.5 transition-transform">
+                      <span>প্রশ্ন করুন</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </button>
+
+                {/* Card 2 */}
+                <button
+                  type="button"
+                  onClick={() => handleSend("আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার")}
+                  disabled={isLoading}
+                  className="card-3d card-3d-interactive p-4 sm:p-5 rounded-2xl text-left border border-amber-100/90 bg-white/95 flex items-start gap-3.5 group shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center shadow-md flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <Bug className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1 min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-amber-800 transition-colors">
+                        ফসলের রোগ ও পোকা দমন
+                      </h3>
+                      <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                        প্রতিকার
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug line-clamp-2">
+                      আলুর লেইট ব্লাইট (নাভিধসা) ও ধানের ব্লাস্ট রোগের স্থায়ী চিকিৎসা
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 pt-1 group-hover:translate-x-0.5 transition-transform">
+                      <span>পরামর্শ নিন</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </button>
+
+                {/* Card 3 */}
+                <button
+                  type="button"
+                  onClick={() => handleSend("অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
+                  disabled={isLoading}
+                  className="card-3d card-3d-interactive p-4 sm:p-5 rounded-2xl text-left border border-teal-100/90 bg-white/95 flex items-start gap-3.5 group shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-teal-500 to-cyan-700 text-white flex items-center justify-center shadow-md flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <Sprout className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1 min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-teal-800 transition-colors">
+                        মাটির পুষ্টি ও অম্লত্ব সংস্কার
+                      </h3>
+                      <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
+                        পিএইচ
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug line-clamp-2">
+                      অম্লীয় মাটিতে চুন ও জৈব সার প্রয়োগের সঠিক অনুপাত ও পদ্ধতি
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-700 pt-1 group-hover:translate-x-0.5 transition-transform">
+                      <span>মাত্রা জানুন</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </button>
+
+                {/* Card 4 */}
+                <button
+                  type="button"
+                  onClick={() => handleSend("বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
+                  disabled={isLoading}
+                  className="card-3d card-3d-interactive p-4 sm:p-5 rounded-2xl text-left border border-blue-100/90 bg-white/95 flex items-start gap-3.5 group shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-md flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <CloudSun className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1 min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-800 transition-colors">
+                        আবহাওয়া ও জাত নির্বাচন
+                      </h3>
+                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                        বোরো ধান
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug line-clamp-2">
+                      দোআঁশ ও বেলে মাটিতে বোরো ধান এবং রবি ফসলের সুষম সার পরিকল্পনা
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700 pt-1 group-hover:translate-x-0.5 transition-transform">
+                      <span>পরিকল্পনা দেখুন</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </button>
+              </div>
+
+              {/* Regional Agro Tip Card */}
+              <div className="p-4 rounded-2xl bg-linear-to-r from-emerald-50 via-teal-50 to-slate-50 border border-emerald-200/80 shadow-xs flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold text-lg shadow-2xs">
+                  🌾
+                </div>
+                <div className="text-xs leading-relaxed text-slate-700 font-bangla">
+                  <span className="font-bold text-emerald-950">আজকের বিশেষ কৃষি বার্তা: </span>
+                  বোরো মৌসুমের চারা রোপণের পূর্বে বীজতলায় অতিরিক্ত ঠান্ডার প্রভাব রোধে রাতের বেলায় পলিথিন দিয়ে ঢেকে রাখুন এবং সকালে সূর্যের আলোতে উন্মুক্ত করুন।
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Active Conversation Messages */
+            <div className="max-w-4xl mx-auto w-full space-y-4">
+              {messages.map((msg) => {
+                const isUser = msg.sender === "user";
+
+                return (
+                  <div
+                    key={msg.id}
+                    className={`w-full flex ${isUser ? "justify-end" : "justify-start"} my-2`}
+                  >
+                    <div
+                      className={`rounded-2xl p-4 sm:p-5 text-sm leading-relaxed transition-all overflow-hidden break-words ${
+                        isUser
+                          ? "max-w-[85%] sm:max-w-[75%] bg-linear-to-r from-emerald-800 via-emerald-850 to-teal-900 text-white rounded-tr-xs shadow-[0_8px_20px_-3px_rgba(6,78,59,0.35)] border border-emerald-700/60 ml-auto"
+                          : msg.fallback
+                          ? "w-full max-w-[95%] sm:max-w-[92%] bg-amber-50/70 text-slate-900 border border-amber-300 rounded-tl-xs card-3d"
+                          : "w-full max-w-[95%] sm:max-w-[92%] bg-white/95 text-slate-900 border border-emerald-100/90 rounded-tl-xs card-3d"
+                      }`}
+                    >
+                    {/* Sender Header */}
+                    <div className="flex items-center justify-between gap-3 mb-2.5 text-[11px] font-semibold border-b border-black/5 pb-2">
+                      {isUser ? (
+                        <div className="flex items-center justify-between w-full text-emerald-100">
+                          <span className="flex items-center gap-1.5 font-bold">
+                            <span>👤 আপনি</span>
+                          </span>
+                          {msg.timestamp && (
+                            <span className="text-[10px] text-emerald-200/80 font-normal ml-2 font-mono">
+                              {msg.timestamp}
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-between w-full">
+                          <span className="text-emerald-900 flex items-center gap-1.5 font-bold">
+                            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                            <span>মৃত্তিকা এআই</span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 badge-3d">
+                              BRRI নির্দেশিকা
+                            </span>
+                          </span>
+                          {msg.timestamp && (
+                            <span className="text-[10px] text-slate-400 font-normal font-mono">
+                              {msg.timestamp}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Message Content */}
                     {isUser ? (
-                      <div className="flex items-center justify-between w-full text-emerald-100">
-                        <span className="flex items-center gap-1.5 font-bold">
-                          <span>👤 আপনি</span>
-                        </span>
-                        {msg.timestamp && (
-                          <span className="text-[10px] text-emerald-200/80 font-normal ml-2">
-                            {msg.timestamp}
-                          </span>
-                        )}
-                      </div>
+                      <p className="whitespace-pre-wrap break-words leading-relaxed font-bangla text-white text-[13px] sm:text-sm">
+                        {msg.text}
+                      </p>
                     ) : (
-                      <div className="flex items-center justify-between w-full">
-                        <span className="text-emerald-800 flex items-center gap-1.5 font-bold">
-                          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>মৃত্তিকা এআই</span>
-                        </span>
-                        {msg.timestamp && (
-                          <span className="text-[10px] text-gray-400 font-normal">
-                            {msg.timestamp}
-                          </span>
+                      <div>
+                        {!msg.text && isLoading ? (
+                          <div className="flex items-center gap-2 py-3">
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.3s]" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.15s]" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-bounce" />
+                            <span className="text-xs text-slate-500 font-medium ml-1 font-bangla">মৃত্তিকা এআই নির্ভুল উত্তর প্রস্তুত করছে...</span>
+                          </div>
+                        ) : (
+                          <div className="font-bangla leading-relaxed">
+                            <MarkdownRenderer content={msg.text} />
+                          </div>
                         )}
                       </div>
                     )}
-                  </div>
 
-                  {/* Message Content */}
-                  {isUser ? (
-                    <p className="whitespace-pre-wrap break-words leading-relaxed font-bangla text-white text-[13px] sm:text-sm">
-                      {msg.text}
-                    </p>
-                  ) : (
-                    <div>
-                      {!msg.text && isLoading ? (
-                        <div className="flex items-center gap-2 py-3">
-                          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.3s]" />
-                          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:-0.15s]" />
-                          <span className="w-2 h-2 rounded-full bg-emerald-600 animate-bounce" />
-                          <span className="text-xs text-gray-500 font-medium ml-1 font-bangla">মৃত্তিকা এআই উত্তর তৈরি করছে...</span>
+                    {/* Fallback Special Card */}
+                    {!isUser && msg.fallback && (
+                      <div className="mt-4 p-3.5 bg-amber-100/70 rounded-xl border border-amber-300 text-xs text-amber-950 space-y-1.5 shadow-2xs font-bangla">
+                        <div className="flex items-center gap-2 font-bold text-amber-900">
+                          <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                          <span>উপজেলা কৃষি কর্মকর্তার সাথে যোগাযোগ করুন</span>
                         </div>
-                      ) : (
-                        <MarkdownRenderer content={msg.text} />
-                      )}
-                    </div>
-                  )}
-
-                  {/* Fallback Special Card */}
-                  {!isUser && msg.fallback && (
-                    <div className="mt-4 p-3.5 bg-amber-100/70 rounded-xl border border-amber-300 text-xs text-amber-950 space-y-1.5 shadow-2xs">
-                      <div className="flex items-center gap-2 font-bold text-amber-900">
-                        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                        <span>উপজেলা কৃষি কর্মকর্তার সাথে যোগাযোগ করুন</span>
+                        <p className="text-[11px] text-amber-900/90 leading-relaxed font-bangla">
+                          উচ্চ-ঝুঁকি বা বিষাক্ত রাসায়নিক প্রয়োগের ক্ষেত্রে শুধুমাত্র সরকারি লাইসেন্সধারী কর্মকর্তা বা আপনার নিকটস্থ উপজেলা কৃষি অফিসে গিয়ে সরাসরি পরামর্শ নিন।
+                        </p>
                       </div>
-                      <p className="text-[11px] text-amber-900/90 leading-relaxed font-bangla">
-                        উচ্চ-ঝুঁকি বা বিষাক্ত রাসায়নিক প্রয়োগের ক্ষেত্রে শুধুমাত্র সরকারি লাইসেন্সধারী কর্মকর্তা বা আপনার নিকটস্থ উপজেলা কৃষি অফিসে গিয়ে সরাসরি পরামর্শ নিন।
-                      </p>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Expandable Sources Chips */}
-                  {!isUser && msg.sources && msg.sources.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-gray-100">
-                      <div className="text-[11px] font-bold text-gray-500 mb-1.5 flex items-center gap-1.5">
-                        <BookOpen className="w-3.5 h-3.5 text-emerald-700" />
-                        <span>তথ্যসূত্র ও নির্দেশিকা ({msg.sources.length}):</span>
-                      </div>
-                      <div className="space-y-1.5">
-                        {msg.sources.map((s, idx) => {
-                          const chipKey = `${msg.id}_src_${idx}`;
-                          const isExpanded = expandedSourceIndex === chipKey;
-                          return (
-                            <div
-                              key={idx}
-                              className="bg-gray-50/90 border border-gray-200 rounded-lg p-2.5 text-[11px] text-gray-700 hover:border-gray-300 transition-colors"
-                            >
+                    {/* Expandable Sources Chips */}
+                    {!isUser && msg.sources && msg.sources.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-slate-100 space-y-2">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                          <BookOpen className="w-3.5 h-3.5 text-emerald-700" />
+                          <span>যাচাইকৃত তথ্যসূত্র ({msg.sources.length}টি নথি):</span>
+                        </div>
+                        <div className="space-y-1.5">
+                          {msg.sources.map((s, idx) => {
+                            const chipKey = `${msg.id}_src_${idx}`;
+                            const isExpanded = expandedSourceIndex === chipKey;
+                            return (
                               <div
-                                onClick={() =>
-                                  setExpandedSourceIndex(isExpanded ? null : chipKey)
-                                }
-                                className="flex items-center justify-between cursor-pointer font-medium"
+                                key={idx}
+                                className="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 text-[11px] text-slate-700 hover:border-emerald-300 transition-colors badge-3d"
                               >
-                                <span className="truncate flex-1 font-bangla">
-                                  📄 {s.source} {s.page ? `(পৃ. ${s.page})` : ""}
-                                </span>
-                                <div className="flex items-center gap-1.5 ml-2">
-                                  {s.is_sample && (
-                                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                                      নমুনা নথি
-                                    </span>
-                                  )}
-                                  {isExpanded ? (
-                                    <ChevronUp className="w-3.5 h-3.5 text-gray-500" />
-                                  ) : (
-                                    <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
-                                  )}
+                                <div
+                                  onClick={() =>
+                                    setExpandedSourceIndex(isExpanded ? null : chipKey)
+                                  }
+                                  className="flex items-center justify-between cursor-pointer font-medium"
+                                >
+                                  <span className="truncate flex-1 font-bangla font-semibold text-slate-900">
+                                    📄 {s.source} {s.page ? `(পৃষ্ঠা: ${s.page})` : ""}
+                                  </span>
+                                  <div className="flex items-center gap-1.5 ml-2">
+                                    {s.is_sample && (
+                                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 text-amber-800 border border-amber-200 font-bangla">
+                                        নমুনা নথি
+                                      </span>
+                                    )}
+                                    {isExpanded ? (
+                                      <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
+                                    ) : (
+                                      <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                                    )}
+                                  </div>
                                 </div>
+                                {isExpanded && s.snippet && (
+                                  <p className="mt-2 pt-2 border-t border-slate-200 text-slate-600 italic bg-white p-2.5 rounded-lg text-[11px] leading-relaxed font-bangla border border-slate-100">
+                                    "{s.snippet}"
+                                  </p>
+                                )}
                               </div>
-                              {isExpanded && s.snippet && (
-                                <p className="mt-2 pt-2 border-t border-gray-200 text-gray-600 italic bg-white p-2 rounded text-[11px] leading-relaxed font-bangla">
-                                  "{s.snippet}"
-                                </p>
-                              )}
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Assistant Message Actions */}
-                  {!isUser && msg.id !== "welcome" && msg.text && (
-                    <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-gray-100 text-gray-400 text-xs">
-                      <button
-                        onClick={() => handleCopyText(msg.id, msg.text)}
-                        className="hover:text-emerald-700 p-1 flex items-center gap-1 rounded hover:bg-gray-100 transition-colors"
-                        title="অনুলিপি (Copy)"
-                      >
-                        {copiedId === msg.id ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-emerald-600" />
-                            <span className="text-[11px] text-emerald-600 font-medium">কপি হয়েছে</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span className="text-[11px]">কপি</span>
-                          </>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => {
-                          setFeedbackTargetMessage(msg);
-                          submitFeedback(true);
-                        }}
-                        className="hover:text-emerald-700 p-1 flex items-center gap-1 rounded hover:bg-gray-100 transition-colors"
-                        title="সহায়ক উত্তর (Helpful)"
-                      >
-                        <ThumbsUp className="w-3.5 h-3.5" />
-                        <span className="text-[11px]">পছন্দ</span>
-                      </button>
-                      <button
-                        onClick={() => openFeedbackModal(msg)}
-                        className="hover:text-red-600 p-1 flex items-center gap-1 rounded hover:bg-gray-100 transition-colors ml-auto"
-                        title="রিপোর্ট করুন"
-                      >
-                        <Flag className="w-3.5 h-3.5" />
-                        <span className="text-[11px]">রিপোর্ট</span>
-                      </button>
-                    </div>
-                  )}
+                    {/* Assistant Message Actions */}
+                    {!isUser && msg.id !== "welcome" && msg.text && (
+                      <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-slate-100 text-slate-400 text-xs">
+                        <button
+                          onClick={() => handleCopyText(msg.id, msg.text)}
+                          className="hover:text-emerald-700 p-1.5 flex items-center gap-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                          title="অনুলিপি (Copy)"
+                        >
+                          {copiedId === msg.id ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-[11px] text-emerald-600 font-medium">কপি হয়েছে</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span className="text-[11px]">কপি</span>
+                            </>
+                          )}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFeedbackTargetMessage(msg);
+                            submitFeedback(true);
+                          }}
+                          className="hover:text-emerald-700 p-1.5 flex items-center gap-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                          title="সহায়ক উত্তর (Helpful)"
+                        >
+                          <ThumbsUp className="w-3.5 h-3.5" />
+                          <span className="text-[11px]">পছন্দ</span>
+                        </button>
+                        <button
+                          onClick={() => openFeedbackModal(msg)}
+                          className="hover:text-red-600 p-1.5 flex items-center gap-1 rounded-lg hover:bg-slate-100 transition-colors ml-auto cursor-pointer"
+                          title="রিপোর্ট করুন"
+                        >
+                          <Flag className="w-3.5 h-3.5" />
+                          <span className="text-[11px]">রিপোর্ট</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Smart Follow-up Inquiries Bar when conversation has 1-3 messages */}
+            {messages.length <= 4 && !isLoading && (
+              <div className="mt-3 p-4 rounded-2xl bg-white/90 border border-emerald-100/90 shadow-sm space-y-2.5 animate-in fade-in">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-emerald-950 flex items-center gap-1.5 uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                    সম্পর্কিত প্রস্তাবিত বিষয় (Related Queries)
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-medium">পরামর্শ পেতে যেকোনো বিষয়ে চাপুন</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleSend("আলুর নাবিধসা রোগ লক্ষণ ও প্রতিকার")}
+                    className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-emerald-50/90 border border-slate-200/80 hover:border-emerald-300 text-left text-xs font-semibold text-slate-700 hover:text-emerald-900 transition-all flex items-center gap-2 group cursor-pointer shadow-2xs"
+                  >
+                    <span className="text-base group-hover:scale-110 transition-transform">🥔</span>
+                    <span className="truncate">আলুর নাবিধসা রোগ ও প্রতিকার</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSend("অম্লীয় মাটিতে চুন প্রয়োগের সঠিক মাত্রা")}
+                    className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-teal-50/90 border border-slate-200/80 hover:border-teal-300 text-left text-xs font-semibold text-slate-700 hover:text-teal-900 transition-all flex items-center gap-2 group cursor-pointer shadow-2xs"
+                  >
+                    <span className="text-base group-hover:scale-110 transition-transform">🧪</span>
+                    <span className="truncate">অম্লীয় মাটিতে চুন প্রয়োগের মাত্রা</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSend("বেলে দোআঁশ মাটিতে বোরো ধানের সার ব্যবস্থাপনা")}
+                    className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-blue-50/90 border border-slate-200/80 hover:border-blue-300 text-left text-xs font-semibold text-slate-700 hover:text-blue-900 transition-all flex items-center gap-2 group cursor-pointer shadow-2xs"
+                  >
+                    <span className="text-base group-hover:scale-110 transition-transform">🌾</span>
+                    <span className="truncate">বোরো ধানের সুষম সার ব্যবস্থাপনা</span>
+                  </button>
                 </div>
               </div>
-            );
-          })}
+            )}
+            </div>
+          )}
 
           {isLoading && (
-            <div className="flex flex-col gap-1.5 bg-white p-3.5 rounded-2xl border border-gray-200 w-fit shadow-xs">
-              <div className="flex items-center gap-2 text-xs text-gray-700">
+            <div className="flex flex-col gap-1.5 bg-white p-3.5 rounded-2xl border border-emerald-100/90 w-fit shadow-md card-3d">
+              <div className="flex items-center gap-2 text-xs text-slate-800">
                 <Loader2 className="w-4 h-4 animate-spin text-emerald-700" />
                 <span className="font-semibold">নথি বিশ্লেষণ ও উত্তর প্রস্তুত করা হচ্ছে...</span>
               </div>
               {isWarmingUp && (
-                <p className="text-[11px] text-amber-700 bg-amber-50 px-2 py-1 rounded-md border border-amber-200 font-bangla animate-pulse">
+                <p className="text-[11px] text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 font-bangla animate-pulse">
                   ⏳ সার্ভার ক্লাউড থেকে সক্রিয় হচ্ছে (Render Cold Start)... অনুগ্রহ করে কয়েক সেকেন্ড অপেক্ষা করুন।
                 </p>
               )}
@@ -909,8 +1155,8 @@ export const AssistantChatPage: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* 6 Suggested Starter Prompts */}
-        <div className="bg-white px-4 py-2 border-t border-gray-100 overflow-x-auto whitespace-nowrap flex gap-2 no-scrollbar">
+        {/* 6 Suggested Starter Prompts Bar */}
+        <div className="bg-white/95 px-4 py-2.5 border-t border-slate-200/80 overflow-x-auto whitespace-nowrap flex gap-2 no-scrollbar backdrop-blur-md">
           {[
             "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম",
             "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার",
@@ -923,16 +1169,17 @@ export const AssistantChatPage: React.FC = () => {
               key={idx}
               onClick={() => handleSend(prompt)}
               disabled={isLoading}
-              className="text-xs px-3 py-1.5 rounded-full bg-gray-50 hover:bg-mrittika-50 text-gray-700 hover:text-mrittika-900 border border-gray-200 transition-colors"
+              className="text-xs px-3.5 py-1.5 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-950 border border-slate-200/90 hover:border-emerald-300 transition-all font-medium badge-3d shadow-2xs hover:-translate-y-0.5 cursor-pointer flex items-center gap-1.5 shrink-0"
             >
-              {prompt}
+              <Sparkles className="w-3 h-3 text-amber-500" />
+              <span>{prompt}</span>
             </button>
           ))}
         </div>
 
-        {/* Input Bar */}
-        <div className="bg-white p-3 border-t border-gray-200">
-          <div className="flex items-end gap-2 bg-gray-50 rounded-2xl border border-gray-300 p-2 focus-within:border-mrittika-600 focus-within:bg-white focus-within:ring-1 focus-within:ring-mrittika-600 transition-all">
+        {/* 3D Floating Input Dock */}
+        <div className="bg-white/95 p-3 sm:p-4 border-t border-emerald-100/90 backdrop-blur-md">
+          <div className="flex items-end gap-2.5 bg-slate-50/90 rounded-2xl border border-slate-200/90 p-2.5 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 shadow-inner transition-all">
             <VoiceInputButton
               onTranscript={(spoken) => {
                 setInputMessage((prev) => (prev ? `${prev} ${spoken}` : spoken));
@@ -955,13 +1202,13 @@ export const AssistantChatPage: React.FC = () => {
               }}
               placeholder="আপনার প্রশ্নটি বাংলায় লিখুন... (Enter চাপলে সেন্ড হবে)"
               disabled={isLoading}
-              className="flex-1 bg-transparent border-0 text-sm focus:outline-none resize-none max-h-32 min-h-[2.25rem] py-1 text-gray-900 placeholder-gray-400 font-bangla"
+              className="flex-1 bg-transparent border-0 text-sm focus:outline-none resize-none max-h-32 min-h-[2.25rem] py-1 text-slate-900 placeholder-slate-400 font-bangla"
             />
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span
-                className={`text-[10px] ${
-                  inputMessage.length > 900 ? "text-amber-600 font-bold" : "text-gray-400"
+                className={`text-[10px] font-mono ${
+                  inputMessage.length > 900 ? "text-amber-600 font-bold" : "text-slate-400"
                 }`}
               >
                 {inputMessage.length}/1000
@@ -971,7 +1218,7 @@ export const AssistantChatPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleStopGeneration}
-                  className="p-2 rounded-xl bg-red-600 hover:bg-red-700 text-white transition-colors shadow-sm"
+                  className="p-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white transition-colors shadow-md cursor-pointer"
                   title="উত্তর থামান (Stop)"
                 >
                   <Square className="w-4 h-4 fill-white" />
@@ -981,10 +1228,10 @@ export const AssistantChatPage: React.FC = () => {
                   type="button"
                   onClick={() => handleSend()}
                   disabled={isLoading || !inputMessage.trim()}
-                  className="p-2 rounded-xl bg-mrittika-800 hover:bg-mrittika-900 text-white disabled:opacity-40 transition-colors shadow-sm"
+                  className="btn-3d-emerald p-2.5 rounded-xl disabled:opacity-40 transition-all shadow-md cursor-pointer flex items-center justify-center"
                   aria-label="Send message"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-4 h-4 text-white" />
                 </button>
               )}
             </div>

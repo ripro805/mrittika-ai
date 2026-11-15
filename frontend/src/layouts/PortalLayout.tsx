@@ -104,13 +104,13 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
   const pageTitleEn = currentNav ? currentNav.labelEn : "Workspace";
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row text-gray-900 font-sans">
+    <div className="min-h-screen bg-agro-mesh flex flex-col md:flex-row text-slate-900 font-sans relative">
       {/* Mobile Header Bar */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-gray-200 sticky top-0 z-40">
+      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 rounded-xl text-gray-700 hover:bg-gray-100 focus:outline-none"
+            className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -123,7 +123,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
         <div className="flex items-center gap-2">
           <button
             onClick={toggleLanguage}
-            className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 border border-gray-300 hover:bg-gray-200 transition"
+            className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 border border-slate-300 hover:bg-slate-200 transition"
           >
             {i18n.language === "bn" ? "English" : "বাংলা"}
           </button>
@@ -132,7 +132,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({ portalRole, children
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:inset-auto flex flex-col shadow-lg md:shadow-none ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 bg-white/95 backdrop-blur-xl border-r border-emerald-100/90 transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:inset-auto flex flex-col shadow-lg md:shadow-xs ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

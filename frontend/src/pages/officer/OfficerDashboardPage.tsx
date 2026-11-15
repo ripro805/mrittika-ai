@@ -93,7 +93,7 @@ export const OfficerDashboardPage: React.FC = () => {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-amber-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">মোট ফ্ল্যাগকৃত প্রশ্নোত্তর</span>
             <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
@@ -104,7 +104,7 @@ export const OfficerDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">কৃষক কর্তৃক চিহ্নিত বা পর্যালোচনার দাবি</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-red-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">অপেক্ষমাণ নিরীক্ষা (Pending)</span>
             <div className="w-8 h-8 rounded-xl bg-red-50 text-red-700 flex items-center justify-center">
@@ -115,7 +115,7 @@ export const OfficerDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">অবিলম্বে কৃষিতাত্ত্বিক পর্যবেক্ষণ প্রয়োজন</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-emerald-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">সমাধানকৃত (Resolved)</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
@@ -126,7 +126,7 @@ export const OfficerDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">কর্মকর্তা কর্তৃক সংশোধিত ও অনুমোদিত</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-teal-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">সমাধানের হার (Resolution)</span>
             <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">

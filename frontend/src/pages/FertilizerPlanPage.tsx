@@ -132,7 +132,7 @@ export const FertilizerPlanPage: React.FC = () => {
       )}
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+      <form onSubmit={handleSubmit} className="card-3d p-6 sm:p-8 rounded-3xl border border-amber-100/90 bg-white/95 shadow-lg space-y-6">
         {/* Crop Selection & Area */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-1">
@@ -320,16 +320,16 @@ export const FertilizerPlanPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting || !isCropSupported}
-            className={`w-full py-3.5 px-6 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-transform hover:-translate-y-0.5 ${
+            className={`w-full py-4 px-6 rounded-2xl font-extrabold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all ${
               isCropSupported
-                ? "bg-amber-700 hover:bg-amber-800 text-white"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                ? "bg-linear-to-r from-amber-600 via-amber-700 to-orange-700 hover:from-amber-500 hover:to-orange-600 text-white shadow-amber-600/30 hover:-translate-y-0.5"
+                : "bg-slate-200 text-slate-400 cursor-not-allowed"
             }`}
           >
             {isSubmitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <FlaskConical className="w-5 h-5" />
+              <FlaskConical className="w-5 h-5 text-amber-200" />
             )}
             <span>{t("buttons.get_fertilizer")}</span>
           </button>
@@ -338,24 +338,24 @@ export const FertilizerPlanPage: React.FC = () => {
 
       {/* Results Section */}
       {result && result.supported && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-8 animate-in fade-in duration-300">
           {/* Header Card */}
-          <div className="bg-gradient-to-r from-amber-700 to-amber-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-linear-to-r from-amber-800 via-amber-900 to-orange-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl border border-amber-600/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 card-3d">
             <div>
-              <span className="text-xs uppercase tracking-wider text-amber-200 font-bold block mb-1">
+              <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
                 সুপারিশকৃত সারের প্যাকেজ
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold">
                 {result.crop_name_bn} - {result.fertilizer_plan}
               </h2>
-              <p className="text-xs text-amber-100 mt-1">
+              <p className="text-xs text-amber-200 mt-1 font-bangla">
                 জমির পরিমাপ: {formData.land_area} {formData.land_unit === "bigha" ? "বিঘা" : formData.land_unit === "decimal" ? "শতক" : "হেক্টর"}
               </p>
             </div>
 
             <button
               onClick={handleAskAssistant}
-              className="inline-flex items-center gap-2 bg-white text-amber-900 hover:bg-amber-50 px-4 py-2.5 rounded-xl font-bold text-xs shadow-md transition-colors"
+              className="inline-flex items-center gap-2 bg-white text-amber-950 hover:bg-amber-50 px-4 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all hover:-translate-y-0.5 cursor-pointer badge-3d"
             >
               <MessageSquare className="w-4 h-4 text-amber-700" />
               <span>সহকারীকে প্রশ্ন করুন</span>

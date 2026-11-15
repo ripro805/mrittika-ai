@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthContext";
 import { UnifiedFlowProvider } from "./context/UnifiedFlowContext";
@@ -46,6 +46,42 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Public Layout with dynamic padding and footer handling for chat workspace
+const PublicLayout: React.FC = () => {
+  const location = useLocation();
+  const isAssistant = location.pathname.startsWith("/assistant");
+
+  return (
+    <div className="flex flex-col min-h-screen bg-agro-mesh relative selection:bg-emerald-200 selection:text-emerald-900">
+      {/* Ambient 3D background light blobs */}
+      <div className="fixed top-0 left-1/4 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="fixed bottom-10 right-10 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <Navbar />
+      <main
+        className={
+          isAssistant
+            ? "flex-1 w-full mx-auto px-2 sm:px-4 py-2 flex flex-col min-h-0"
+            : "flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6"
+        }
+      >
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/crop" element={<CropRecommendPage />} />
+          <Route path="/fertilizer" element={<FertilizerPlanPage />} />
+          <Route path="/assistant" element={<AssistantChatPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/about" element={<AboutModelInfoPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+      {!isAssistant && <Footer />}
+    </div>
+  );
+};
 
 export const App: React.FC = () => {
   React.useEffect(() => {
@@ -247,29 +283,7 @@ export const App: React.FC = () => {
               {/* ========================================================= */}
               {/* 4. PUBLIC & GUEST ROUTES (Standard App Layout)            */}
               {/* ========================================================= */}
-              <Route
-                path="/*"
-                element={
-                  <div className="flex flex-col min-h-screen bg-gray-50">
-                    <Navbar />
-                    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                      <Routes>
-                        <Route path="/" element={<LandingPage />} />
-                        <Route path="/crop" element={<CropRecommendPage />} />
-                        <Route path="/fertilizer" element={<FertilizerPlanPage />} />
-                        <Route path="/assistant" element={<AssistantChatPage />} />
-                        <Route path="/history" element={<HistoryPage />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/profile" element={<ProfilePage />} />
-                        <Route path="/about" element={<AboutModelInfoPage />} />
-                        <Route path="*" element={<Navigate to="/" replace />} />
-                      </Routes>
-                    </main>
-                    <Footer />
-                  </div>
-                }
-              />
+              <Route path="/*" element={<PublicLayout />} />
             </Routes>
           </BrowserRouter>
         </UnifiedFlowProvider>

@@ -75,12 +75,12 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xs">
+    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-emerald-100/80 shadow-[0_4px_25px_-4px_rgba(15,23,42,0.05)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-linear-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-linear-to-br from-emerald-500 via-emerald-600 to-teal-800 text-white flex items-center justify-center shadow-md shadow-emerald-700/25 border border-emerald-400/40 group-hover:scale-105 transition-transform duration-200">
               <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-100" />
             </div>
             <div>
@@ -88,7 +88,7 @@ export const Navbar: React.FC = () => {
                 <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight leading-none">
                   মৃত্তিকা এআই
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-mono badge-3d">
                   v2.0
                 </span>
               </div>
@@ -111,11 +111,11 @@ export const Navbar: React.FC = () => {
                   to={link.to}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                     active
-                      ? "bg-emerald-50 text-emerald-900 font-bold border border-emerald-200/60 shadow-2xs"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
+                      ? "bg-linear-to-r from-emerald-600 to-teal-700 text-white font-bold shadow-md shadow-emerald-600/25 badge-3d hover:translate-y-[-1px]"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? "text-emerald-700" : "text-slate-400"}`} />
+                  <Icon className={`w-4 h-4 ${active ? "text-emerald-100" : "text-slate-400"}`} />
                   <span>{link.label}</span>
                 </Link>
               );

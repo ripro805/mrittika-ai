@@ -96,7 +96,7 @@ export const AdminDashboardPage: React.FC = () => {
 
       {/* KPI Cards: Platform Totals */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-purple-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">নিবন্ধিত ব্যবহারকারী</span>
             <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
@@ -109,7 +109,7 @@ export const AdminDashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-emerald-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">মোট এআই সুপারিশ</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
@@ -122,7 +122,7 @@ export const AdminDashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-blue-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">কৃষি সহকারী বার্তা আদান-প্রদান</span>
             <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
@@ -133,7 +133,7 @@ export const AdminDashboardPage: React.FC = () => {
           <p className="text-[11px] text-gray-500">{assistant.sessions} টি সক্রিয় আলোচনা সেশন</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-1">
+        <div className="card-3d card-3d-interactive p-5 rounded-2xl border border-amber-100/90 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-500 mb-2">
             <span className="text-xs font-semibold">পর্যালোচনা ও সংশোধন</span>
             <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">

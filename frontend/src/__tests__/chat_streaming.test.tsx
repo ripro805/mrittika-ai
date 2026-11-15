@@ -30,7 +30,7 @@ describe("AssistantChatPage Unit & Streaming Tests", () => {
   it("renders assistant chat header, starter chips, and input box", () => {
     renderWithProviders(<AssistantChatPage />);
 
-    expect(screen.getByText(/মৃত্তিকা এআই বাংলা কৃষি সহকারী/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/মৃত্তিকা এআই বাংলা কৃষি সহকারী/i)[0]).toBeInTheDocument();
     expect(screen.getByText(/আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম/i)).toBeInTheDocument();
     expect(screen.getByText(/আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/আপনার প্রশ্নটি বাংলায় লিখুন/i)).toBeInTheDocument();
