@@ -43,11 +43,14 @@ export const CropRecommendPage: React.FC = () => {
 
   // Fetch metadata options
   useEffect(() => {
-    apiClient.get("/meta/options").then((res) => {
-      setDistricts(res.data.districts || []);
-      setSeasons(res.data.seasons || []);
-      setSoilTypes(res.data.soil_types || []);
-    }).catch(() => {});
+    apiClient
+      .get("/meta/options")
+      .then((res) => {
+        setDistricts(res.data.districts || []);
+        setSeasons(res.data.seasons || []);
+        setSoilTypes(res.data.soil_types || []);
+      })
+      .catch(() => {});
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
