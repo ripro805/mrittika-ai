@@ -53,12 +53,16 @@ const PublicLayout: React.FC = () => {
   const isAssistant = location.pathname.startsWith("/assistant");
 
   return (
-    <div className="flex flex-col min-h-screen bg-agro-clean relative selection:bg-emerald-100 selection:text-emerald-900">
+    <div
+      className={`flex flex-col ${
+        isAssistant ? "h-screen max-h-screen overflow-hidden" : "min-h-screen"
+      } bg-agro-clean relative selection:bg-emerald-100 selection:text-emerald-900`}
+    >
       <Navbar />
       <main
         className={
           isAssistant
-            ? "flex-1 w-full mx-auto px-2 sm:px-4 py-2 sm:py-3 flex flex-col min-h-0"
+            ? "flex-1 w-full max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-3 flex flex-col min-h-0 overflow-hidden"
             : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
         }
       >

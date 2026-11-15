@@ -88,6 +88,7 @@ export const AssistantChatPage: React.FC = () => {
   // Streaming & Abort
   const abortControllerRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const chatScrollRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   // Error & Retry State
@@ -116,15 +117,27 @@ export const AssistantChatPage: React.FC = () => {
   const [adminUploadFile, setAdminUploadFile] = useState<File | null>(null);
   const [adminMessage, setAdminMessage] = useState<string | null>(null);
 
-  // Scroll to bottom
+  // Scroll to bottom (contained within chat container so window never scrolls)
   const scrollToBottom = () => {
-    if (typeof messagesEndRef.current?.scrollIntoView === "function") {
+    if (chatScrollRef.current) {
+      if (typeof chatScrollRef.current.scrollTo === "function") {
+        chatScrollRef.current.scrollTo({
+          top: chatScrollRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      } else {
+        chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+      }
+    } else if (typeof messagesEndRef.current?.scrollIntoView === "function") {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Only auto-scroll when user has engaged in conversation, avoiding initial mount window jumps
+    if (messages.length > 1 || isLoading) {
+      scrollToBottom();
+    }
   }, [messages, isLoading]);
 
   // Load Sessions for authenticated users
@@ -573,7 +586,7 @@ export const AssistantChatPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-1 h-[calc(100vh-4.5rem)] min-h-[580px] bg-white rounded-3xl shadow-card border border-slate-200/90 overflow-hidden font-sans">
+    <div className="w-full h-full min-h-0 flex flex-1 bg-white rounded-2xl sm:rounded-3xl shadow-card border border-slate-200/90 overflow-hidden font-sans">
       {/* Sessions Sidebar */}
       <aside
         className={`${
@@ -685,7 +698,7 @@ export const AssistantChatPage: React.FC = () => {
       {/* Main Chat Area */}
       <div className="flex-1 min-w-0 flex flex-col h-full bg-slate-50/50 relative overflow-hidden">
         {/* Header */}
-        <div className="p-3.5 sm:p-4 border-b border-slate-200 flex items-center justify-between bg-white z-10 shadow-2xs">
+        <div className="p-3.5 sm:p-4 border-b border-slate-200 flex items-center justify-between bg-white z-10 shadow-2xs flex-shrink-0">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -754,6 +767,7 @@ export const AssistantChatPage: React.FC = () => {
 
         {/* Messages List / 3D Welcome Hub */}
         <div
+          ref={chatScrollRef}
           className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 space-y-4"
           aria-live="polite"
         >
@@ -1208,7 +1222,7 @@ export const AssistantChatPage: React.FC = () => {
         </div>
 
         {/* 6 Suggested Starter Prompts Bar */}
-        <div className="bg-white px-4 py-2.5 border-t border-slate-200 overflow-x-auto whitespace-nowrap flex gap-2 no-scrollbar">
+        <div className="bg-white px-4 py-2 border-t border-slate-200 overflow-x-auto whitespace-nowrap flex gap-2 no-scrollbar flex-shrink-0">
           {[
             { en: "Urea application guidelines for Aman rice", bn: "আমন ধানের ইউরিয়া উপরিপ্রয়োগের নিয়ম" },
             { en: "Potato Late Blight symptoms and control", bn: "আলুর নাভিধসা রোগ লক্ষণ ও প্রতিকার" },
@@ -1230,7 +1244,7 @@ export const AssistantChatPage: React.FC = () => {
         </div>
 
         {/* Floating Input Dock */}
-        <div className="bg-white p-3 sm:p-4 border-t border-slate-200">
+        <div className="bg-white p-3 sm:p-4 border-t border-slate-200 flex-shrink-0">
           <div className="flex items-end gap-2.5 bg-slate-50 rounded-2xl border border-slate-300 p-2.5 focus-within:border-emerald-600 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-600/15 shadow-inner transition-all">
             <VoiceInputButton
               onTranscript={(spoken) => {
