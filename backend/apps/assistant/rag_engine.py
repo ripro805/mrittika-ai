@@ -8,7 +8,7 @@ import logging
 import os
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, cast
 
 from django.conf import settings
 
@@ -234,7 +234,7 @@ def ingest_document(file_path: Path) -> int:
         ids=all_ids,
         embeddings=embeddings,
         documents=all_chunks,
-        metadatas=all_metas,
+        metadatas=cast(Any, all_metas),
     )
     logger.info("Ingested %d chunks from %s into ChromaDB", len(all_chunks), filename)
     return len(all_chunks)
@@ -258,31 +258,34 @@ def query_knowledge_base(query_text: str, top_k: int = 4) -> Tuple[List[Dict[str
 
         # Fast lexical retrieval: sub-millisecond keyword matching
         data = collection.get(include=["documents", "metadatas"])
-        docs = data.get("documents", [])
-        metas = data.get("metadatas", [])
+        raw_docs = data.get("documents") or []
+        raw_metas = data.get("metadatas") or []
+        docs: List[str] = list(raw_docs) if raw_docs is not None else []
+        metas: List[Any] = list(raw_metas) if raw_metas is not None else []
 
         q_tokens = [w.lower() for w in re.findall(r"[\u0980-\u09FF\w]+", cleaned_query) if len(w) >= 2]
         if q_tokens and docs:
             scored = []
             for doc, meta in zip(docs, metas):
+                meta_dict: Dict[str, Any] = dict(meta) if meta and isinstance(meta, dict) else {}
                 doc_lower = doc.lower()
                 score = 0
                 for t in q_tokens:
                     if t in doc_lower:
                         score += doc_lower.count(t) * 2
                 if score > 0:
-                    scored.append((score, doc, meta))
+                    scored.append((score, doc, meta_dict))
 
             if scored:
                 scored.sort(key=lambda x: x[0], reverse=True)
                 retrieved = []
-                for score, doc, meta in scored[:top_k]:
+                for score, doc, meta_dict in scored[:top_k]:
                     retrieved.append({
                         "content": doc,
-                        "source": meta.get("source", "Agricultural Document"),
-                        "filename": meta.get("filename", ""),
-                        "page": meta.get("page", "1"),
-                        "is_sample": meta.get("is_sample", True),
+                        "source": meta_dict.get("source", "Agricultural Document"),
+                        "filename": meta_dict.get("filename", ""),
+                        "page": meta_dict.get("page", "1"),
+                        "is_sample": meta_dict.get("is_sample", True),
                         "distance": max(0.1, 1.0 - min(0.9, score / (len(q_tokens) * 3))),
                     })
                 return retrieved, False
@@ -299,23 +302,29 @@ def query_knowledge_base(query_text: str, top_k: int = 4) -> Tuple[List[Dict[str
             n_results=min(top_k, count),
             include=["documents", "metadatas", "distances"],
         )
-        docs = results.get("documents", [[]])[0]
-        metas = results.get("metadatas", [[]])[0]
-        distances = results.get("distances", [[]])[0]
+        raw_docs_list = results.get("documents") or []
+        raw_metas_list = results.get("metadatas") or []
+        raw_dist_list = results.get("distances") or []
+
+        q_docs: List[Any] = raw_docs_list[0] if (raw_docs_list and len(raw_docs_list) > 0) else []
+        q_metas: List[Any] = raw_metas_list[0] if (raw_metas_list and len(raw_metas_list) > 0) else []
+        q_distances: List[Any] = raw_dist_list[0] if (raw_dist_list and len(raw_dist_list) > 0) else []
 
         min_score_threshold = float(os.getenv("RAG_MIN_SCORE", str(DEFAULT_RELEVANCE_DISTANCE_THRESHOLD)))
         retrieved = []
-        for doc, meta, dist in zip(docs, metas, distances):
+        for doc, meta, dist in zip(q_docs, q_metas, q_distances):
+            meta_dict = dict(meta) if meta and isinstance(meta, dict) else {}
+            dist_val = float(dist) if dist is not None else 1.0
             retrieved.append({
-                "content": doc,
-                "source": meta.get("source", "Agricultural Document"),
-                "filename": meta.get("filename", ""),
-                "page": meta.get("page", "1"),
-                "is_sample": meta.get("is_sample", True),
-                "distance": float(dist),
+                "content": str(doc),
+                "source": meta_dict.get("source", "Agricultural Document"),
+                "filename": meta_dict.get("filename", ""),
+                "page": meta_dict.get("page", "1"),
+                "is_sample": meta_dict.get("is_sample", True),
+                "distance": dist_val,
             })
 
-        is_low_confidence = not retrieved or retrieved[0]["distance"] > min_score_threshold
+        is_low_confidence = not retrieved or float(retrieved[0]["distance"]) > min_score_threshold
         return retrieved, is_low_confidence
 
     except Exception as err:

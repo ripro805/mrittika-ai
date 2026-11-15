@@ -140,7 +140,7 @@ def canonicalize_context(context: Optional[Dict[str, Any]]) -> Tuple[str, str, D
         if val is not None and val != "":
             try:
                 flt_val = float(val)
-                clean[num_key] = round(flt_val, decimals) if decimals > 0 else int(round(flt_val))
+                clean[num_key] = round(flt_val, decimals) if decimals > 0 else round(flt_val)
             except (ValueError, TypeError):
                 pass
 
