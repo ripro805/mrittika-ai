@@ -85,7 +85,7 @@ export const LoginPage: React.FC = () => {
         navigate("/farmer/overview");
       }
     } catch (err: any) {
-      const msg =
+      let msg =
         err.response?.data?.non_field_errors?.[0] ||
         err.response?.data?.detail ||
         err.response?.data?.error ||
@@ -93,6 +93,10 @@ export const LoginPage: React.FC = () => {
         (err.response
           ? "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে।"
           : "সার্ভারের সাথে সংযোগ স্থাপন করা যায়নি (Network Error)। ব্যাকএন্ড চালু আছে কি না পরীক্ষা করুন।");
+
+      if (typeof msg === "string" && msg.toLowerCase().includes("token")) {
+        msg = "মোবাইল নম্বর বা পাসওয়ার্ড ভুল হয়েছে অথবা সেশনের মেয়াদ শেষ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।";
+      }
       setErrorMessage(msg);
     } finally {
       setIsLoading(false);

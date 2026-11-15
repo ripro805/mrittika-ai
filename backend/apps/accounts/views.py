@@ -42,6 +42,7 @@ def clear_refresh_cookie(response: Response):
 
 
 class RegisterView(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     @extend_schema(
@@ -71,6 +72,7 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     @extend_schema(
@@ -100,6 +102,7 @@ class LoginView(APIView):
 
 
 class RefreshTokenView(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     @extend_schema(
@@ -140,6 +143,7 @@ class RefreshTokenView(APIView):
 
 
 class LogoutView(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     @extend_schema(

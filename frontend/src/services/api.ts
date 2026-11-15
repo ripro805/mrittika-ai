@@ -21,8 +21,15 @@ export const getAccessToken = () => accessToken;
 
 // Request interceptor to attach JWT
 apiClient.interceptors.request.use((config) => {
-  if (accessToken && config.headers) {
+  const isAuthPublicEndpoint =
+    config.url?.includes("/auth/login") ||
+    config.url?.includes("/auth/register") ||
+    config.url?.includes("/auth/refresh");
+
+  if (accessToken && config.headers && !isAuthPublicEndpoint) {
     config.headers.Authorization = `Bearer ${accessToken}`;
+  } else if (isAuthPublicEndpoint && config.headers) {
+    delete config.headers.Authorization;
   }
   return config;
 });

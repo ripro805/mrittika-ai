@@ -51,6 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (phone: string, password: string): Promise<User> => {
+    setAccessToken(null);
     const res = await apiClient.post("/auth/login", { phone, password });
     if (res.data?.access) {
       setAccessToken(res.data.access);
@@ -61,6 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const register = async (data: any): Promise<User> => {
+    setAccessToken(null);
     const res = await apiClient.post("/auth/register", data);
     if (res.data?.access) {
       setAccessToken(res.data.access);
