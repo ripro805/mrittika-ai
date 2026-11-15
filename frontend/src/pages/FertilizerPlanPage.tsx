@@ -354,7 +354,13 @@ export const FertilizerPlanPage: React.FC = () => {
       {result && result.supported && (
         <div className="space-y-8 animate-in fade-in duration-300">
           {/* Header Card */}
-          <div className="bg-amber-950 bg-gradient-to-r from-amber-950 via-amber-900 to-orange-950 text-white p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div
+            className="banner-fertilizer-hero p-6 sm:p-8 rounded-3xl shadow-card border border-amber-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white"
+            style={{
+              background: "linear-gradient(135deg, #451a03 0%, #78350f 50%, #431407 100%)",
+              backgroundColor: "#451a03",
+            }}
+          >
             <div>
               <span className="text-xs uppercase tracking-wider text-amber-300 font-bold block mb-1">
                 {i18n.language === "en" ? "Recommended Fertilizer Package" : "সুপারিশকৃত সারের প্যাকেজ"}

@@ -164,7 +164,10 @@ export const AdminModelRegistryPage: React.FC = () => {
       </div>
 
       {/* Hugging Face Hub Banner */}
-      <div className="p-6 rounded-3xl bg-slate-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-800 shadow-card">
+      <div
+        className="p-6 rounded-3xl bg-slate-950 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-800 shadow-card"
+        style={{ backgroundColor: "#020617" }}
+      >
         <div className="space-y-1 text-center sm:text-left">
           <h3 className="text-base font-extrabold text-white">Hugging Face মডেল রিপোজিটরি</h3>
           <p className="text-xs text-slate-200 font-medium font-bangla">

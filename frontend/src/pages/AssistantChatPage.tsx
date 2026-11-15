@@ -696,7 +696,7 @@ export const AssistantChatPage: React.FC = () => {
       </aside>
 
       {/* Main Chat Area */}
-      <div className="flex-1 min-w-0 flex flex-col h-full bg-slate-50/50 relative overflow-hidden">
+      <div className="flex-1 min-w-0 min-h-0 flex flex-col bg-slate-50/50 relative overflow-hidden">
         {/* Header */}
         <div className="p-3.5 sm:p-4 border-b border-slate-200 flex items-center justify-between bg-white z-10 shadow-2xs flex-shrink-0">
           <div className="flex items-center gap-3">
@@ -775,7 +775,13 @@ export const AssistantChatPage: React.FC = () => {
             /* Agricultural AI Command Hub */
             <div className="max-w-4xl mx-auto py-2 sm:py-4 space-y-6 animate-in fade-in duration-300">
               {/* Hero Showcase Card */}
-              <div className="relative overflow-hidden rounded-3xl bg-slate-950 bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-900 p-6 sm:p-8 text-white border border-emerald-800 shadow-card">
+              <div
+                className="banner-assistant-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white border border-emerald-800 shadow-card"
+                style={{
+                  background: "linear-gradient(135deg, #020617 0%, #052e16 50%, #0f172a 100%)",
+                  backgroundColor: "#020617",
+                }}
+              >
                 <div className="relative z-10 space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
@@ -1244,7 +1250,7 @@ export const AssistantChatPage: React.FC = () => {
         </div>
 
         {/* Floating Input Dock */}
-        <div className="bg-white p-3 sm:p-4 border-t border-slate-200 flex-shrink-0">
+        <div className="bg-white p-2.5 sm:p-3.5 border-t border-slate-200 flex-shrink-0">
           <div className="flex items-end gap-2.5 bg-slate-50 rounded-2xl border border-slate-300 p-2.5 focus-within:border-emerald-600 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-600/15 shadow-inner transition-all">
             <VoiceInputButton
               onTranscript={(spoken) => {

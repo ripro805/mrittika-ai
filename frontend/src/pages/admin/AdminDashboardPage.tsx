@@ -64,7 +64,13 @@ export const AdminDashboardPage: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Executive Command Banner */}
-      <div className="relative overflow-hidden bg-purple-950 bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-card border border-purple-800">
+      <div
+        className="banner-admin-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-purple-800"
+        style={{
+          background: "linear-gradient(135deg, #2e1065 0%, #3b0764 50%, #0f172a 100%)",
+          backgroundColor: "#2e1065",
+        }}
+      >
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-purple-200 border border-white/10">

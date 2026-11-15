@@ -62,7 +62,13 @@ export const FarmerDashboardPage: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Farmer Greeting Banner */}
-      <div className="relative overflow-hidden bg-emerald-950 bg-gradient-to-r from-emerald-950 via-emerald-900 to-teal-950 rounded-3xl p-6 sm:p-8 text-white shadow-card border border-emerald-800">
+      <div
+        className="banner-farmer-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-emerald-800"
+        style={{
+          background: "linear-gradient(135deg, #052e16 0%, #064e3b 50%, #022c22 100%)",
+          backgroundColor: "#052e16",
+        }}
+      >
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-emerald-200 border border-white/10">

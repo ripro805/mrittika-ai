@@ -61,7 +61,13 @@ export const OfficerDashboardPage: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Officer Jurisdiction Banner */}
-      <div className="relative overflow-hidden bg-teal-950 bg-gradient-to-r from-teal-950 via-teal-900 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white shadow-card border border-teal-800">
+      <div
+        className="banner-officer-hero relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-card border border-teal-800"
+        style={{
+          background: "linear-gradient(135deg, #042f2e 0%, #134e4a 50%, #022c22 100%)",
+          backgroundColor: "#042f2e",
+        }}
+      >
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-semibold text-teal-200 border border-white/10">
