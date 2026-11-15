@@ -262,6 +262,15 @@ if RENDER_EXTERNAL_HOSTNAME:
     if render_origin not in CSRF_TRUSTED_ORIGINS:
         CSRF_TRUSTED_ORIGINS.append(render_origin)
 
+# Cache Configuration (15-minute default for weather & RAG cache)
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "mrittika-cache",
+        "TIMEOUT": 900,
+    }
+}
+
 # Content Security Policy (django-csp 4.0+)
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {

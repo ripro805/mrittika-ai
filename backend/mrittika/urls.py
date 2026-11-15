@@ -34,7 +34,24 @@ def custom_server_error(request, *args, **kwargs):
     response["Access-Control-Allow-Methods"] = "DELETE, GET, OPTIONS, PATCH, POST, PUT"
     return response
 
+def custom_not_found(request, *args, **kwargs):
+    origin = request.headers.get("Origin", "")
+    allowed = origin if ("vercel.app" in origin or "localhost" in origin or "127.0.0.1" in origin) else "*"
+    response = JsonResponse(
+        {
+            "error": "অনুরোধকৃত রিসোর্সটি পাওয়া যায়নি।",
+            "detail": "Endpoint not found.",
+        },
+        status=404,
+    )
+    response["Access-Control-Allow-Origin"] = allowed
+    response["Access-Control-Allow-Credentials"] = "true"
+    response["Access-Control-Allow-Headers"] = "accept, authorization, content-type, user-agent, x-csrftoken, x-requested-with"
+    response["Access-Control-Allow-Methods"] = "DELETE, GET, OPTIONS, PATCH, POST, PUT"
+    return response
+
 handler500 = custom_server_error
+handler404 = custom_not_found
 
 urlpatterns = [
     path("", root_view, name="root"),
