@@ -56,10 +56,11 @@ const ScrollToTop: React.FC = () => {
   return null;
 };
 
-// Public Layout with dynamic padding and footer handling for chat workspace
+// Public Layout with dynamic padding and footer handling for chat workspace & landing page
 const PublicLayout: React.FC = () => {
   const location = useLocation();
   const isAssistant = location.pathname.startsWith("/assistant");
+  const isLanding = location.pathname === "/";
 
   return (
     <div
@@ -72,6 +73,8 @@ const PublicLayout: React.FC = () => {
         className={
           isAssistant
             ? "flex-1 w-full max-w-7xl 2xl:max-w-[1440px] mx-auto px-2 sm:px-4 pt-1.5 pb-2 sm:pt-2 sm:pb-3 flex flex-col min-h-0 overflow-hidden"
+            : isLanding
+            ? "flex-1 w-full min-h-0"
             : "flex-1 max-w-7xl 2xl:max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7"
         }
       >

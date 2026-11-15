@@ -77,22 +77,22 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white/80 supports-[backdrop-filter]:bg-white/70 backdrop-blur-xl border-b border-black/[0.06] shadow-[0_1px_2px_rgba(0,0,0,0.03)] flex-shrink-0 transition-all">
       <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between min-h-[64px] py-2">
+        <div className="flex items-center justify-between min-h-[68px] py-2.5">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0 select-none overflow-visible">
             <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center shadow-xs border border-emerald-700/50 group-hover:scale-105 transition-all flex-shrink-0">
               <Sprout className="w-5 h-5 text-emerald-100" />
             </div>
-            <div className="flex flex-col justify-center flex-shrink-0 overflow-visible">
+            <div className="flex flex-col justify-center flex-shrink-0 overflow-visible py-0.5">
               <div className="flex items-center gap-1.5 whitespace-nowrap overflow-visible">
-                <span className="font-bold text-base sm:text-[17px] text-[#1d1d1f] tracking-tight leading-snug whitespace-nowrap">
+                <span className="font-bold text-base sm:text-[17px] text-[#1d1d1f] tracking-tight leading-normal whitespace-nowrap pt-0.5">
                   {t("app_name")}
                 </span>
                 <span className="text-[10px] uppercase font-semibold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/60 leading-none whitespace-nowrap">
                   v2.0
                 </span>
               </div>
-              <span className="text-[11px] font-medium text-[#86868b] tracking-normal block leading-snug whitespace-nowrap">
+              <span className="text-[11px] font-medium text-[#86868b] tracking-normal block leading-normal whitespace-nowrap">
                 {i18n.language === "en" ? "Smart Agriculture Advisory" : "স্মার্ট কৃষি পরামর্শ প্ল্যাটফর্ম"}
               </span>
             </div>
