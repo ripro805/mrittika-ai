@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useUnifiedFlow } from "../context/UnifiedFlowContext";
 import { useAuth } from "../context/AuthContext";
-import apiClient, { getAccessToken } from "../services/api";
+import apiClient, { getAccessToken, API_BASE } from "../services/api";
 import { VoiceInputButton } from "../components/VoiceInputButton";
 import { MarkdownRenderer } from "../components/MarkdownRenderer";
 import {
@@ -86,7 +86,9 @@ export const AssistantChatPage: React.FC = () => {
   // Sessions State
   const [sessions, setSessions] = useState<ChatSessionItem[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    typeof window !== "undefined" ? window.innerWidth > 768 : true
+  );
 
   // Feedback Modal State
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
@@ -140,7 +142,9 @@ export const AssistantChatPage: React.FC = () => {
       },
     ]);
     setErrorMessage(null);
-    setIsSidebarOpen(false);
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
     if (inputRef.current) inputRef.current.focus();
   };
 
@@ -170,7 +174,9 @@ export const AssistantChatPage: React.FC = () => {
               },
             ]
       );
-      setIsSidebarOpen(false);
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      }
     } catch {
       setErrorMessage("আলোচনাটি লোড করতে সমস্যা হয়েছে।");
     } finally {
@@ -201,7 +207,7 @@ export const AssistantChatPage: React.FC = () => {
     }
   };
 
-  // Send Message (SSE streaming with fetch + ReadableStream)
+  // Send Message (SSE streaming with fetch + ReadableStream, with seamless fallback to JSON REST)
   const handleSend = async (messageText?: string) => {
     const textToSend = (messageText || inputMessage).trim();
     if (!textToSend || isLoading) return;
@@ -236,6 +242,11 @@ export const AssistantChatPage: React.FC = () => {
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
+    let streamedAny = false;
+    let accumulatedText = "";
+    let sources: SourceItem[] = [];
+    let isFallback = false;
+
     try {
       const token = getAccessToken();
       const headers: Record<string, string> = {
@@ -245,7 +256,9 @@ export const AssistantChatPage: React.FC = () => {
         headers["Authorization"] = `Bearer ${token}`;
       }
 
-      const response = await fetch("/api/v1/assistant/chat/stream/", {
+      const streamEndpoint = `${API_BASE.replace(/\/+$/, "")}/assistant/chat/stream/`;
+
+      const response = await fetch(streamEndpoint, {
         method: "POST",
         headers,
         credentials: "include",
@@ -260,10 +273,8 @@ export const AssistantChatPage: React.FC = () => {
       if (!response.ok) {
         if (response.status === 429) {
           throw new Error("RATE_LIMIT");
-        } else if (response.status >= 500) {
-          throw new Error("SERVER_ERROR");
         } else {
-          throw new Error("REQUEST_FAILED");
+          throw new Error(`STREAM_HTTP_${response.status}`);
         }
       }
 
@@ -273,10 +284,6 @@ export const AssistantChatPage: React.FC = () => {
       if (!reader) throw new Error("NO_STREAM");
 
       let buffer = "";
-      let accumulatedText = "";
-      let sources: SourceItem[] = [];
-      let isFallback = false;
-
       let isStreaming = true;
       while (isStreaming) {
         const { done, value } = await reader.read();
@@ -309,20 +316,23 @@ export const AssistantChatPage: React.FC = () => {
           } else if (eventType === "token") {
             try {
               const parsed = JSON.parse(dataContent);
-              accumulatedText += parsed.token || "";
-              setMessages((prev) =>
-                prev.map((m) =>
-                  m.id === botMsgId ? { ...m, text: accumulatedText } : m
-                )
-              );
+              if (parsed.token) {
+                streamedAny = true;
+                accumulatedText += parsed.token;
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === botMsgId ? { ...m, text: accumulatedText } : m
+                  )
+                );
+              }
             } catch {
               // Ignore incomplete token json
             }
           } else if (eventType === "done") {
             try {
               const parsed = JSON.parse(dataContent);
-              if (parsed.session_id && !currentSessionId) {
-                setCurrentSessionId(parsed.session_id);
+              if (parsed.session_id) {
+                if (!currentSessionId) setCurrentSessionId(parsed.session_id);
                 loadSessions();
               }
               isFallback = !!parsed.fallback;
@@ -365,29 +375,67 @@ export const AssistantChatPage: React.FC = () => {
               : m
           )
         );
-      } else {
-        const errType = err.message || "";
-        let friendlyError = "সার্ভারে সাময়িক সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।";
-        if (errType === "RATE_LIMIT") {
-          friendlyError = "অনুরোধের সীমা (Rate Limit) অতিক্রম করেছে। অনুগ্রহ করে কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন।";
-        } else if (errType.includes("Failed to fetch") || errType === "NO_STREAM") {
-          friendlyError = "ইন্টারনেট সংযোগে সমস্যা হয়েছে। আপনার সংযোগ পরীক্ষা করে পুনরায় চেষ্টা করুন।";
-        }
-        setErrorMessage(friendlyError);
-
-        // Update bot message to indicate failure
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === botMsgId && !m.text
-              ? {
-                  ...m,
-                  text: "দুঃখিত, সংযোগ সমস্যার কারণে উত্তর তৈরি করা যায়নি। নিচে 'পুনরায় চেষ্টা করুন' বোতামে চাপুন।",
-                  fallback: true,
-                }
-              : m
-          )
-        );
+        return;
       }
+
+      // If streaming encountered an error and no text was received yet, fall back seamlessly to standard JSON REST endpoint!
+      if (!streamedAny) {
+        try {
+          const fallbackRes = await apiClient.post("/assistant/chat/", {
+            message: textToSend,
+            session_id: currentSessionId,
+            context: assistantContext || {},
+          });
+
+          const answerText = fallbackRes.data?.answer || "";
+          const answerSources = fallbackRes.data?.sources || [];
+          const answerFallback = !!fallbackRes.data?.fallback;
+          if (fallbackRes.data?.session_id) {
+            if (!currentSessionId) setCurrentSessionId(fallbackRes.data.session_id);
+            loadSessions();
+          }
+
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === botMsgId
+                ? {
+                    ...m,
+                    text: answerText,
+                    sources: answerSources,
+                    fallback: answerFallback,
+                    provider_used: fallbackRes.data?.provider_used,
+                  }
+                : m
+            )
+          );
+          setErrorMessage(null);
+          return;
+        } catch (fallbackErr: any) {
+          console.error("Assistant chat REST fallback failed:", fallbackErr);
+        }
+      }
+
+      const errType = err.message || "";
+      let friendlyError = "সার্ভারে সাময়িক সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।";
+      if (errType === "RATE_LIMIT") {
+        friendlyError = "অনুরোধের সীমা (Rate Limit) অতিক্রম করেছে। অনুগ্রহ করে কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন।";
+      } else if (errType.includes("Failed to fetch") || errType === "NO_STREAM") {
+        friendlyError = "ইন্টারনেট সংযোগে সমস্যা হয়েছে। আপনার সংযোগ পরীক্ষা করে পুনরায় চেষ্টা করুন।";
+      }
+      setErrorMessage(friendlyError);
+
+      // Update bot message to indicate failure
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === botMsgId && !m.text
+            ? {
+                ...m,
+                text: "দুঃখিত, সংযোগ সমস্যার কারণে উত্তর তৈরি করা যায়নি। নিচে 'পুনরায় চেষ্টা করুন' বোতামে চাপুন।",
+                fallback: true,
+              }
+            : m
+        )
+      );
     } finally {
       setIsLoading(false);
       abortControllerRef.current = null;
@@ -492,12 +540,13 @@ export const AssistantChatPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto flex h-[calc(100vh-10rem)] min-h-[550px] bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden font-sans">
-      {/* Sessions Sidebar (Drawer on mobile) */}
-      <div
+    <div className="w-full max-w-5xl mx-auto flex h-[calc(100vh-10rem)] min-h-[550px] bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden font-sans">
+      {/* Sessions Sidebar */}
+      <aside
         className={`${
-          isSidebarOpen ? "flex" : "hidden"
-        } md:flex w-64 bg-gray-50 border-r border-gray-200 flex-col flex-shrink-0 z-20`}
+          isSidebarOpen ? "flex w-72" : "hidden"
+        } bg-gray-50 border-r border-gray-200 flex-col flex-shrink-0 z-20 transition-all duration-200`}
+        aria-label="আলোচনার ইতিহাস"
       >
         <div className="p-3 border-b border-gray-200 flex items-center justify-between">
           <button
@@ -516,12 +565,22 @@ export const AssistantChatPage: React.FC = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          <p className="text-[11px] font-bold text-gray-400 px-3 py-1 uppercase tracking-wider">
-            পূর্বের আলোচনা সমূহ
-          </p>
+          <div className="px-3 py-1.5 flex items-center justify-between">
+            <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+              পূর্বের আলোচনা সমূহ
+            </p>
+            {sessions.length > 0 && (
+              <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-full">
+                {sessions.length}
+              </span>
+            )}
+          </div>
           {!isAuthenticated ? (
-            <div className="p-3 text-xs text-gray-500 bg-white rounded-xl border border-dashed border-gray-200">
-              <p>লগইন করলে আপনার আলোচনার ইতিহাস এখানে সংরক্ষিত থাকবে।</p>
+            <div className="p-3 text-xs text-gray-600 bg-emerald-50/60 rounded-xl border border-emerald-200 space-y-1.5 m-2">
+              <p className="font-semibold text-emerald-900">আলোচনার ইতিহাস সংরক্ষণ</p>
+              <p className="text-[11px] text-emerald-800">
+                লগইন করলে আপনার অতীতের সকল পরামর্শ ও বার্তা এখানে সংরক্ষিত থাকবে।
+              </p>
             </div>
           ) : sessions.length === 0 ? (
             <p className="text-xs text-gray-400 px-3 py-2">কোনো আলোচনা নেই।</p>
@@ -530,18 +589,24 @@ export const AssistantChatPage: React.FC = () => {
               <div
                 key={s.id}
                 onClick={() => selectSession(s.id)}
-                className={`group flex items-center justify-between px-3 py-2 rounded-xl text-xs cursor-pointer transition-colors ${
+                className={`group flex items-center justify-between px-3 py-2.5 rounded-xl text-xs cursor-pointer transition-colors ${
                   currentSessionId === s.id
-                    ? "bg-mrittika-100 text-mrittika-900 font-semibold"
+                    ? "bg-mrittika-100 text-mrittika-900 font-semibold shadow-xs"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
                 <div className="truncate flex-1 pr-2">
-                  <span>{s.title}</span>
+                  <div className="truncate font-medium">{s.title || "নতুন আলোচনা"}</div>
+                  <div className="text-[10px] text-gray-400 mt-0.5 flex items-center gap-1.5">
+                    <span>{new Date(s.updated_at || s.created_at).toLocaleDateString("bn-BD")}</span>
+                    {s.message_count !== undefined && (
+                      <span>• {s.message_count} বার্তা</span>
+                    )}
+                  </div>
                 </div>
                 <button
                   onClick={(e) => deleteSession(s.id, e)}
-                  className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-600 p-1 transition-opacity"
+                  className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-600 p-1 rounded hover:bg-red-50 transition-opacity"
                   title="মুছে ফেলুন"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -562,10 +627,10 @@ export const AssistantChatPage: React.FC = () => {
             </button>
           </div>
         )}
-      </div>
+      </aside>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col h-full bg-white relative">
+      <div className="flex-1 min-w-0 flex flex-col h-full bg-white relative overflow-hidden">
         {/* Header */}
         <div className="p-3.5 border-b border-gray-200 flex items-center justify-between bg-white z-10">
           <div className="flex items-center gap-3">
@@ -628,7 +693,7 @@ export const AssistantChatPage: React.FC = () => {
 
         {/* Messages List */}
         <div
-          className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50"
+          className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 bg-gray-50/50"
           aria-live="polite"
         >
           {messages.map((msg) => {
@@ -640,12 +705,12 @@ export const AssistantChatPage: React.FC = () => {
                 className={`w-full flex ${isUser ? "justify-end" : "justify-start"} my-2`}
               >
                 <div
-                  className={`rounded-2xl p-4 sm:p-5 text-sm leading-relaxed shadow-xs transition-all ${
+                  className={`rounded-2xl p-4 sm:p-5 text-sm leading-relaxed shadow-xs transition-all overflow-hidden break-words ${
                     isUser
-                      ? "max-w-[85%] sm:max-w-[75%] bg-emerald-800 text-white rounded-tr-xs shadow-md border border-emerald-900/30"
+                      ? "max-w-[85%] sm:max-w-[75%] bg-emerald-800 text-white rounded-tr-none shadow-md border border-emerald-900/30 ml-auto"
                       : msg.fallback
-                      ? "w-full max-w-[92%] sm:max-w-[85%] bg-amber-50/50 text-gray-900 border border-amber-300/80 rounded-tl-xs"
-                      : "w-full max-w-[92%] sm:max-w-[85%] bg-white text-gray-900 border border-gray-200/90 rounded-tl-xs"
+                      ? "w-full max-w-[92%] sm:max-w-[85%] bg-amber-50/50 text-gray-900 border border-amber-300/80 rounded-tl-none"
+                      : "w-full max-w-[92%] sm:max-w-[85%] bg-white text-gray-900 border border-gray-200/90 rounded-tl-none"
                   }`}
                 >
                   {/* Sender Header */}
@@ -678,7 +743,7 @@ export const AssistantChatPage: React.FC = () => {
 
                   {/* Message Content */}
                   {isUser ? (
-                    <p className="whitespace-pre-wrap leading-relaxed font-bangla text-white text-[13px] sm:text-sm">
+                    <p className="whitespace-pre-wrap break-words leading-relaxed font-bangla text-white text-[13px] sm:text-sm">
                       {msg.text}
                     </p>
                   ) : (

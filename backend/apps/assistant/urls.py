@@ -28,16 +28,26 @@ from .views import (
 )
 
 urlpatterns = [
-    # Chat endpoints
+    # Chat endpoints (supporting /chat and /assistant/chat, with & without trailing slash)
     path("chat", ChatView.as_view(), name="assistant-chat"),
     path("chat/", ChatView.as_view(), name="assistant-chat-slash"),
     path("chat/stream", ChatStreamView.as_view(), name="assistant-chat-stream-noslash"),
     path("chat/stream/", ChatStreamView.as_view(), name="assistant-chat-stream"),
+    path("assistant/chat", ChatView.as_view()),
+    path("assistant/chat/", ChatView.as_view()),
+    path("assistant/chat/stream", ChatStreamView.as_view()),
+    path("assistant/chat/stream/", ChatStreamView.as_view()),
     path("health/", AssistantHealthView.as_view(), name="assistant-health"),
 
     # Session management (authenticated users)
+    path("sessions", SessionListView.as_view(), name="assistant-sessions-noslash"),
     path("sessions/", SessionListView.as_view(), name="assistant-sessions"),
+    path("sessions/<uuid:session_id>", SessionDetailView.as_view(), name="assistant-session-detail-noslash"),
     path("sessions/<uuid:session_id>/", SessionDetailView.as_view(), name="assistant-session-detail"),
+    path("assistant/sessions", SessionListView.as_view()),
+    path("assistant/sessions/", SessionListView.as_view()),
+    path("assistant/sessions/<uuid:session_id>", SessionDetailView.as_view()),
+    path("assistant/sessions/<uuid:session_id>/", SessionDetailView.as_view()),
 
     # Feedback & Officer auditing
     path("feedback/", AssistantFeedbackView.as_view(), name="assistant-feedback"),
