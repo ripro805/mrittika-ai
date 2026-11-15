@@ -76,8 +76,8 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs flex-shrink-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between min-h-[4rem] sm:min-h-[4.25rem] py-2">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0 select-none py-1">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shadow-xs border border-emerald-800 group-hover:bg-emerald-800 transition-colors flex-shrink-0">

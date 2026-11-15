@@ -129,8 +129,6 @@ export const AssistantChatPage: React.FC = () => {
       } else {
         chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
       }
-    } else if (typeof messagesEndRef.current?.scrollIntoView === "function") {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -190,7 +188,7 @@ export const AssistantChatPage: React.FC = () => {
     if (typeof window !== "undefined" && window.innerWidth < 768) {
       setIsSidebarOpen(false);
     }
-    if (inputRef.current) inputRef.current.focus();
+    if (inputRef.current) inputRef.current.focus({ preventScroll: true });
   };
 
   const selectSession = async (sessionId: string) => {

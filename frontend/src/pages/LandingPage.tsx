@@ -43,9 +43,9 @@ export const LandingPage: React.FC = () => {
   });
 
   return (
-    <div className="space-y-16 lg:space-y-24 py-2 sm:py-4">
+    <div className="space-y-10 lg:space-y-14 py-1 sm:py-2">
       {/* 1. Hero Section with Integrated Agricultural Photography */}
-      <section className="relative overflow-hidden rounded-3xl bg-slate-950 text-white border border-emerald-950/80 shadow-2xl px-6 py-10 sm:px-10 sm:py-16 lg:px-12">
+      <section className="relative overflow-hidden rounded-3xl bg-slate-950 text-white border border-emerald-950/80 shadow-2xl px-6 py-8 sm:px-10 sm:py-12 lg:px-12 lg:py-14">
         {/* Subtle Ambient Background Landscape Overlay */}
         <div className="absolute inset-0 z-0 opacity-25 pointer-events-none">
           <img
@@ -274,126 +274,156 @@ export const LandingPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {/* Card 1: Crop Selection */}
-          <div className="app-card app-card-interactive overflow-hidden rounded-3xl flex flex-col justify-between group border border-slate-200/90 shadow-card hover:border-emerald-500/50">
+          <div className="app-card app-card-interactive overflow-hidden rounded-3xl flex flex-col justify-between group border border-slate-200/90 shadow-card hover:border-emerald-500/50 bg-white">
             <div>
-              <div className="relative h-44 overflow-hidden bg-slate-100">
+              <div className="relative h-60 sm:h-64 lg:h-60 xl:h-64 overflow-hidden bg-slate-100">
                 <img
                   src={CROP_IMAGES["rice_boro"].url}
                   alt={CROP_IMAGES["rice_boro"].altEn}
                   className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                <span className="absolute top-3 left-3 text-xs font-bold text-emerald-950 bg-emerald-100/95 px-3 py-1 rounded-full border border-emerald-300 uppercase tracking-wider backdrop-blur-xs">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                <span className="absolute top-4 left-4 text-xs font-bold text-emerald-950 bg-emerald-100/95 px-3 py-1 rounded-full border border-emerald-300 uppercase tracking-wider backdrop-blur-xs">
                   {i18n.language === "en" ? "Module 1" : "মডিউল ১"}
                 </span>
-                <span className="absolute bottom-3 left-3 text-xs font-extrabold text-white">
-                  {i18n.language === "en" ? "24 Regional Crops" : "২৪টি আঞ্চলিক ফসল"}
+                <span className="absolute bottom-4 left-4 text-xs font-extrabold text-white">
+                  {i18n.language === "en" ? "24 Regional Crops Supported" : "২৪টি আঞ্চলিক ফসল সমর্থিত"}
                 </span>
               </div>
-              <div className="p-6 space-y-3">
-                <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
+              <div className="p-6 sm:p-7 space-y-4">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
                   {i18n.language === "en" ? "Crop Suitability Advisory" : "মাটি ও আবহাওয়ায় সেরা ফসল"}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-bangla">
+                <p className="text-sm text-slate-600 leading-relaxed font-bangla">
                   {i18n.language === "en"
                     ? "AI analyzes soil N, P, K levels, pH, and district climate data to recommend the top 3 highest-yielding crops."
                     : "জমির N, P, K মাত্রা, মাটির পিএইচ এবং জেলার আবহাওয়ার তথ্যে এআই মডেল বিশ্লেষণ করে সেরা ৩টি লাভজনক ফসলের তালিকা তৈরি করে।"}
                 </p>
+                <ul className="space-y-2 pt-1 text-xs sm:text-sm text-slate-700 font-bangla font-semibold">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span>{i18n.language === "en" ? "Top-3 suitability match confidence" : "শীর্ষ ৩ ফসলের পুষ্টি সামঞ্জস্য স্কোর"}</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span>{i18n.language === "en" ? "Seamless 1-click flow to fertilizer plan" : "সার গণনায় মাটির তথ্য স্বয়ংক্রিয় স্থানান্তর"}</span>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            <div className="p-6 pt-0">
+            <div className="p-6 sm:p-7 pt-0">
               <Link
                 to="/crop"
-                className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-700 text-emerald-800 hover:text-white border border-emerald-200 text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all group-hover:translate-x-0.5 cursor-pointer"
+                className="w-full py-3.5 px-5 rounded-2xl bg-emerald-50 hover:bg-emerald-700 text-emerald-800 hover:text-white border border-emerald-200 text-sm font-bold inline-flex items-center justify-center gap-2 transition-all shadow-xs group-hover:translate-x-0.5 cursor-pointer"
               >
                 <span>{i18n.language === "en" ? "Find Best Crops" : "ফসল নির্বাচন শুরু করুন"}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
 
           {/* Card 2: Fertilizer Dosage */}
-          <div className="app-card app-card-interactive overflow-hidden rounded-3xl flex flex-col justify-between group border border-slate-200/90 shadow-card hover:border-amber-500/50">
+          <div className="app-card app-card-interactive overflow-hidden rounded-3xl flex flex-col justify-between group border border-slate-200/90 shadow-card hover:border-amber-500/50 bg-white">
             <div>
-              <div className="relative h-44 overflow-hidden bg-slate-100">
+              <div className="relative h-60 sm:h-64 lg:h-60 xl:h-64 overflow-hidden bg-slate-100">
                 <img
                   src={FERTILIZER_IMAGES["application"].url}
                   alt={FERTILIZER_IMAGES["application"].altEn}
                   className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                <span className="absolute top-3 left-3 text-xs font-bold text-amber-950 bg-amber-100/95 px-3 py-1 rounded-full border border-amber-300 uppercase tracking-wider backdrop-blur-xs">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                <span className="absolute top-4 left-4 text-xs font-bold text-amber-950 bg-amber-100/95 px-3 py-1 rounded-full border border-amber-300 uppercase tracking-wider backdrop-blur-xs">
                   {i18n.language === "en" ? "Module 2" : "মডিউল ২"}
                 </span>
-                <span className="absolute bottom-3 left-3 text-xs font-extrabold text-white">
+                <span className="absolute bottom-4 left-4 text-xs font-extrabold text-white">
                   {i18n.language === "en" ? "BARC Guideline Balanced Splitting" : "বার্ক নির্দেশিকা অনুযায়ী সার কিস্তি"}
                 </span>
               </div>
-              <div className="p-6 space-y-3">
-                <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-amber-800 transition-colors">
+              <div className="p-6 sm:p-7 space-y-4">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-amber-800 transition-colors">
                   {i18n.language === "en" ? "Balanced Fertilizer Dosage" : "সুষম সারের সঠিক মাত্রা"}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-bangla">
+                <p className="text-sm text-slate-600 leading-relaxed font-bangla">
                   {i18n.language === "en"
                     ? "Stage-by-stage split schedule for Urea, TSP, MoP, and Gypsum based on target crop and land measurement in Bigha or Decimal."
                     : "নির্বাচিত ফসলের পুষ্টি চাহিদা অনুসারে বিঘা ও শতক এককে ইউরিয়া, টিএসপি, পটাশ ও জিপসাম সারের কিস্তিভিত্তিক সঠিক ডোজ ও সময়সূচী।"}
                 </p>
+                <ul className="space-y-2 pt-1 text-xs sm:text-sm text-slate-700 font-bangla font-semibold">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                    <span>{i18n.language === "en" ? "Stage-by-stage split schedules (Basal/Splits)" : "প্রাথমিক ও কিস্তিভিত্তিক সার প্রয়োগের দিনক্ষণ"}</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                    <span>{i18n.language === "en" ? "Decimal, Bigha, Acre and Hectare support" : "শতাংশ, বিঘা ও একরে তাৎক্ষণিক রূপান্তর"}</span>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            <div className="p-6 pt-0">
+            <div className="p-6 sm:p-7 pt-0">
               <Link
                 to="/fertilizer"
-                className="w-full py-2.5 px-4 rounded-xl bg-amber-50 hover:bg-amber-600 text-amber-900 hover:text-white border border-amber-200 text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all group-hover:translate-x-0.5 cursor-pointer"
+                className="w-full py-3.5 px-5 rounded-2xl bg-amber-50 hover:bg-amber-600 text-amber-900 hover:text-white border border-amber-200 text-sm font-bold inline-flex items-center justify-center gap-2 transition-all shadow-xs group-hover:translate-x-0.5 cursor-pointer"
               >
                 <span>{i18n.language === "en" ? "Calculate Fertilizer" : "সারের মাত্রা হিসাব করুন"}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
 
           {/* Card 3: AI Assistant */}
-          <div className="app-card app-card-interactive overflow-hidden rounded-3xl flex flex-col justify-between group border border-slate-200/90 shadow-card hover:border-teal-500/50">
+          <div className="app-card app-card-interactive overflow-hidden rounded-3xl flex flex-col justify-between group border border-slate-200/90 shadow-card hover:border-teal-500/50 bg-white">
             <div>
-              <div className="relative h-44 overflow-hidden bg-slate-100">
+              <div className="relative h-60 sm:h-64 lg:h-60 xl:h-64 overflow-hidden bg-slate-100">
                 <img
                   src={SCENIC_IMAGES.soilTesting.url}
                   alt={SCENIC_IMAGES.soilTesting.altEn}
                   className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                <span className="absolute top-3 left-3 text-xs font-bold text-teal-950 bg-teal-100/95 px-3 py-1 rounded-full border border-teal-300 uppercase tracking-wider backdrop-blur-xs">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                <span className="absolute top-4 left-4 text-xs font-bold text-teal-950 bg-teal-100/95 px-3 py-1 rounded-full border border-teal-300 uppercase tracking-wider backdrop-blur-xs">
                   {i18n.language === "en" ? "Module 3" : "মডিউল ৩"}
                 </span>
-                <span className="absolute bottom-3 left-3 text-xs font-extrabold text-white">
+                <span className="absolute bottom-4 left-4 text-xs font-extrabold text-white">
                   {i18n.language === "en" ? "Page-Citing Research RAG" : "পৃষ্ঠা নম্বরযুক্ত সরকারি আরএজি"}
                 </span>
               </div>
-              <div className="p-6 space-y-3">
-                <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-teal-800 transition-colors">
+              <div className="p-6 sm:p-7 space-y-4">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-teal-800 transition-colors">
                   {i18n.language === "en" ? "Bangla AI Agricultural Assistant" : "বাংলা এআই কৃষি সহকারী"}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-bangla">
+                <p className="text-sm text-slate-600 leading-relaxed font-bangla">
                   {i18n.language === "en"
                     ? "Real-time answers on crop diseases, pest remedies, and agro guidelines grounded in BARC & BRRI official research manuals."
                     : "পোকা দমন, রোগ প্রতিরোধ ও রাসায়নিক সুরক্ষায় বাংলায় প্রশ্ন করুন। সাথে পাবেন সরকারি গবেষণা হ্যান্ডবুকের পৃষ্ঠা নম্বরযুক্ত যাচাইকৃত তথ্যসূত্র।"}
                 </p>
+                <ul className="space-y-2 pt-1 text-xs sm:text-sm text-slate-700 font-bangla font-semibold">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                    <span>{i18n.language === "en" ? "Official BARC/BRRI guide citation pages" : "অফিসিয়াল সরকারি গবেষণার পৃষ্ঠা নম্বর রেফারেন্স"}</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                    <span>{i18n.language === "en" ? "Bangla voice input with instant translation" : "বাংলা ভয়েস ইনপুট ও সহজ সমাধান"}</span>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            <div className="p-6 pt-0">
+            <div className="p-6 sm:p-7 pt-0">
               <Link
                 to="/assistant"
-                className="w-full py-2.5 px-4 rounded-xl bg-teal-50 hover:bg-teal-700 text-teal-900 hover:text-white border border-teal-200 text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-all group-hover:translate-x-0.5 cursor-pointer"
+                className="w-full py-3.5 px-5 rounded-2xl bg-teal-50 hover:bg-teal-700 text-teal-900 hover:text-white border border-teal-200 text-sm font-bold inline-flex items-center justify-center gap-2 transition-all shadow-xs group-hover:translate-x-0.5 cursor-pointer"
               >
                 <span>{i18n.language === "en" ? "Ask Assistant" : "সহকারীকে জিজ্ঞাসা করুন"}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -514,7 +544,7 @@ export const LandingPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
           {/* Farmer Portal Card */}
           <div className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-colors shadow-md flex flex-col justify-between group">
-            <div className="relative h-36 overflow-hidden">
+            <div className="relative h-48 sm:h-52 overflow-hidden">
               <img
                 src={SCENIC_IMAGES.farmerHarvest.url}
                 alt={SCENIC_IMAGES.farmerHarvest.altEn}
@@ -522,28 +552,28 @@ export const LandingPage: React.FC = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-              <div className="absolute bottom-2.5 left-3.5 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 flex items-center justify-center font-bold text-sm backdrop-blur-xs">
+              <div className="absolute bottom-3 left-4 flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 flex items-center justify-center font-bold text-base backdrop-blur-xs">
                   🌾
                 </div>
-                <h3 className="text-base font-extrabold text-white font-bangla">
+                <h3 className="text-lg font-extrabold text-white font-bangla">
                   {i18n.language === "en" ? "Farmer Digital Portal" : "কৃষক ডিজিটাল পোর্টাল"}
                 </h3>
               </div>
             </div>
-            <div className="p-5 space-y-3">
-              <p className="text-xs text-slate-200 leading-relaxed font-bangla font-medium">
+            <div className="p-6 space-y-3.5">
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-bangla font-medium">
                 {i18n.language === "en"
                   ? "Localized weather, field-level fertilizer plans, advisory history, and 1-click PDF download."
                   : "স্থানীয় আবহাওয়া, জমির পরিমাপ অনুযায়ী সারের ডোজ, সংরক্ষিত সুপারিশের ইতিহাস এবং ১-ক্লিকে পিডিএফ প্রিন্ট।"}
               </p>
-              <ul className="text-xs text-slate-200 space-y-1.5 pt-1 font-bangla font-medium">
+              <ul className="text-xs sm:text-sm text-slate-200 space-y-2 pt-1 font-bangla font-medium">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   <span>{i18n.language === "en" ? "Personal Farm Dashboard & Advisory Logs" : "ব্যক্তিগত খামার ড্যাশবোর্ড ও পরামর্শ লগ"}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   <span>{i18n.language === "en" ? "PDF Advisory Export for Offline Record-Keeping" : "অফলাইন সংরক্ষণের জন্য পিডিএফ রিপোর্ট"}</span>
                 </li>
               </ul>
@@ -552,7 +582,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Extension Officer Portal Card */}
           <div className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden hover:border-teal-500/50 transition-colors shadow-md flex flex-col justify-between group">
-            <div className="relative h-36 overflow-hidden">
+            <div className="relative h-48 sm:h-52 overflow-hidden">
               <img
                 src={SCENIC_IMAGES.pestInspection.url}
                 alt={SCENIC_IMAGES.pestInspection.altEn}
@@ -560,28 +590,28 @@ export const LandingPage: React.FC = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-              <div className="absolute bottom-2.5 left-3.5 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-teal-900/80 text-teal-300 border border-teal-700/60 flex items-center justify-center font-bold text-sm backdrop-blur-xs">
+              <div className="absolute bottom-3 left-4 flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-teal-900/80 text-teal-300 border border-teal-700/60 flex items-center justify-center font-bold text-base backdrop-blur-xs">
                   🛡️
                 </div>
-                <h3 className="text-base font-extrabold text-white font-bangla">
+                <h3 className="text-lg font-extrabold text-white font-bangla">
                   {i18n.language === "en" ? "Extension Officer Portal" : "উপজেলা কর্মকর্তা পোর্টাল"}
                 </h3>
               </div>
             </div>
-            <div className="p-5 space-y-3">
-              <p className="text-xs text-slate-200 leading-relaxed font-bangla font-medium">
+            <div className="p-6 space-y-3.5">
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-bangla font-medium">
                 {i18n.language === "en"
                   ? "Audit AI responses, add field-level scientific notes, and track regional agronomic patterns."
                   : "এআই মডেলের ভুল বা অস্পষ্ট উত্তর নিরীক্ষা কেন্দ্র, মাঠপর্যায়ের বৈজ্ঞানিক নোট সংযোজন ও আঞ্চলিক প্রবণতা বিশ্লেষণ।"}
               </p>
-              <ul className="text-xs text-slate-200 space-y-1.5 pt-1 font-bangla font-medium">
+              <ul className="text-xs sm:text-sm text-slate-200 space-y-2 pt-1 font-bangla font-medium">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0" />
                   <span>{i18n.language === "en" ? "Audit and Resolve Flagged Advisory Feedback" : "ফ্ল্যাগকৃত প্রশ্নোত্তর সংশোধন ও অনুমোদন"}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-400 flex-shrink-0" />
                   <span>{i18n.language === "en" ? "Regional Nutrient Deficiencies & Crop Analytics" : "আঞ্চলিক পুষ্টি ঘাটতি ও ফসল পরিসংখ্যান"}</span>
                 </li>
               </ul>
@@ -590,7 +620,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Admin Command Center Card */}
           <div className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-colors shadow-md flex flex-col justify-between group">
-            <div className="relative h-36 overflow-hidden">
+            <div className="relative h-48 sm:h-52 overflow-hidden">
               <img
                 src={SCENIC_IMAGES.researchLab.url}
                 alt={SCENIC_IMAGES.researchLab.altEn}
@@ -598,29 +628,29 @@ export const LandingPage: React.FC = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-              <div className="absolute bottom-2.5 left-3.5 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-purple-900/80 text-purple-300 border border-purple-700/60 flex items-center justify-center font-bold text-sm backdrop-blur-xs">
-                  👑
+              <div className="absolute bottom-3 left-4 flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-purple-900/80 text-purple-300 border border-purple-700/60 flex items-center justify-center font-bold text-base backdrop-blur-xs">
+                  ⚡
                 </div>
-                <h3 className="text-base font-extrabold text-white font-bangla">
-                  {i18n.language === "en" ? "Admin Command Center" : "অ্যাডমিন কমান্ড সেন্টার"}
+                <h3 className="text-lg font-extrabold text-white font-bangla">
+                  {i18n.language === "en" ? "Admin Executive Portal" : "সিস্টেম অ্যাডমিন কমান্ড পোর্টাল"}
                 </h3>
               </div>
             </div>
-            <div className="p-5 space-y-3">
-              <p className="text-xs text-slate-200 leading-relaxed font-bangla font-medium">
+            <div className="p-6 space-y-3.5">
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-bangla font-medium">
                 {i18n.language === "en"
-                  ? "Manage user accounts, officer verification, RAG knowledge indexing, and system security audit trails."
-                  : "সমগ্র প্ল্যাটফর্মের ইউজার ম্যানেজমেন্ট, কর্মকর্তা স্বীকৃতি অনুমোদন, RAG গবেষণা নথি ব্যবস্থাপনা ও অডিট ট্রেইল।"}
+                  ? "Manage 275+ users, approve agricultural officer credentials, and manage research knowledge bases."
+                  : "ব্যবহারকারী নিয়ন্ত্রণ, কর্মকর্তা যাচাইকরণ, আরএজি নথি ম্যানেজমেন্ট ও ক্যাশ পারফরম্যান্স পর্যবেক্ষণ।"}
               </p>
-              <ul className="text-xs text-slate-200 space-y-1.5 pt-1 font-bangla font-medium">
+              <ul className="text-xs sm:text-sm text-slate-200 space-y-2 pt-1 font-bangla font-medium">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
-                  <span>{i18n.language === "en" ? "AI Model Registry & Vector Database Re-indexing" : "মডেল আর্কিটেকচার ও আরএজি রি-ইন্ডেক্স"}</span>
+                  <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                  <span>{i18n.language === "en" ? "User Roles, Permissions & Officer Approvals" : "ব্যবহারকারী রোল ব্যবস্থাপনা ও কর্মকর্তা অনুমোদন"}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
-                  <span>{i18n.language === "en" ? "Full Activity Logs & System Telemetry" : "জাতীয় কৃষি কার্যক্রমের সম্পূর্ণ অডিট লগ"}</span>
+                  <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                  <span>{i18n.language === "en" ? "Knowledge Vector Ingestion & System Auditing" : "কৃষি গবেষণা নথিপত্র ভেক্টরাইজেশন ও সিস্টেম লগ"}</span>
                 </li>
               </ul>
             </div>

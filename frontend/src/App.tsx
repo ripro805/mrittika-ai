@@ -47,6 +47,15 @@ const queryClient = new QueryClient({
   },
 });
 
+// Component to ensure window scroll always resets to (0, 0) on route change
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
+  return null;
+};
+
 // Public Layout with dynamic padding and footer handling for chat workspace
 const PublicLayout: React.FC = () => {
   const location = useLocation();
@@ -62,8 +71,8 @@ const PublicLayout: React.FC = () => {
       <main
         className={
           isAssistant
-            ? "flex-1 w-full max-w-7xl mx-auto px-2 sm:px-4 pt-1.5 pb-2 sm:pt-2 sm:pb-3 flex flex-col min-h-0 overflow-hidden"
-            : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
+            ? "flex-1 w-full max-w-7xl 2xl:max-w-[1440px] mx-auto px-2 sm:px-4 pt-1.5 pb-2 sm:pt-2 sm:pb-3 flex flex-col min-h-0 overflow-hidden"
+            : "flex-1 max-w-7xl 2xl:max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7"
         }
       >
         <Routes>
@@ -95,6 +104,7 @@ export const App: React.FC = () => {
       <AuthProvider>
         <UnifiedFlowProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               {/* ========================================================= */}
               {/* 1. FARMER PORTAL ROUTES (/farmer/*)                       */}
